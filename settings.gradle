@@ -1,0 +1,4 @@
+rootProject.name = 'multisweeper'
+include 'client'
+include 'server'
+include 'shared'
