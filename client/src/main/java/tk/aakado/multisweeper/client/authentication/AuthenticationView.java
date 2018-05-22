@@ -1,16 +1,16 @@
 package tk.aakado.multisweeper.client.authentication;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 
-public class AuthenticationView implements View<AuthenticationViewModel>, Initializable {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AuthenticationView implements FxmlView<AuthenticationViewModel>, Initializable {
     @InjectViewModel
     private AuthenticationViewModel viewModel;
 

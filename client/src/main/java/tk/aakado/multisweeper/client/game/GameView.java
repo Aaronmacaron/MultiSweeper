@@ -1,7 +1,7 @@
 package tk.aakado.multisweeper.client.game;
 
+import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.View;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +12,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.ResourceBundle;
 
-public class GameView implements View<GameViewModel>, Initializable {
+public class GameView implements FxmlView<GameViewModel>, Initializable {
     @InjectViewModel
     private GameViewModel viewModel;
 

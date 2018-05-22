@@ -1,13 +1,14 @@
 package tk.aakado.multisweeper.client.finished;
 
+import de.saxsys.mvvmfx.FxmlView;
+import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.fxml.Initializable;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import de.saxsys.mvvmfx.InjectViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.View;
-import javafx.fxml.Initializable;
+public class FinishedView implements FxmlView<FinishedViewModel>, Initializable {
 
-public class FinishedView implements View<FinishedViewModel>, Initializable {
     @InjectViewModel
     private FinishedViewModel viewModel;
 
@@ -15,4 +16,5 @@ public class FinishedView implements View<FinishedViewModel>, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
 }

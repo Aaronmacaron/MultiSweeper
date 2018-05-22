@@ -1,21 +1,20 @@
 package tk.aakado.multisweeper.client.configuration;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import tk.aakado.multisweeper.client.connection.ConnectionViewModel;
 
-public class ConfigurationView implements View<ConfigurationViewModel>, Initializable {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Initializable {
     @InjectViewModel
-    private ConnectionViewModel viewModel;
+    private ConfigurationViewModel viewModel;
 
     @FXML
     private TextField mineDensityString;
