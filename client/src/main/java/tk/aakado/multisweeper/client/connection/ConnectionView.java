@@ -20,18 +20,16 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: variante 1
-        //hier wird ein bidirectional binding verwendet, da das ViewModel den eingegebenen String verwenden muss
+        // bind connectionString bidirectional to viewModel
         connectionString.textProperty().bindBidirectional(viewModel.connectionStringProperty());
-        //TODO: variante 2
-        //kein binding
     }
 
+    /**
+     * Handles click on the onConnect button
+     * @param actionEvent event of click
+     */
     @FXML
-    public void connect(ActionEvent actionEvent) {
-        //TODO: variante 1
+    public void onConnect(ActionEvent actionEvent) {
         viewModel.connect();
-        //TODO: variante 2
-        viewModel.connect(connectionString.getText());
     }
 }

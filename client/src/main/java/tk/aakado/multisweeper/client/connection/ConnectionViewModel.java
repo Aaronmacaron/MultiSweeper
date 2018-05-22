@@ -19,13 +19,10 @@ public class ConnectionViewModel implements ViewModel {
         this.connectionString.set(connectionString);
     }
 
-    public void connect() {
-        //TODO: variante 1
-        String tuwas = connectionString.get();
-    }
+    /**
+     * Connects player to MultiSweeper server
+     */
+    void connect() {
 
-    public void connect(String text) {
-        //TODO: variante 2
-        String tuwas = text;
     }
 }
