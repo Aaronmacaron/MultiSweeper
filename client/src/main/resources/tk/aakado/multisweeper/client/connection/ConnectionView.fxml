@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.connection.ConnectionView">
+<VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.connection.ConnectionView">
     <children>
         <Label text="Connect to server">
             <font>
@@ -15,7 +15,12 @@
             </font>
         </Label>
         <TextField fx:id="connectionString" promptText="hostname or server" />
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#onConnect" text="Connect" />
+        <Button defaultButton="true" mnemonicParsing="false" onAction="#onConnect" text="Connect" fx:id="connectButton"/>
+      <Label text="Not a valid Server Name" textFill="#bc0000" visible="false" fx:id="errorMessage">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
     </children>
     <padding>
         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

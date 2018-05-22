@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ConnectionViewModel implements ViewModel {
 
-    private SimpleStringProperty connectionString = new SimpleStringProperty();
+    private SimpleStringProperty connectionString = new SimpleStringProperty("");
 
     public String getConnectionString() {
         return connectionString.get();
