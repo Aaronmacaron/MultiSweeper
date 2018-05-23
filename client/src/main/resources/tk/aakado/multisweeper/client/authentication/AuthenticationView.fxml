@@ -24,7 +24,7 @@
       <HBox spacing="10.0">
          <children>
             <PasswordField fx:id="passwordString" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#submit" text="Submit" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
          </children>
       </HBox>
    </children>

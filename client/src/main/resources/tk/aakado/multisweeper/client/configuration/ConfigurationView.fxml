@@ -29,19 +29,19 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="mineDensityString" />
+                  <TextField fx:id="mineDensity" />
                   <Label text="Field width">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="fieldWidthString" />
+                  <TextField fx:id="fieldWidth" />
                   <Label text="Field height">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="FieldHeightString" />
+                  <TextField fx:id="fieldHeight" />
                   <Label text="Password (if required)">
                      <font>
                         <Font size="18.0" />
@@ -50,7 +50,7 @@
                   <PasswordField fx:id="passwordString" />
                   <AnchorPane nodeOrientation="RIGHT_TO_LEFT">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#save" text="Save" />
+                        <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
                      </children>
                   </AnchorPane>
                </children>
@@ -75,8 +75,8 @@
       </HBox>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <buttons>
-          <Button cancelButton="true" mnemonicParsing="false" onAction="#disconnect" text="Disconnect" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#start" text="Start!" />
+          <Button cancelButton="true" mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onStart" text="Start!" />
         </buttons>
          <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

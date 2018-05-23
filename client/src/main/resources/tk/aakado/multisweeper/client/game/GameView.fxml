@@ -8,53 +8,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="tk.aakado.multisweeper.client.game.GameView">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.game.GameView">
     <HBox spacing="2.0">
         <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </padding>
         <Label text="Time elapsed: ">
             <font>
-                <Font name="System Bold" size="13.0"/>
+                <Font name="System Bold" size="13.0" />
             </font>
         </Label>
         <Label fx:id="timeElapsed">
             <HBox.margin>
-                <Insets right="10.0"/>
+                <Insets right="10.0" />
             </HBox.margin>
         </Label>
         <Label text="Players: ">
             <font>
-                <Font name="System Bold" size="13.0"/>
+                <Font name="System Bold" size="13.0" />
             </font>
         </Label>
         <Label fx:id="numberOfPlayers">
             <HBox.margin>
-                <Insets right="10.0"/>
+                <Insets right="10.0" />
             </HBox.margin>
         </Label>
         <Label text="Remaining Mines: ">
             <font>
-                <Font name="System Bold" size="13.0"/>
+                <Font name="System Bold" size="13.0" />
             </font>
         </Label>
         <Label fx:id="remainingMines">
             <HBox.margin>
-                <Insets right="10.0"/>
+                <Insets right="10.0" />
             </HBox.margin>
         </Label>
     </HBox>
     <HBox spacing="15.0">
         <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </padding>
-        <Button mnemonicParsing="false" text="Restart" onAction="#onRestart"/>
-        <Button mnemonicParsing="false" text="Disconnect" onAction="#onDisconnect"/>
+        <Button mnemonicParsing="false" onAction="#onRestart" text="Restart" />
+        <Button mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
     </HBox>
-    <AnchorPane>
+    <AnchorPane fx:id="gameContainer">
         <VBox.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </VBox.margin>
     </AnchorPane>
 </VBox>
