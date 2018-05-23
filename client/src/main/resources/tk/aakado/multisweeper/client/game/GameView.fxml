@@ -18,7 +18,7 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <Label fx:id="timeElapsed">
+        <Label fx:id="timeElapsedLabel">
             <HBox.margin>
                 <Insets right="10.0" />
             </HBox.margin>
@@ -28,7 +28,7 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <Label fx:id="numberOfPlayers">
+        <Label fx:id="numberOfPlayersLabel">
             <HBox.margin>
                 <Insets right="10.0" />
             </HBox.margin>
@@ -38,7 +38,7 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <Label fx:id="remainingMines">
+        <Label fx:id="remainingMinesLabel">
             <HBox.margin>
                 <Insets right="10.0" />
             </HBox.margin>
@@ -51,7 +51,7 @@
         <Button mnemonicParsing="false" onAction="#onRestart" text="Restart" />
         <Button mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
     </HBox>
-    <AnchorPane fx:id="gameContainer">
+    <AnchorPane fx:id="gamePane">
         <VBox.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </VBox.margin>

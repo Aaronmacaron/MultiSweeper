@@ -9,21 +9,9 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class FinishedViewModel implements ViewModel {
 
-    private SimpleStringProperty victoryString = new SimpleStringProperty();
+    private SimpleStringProperty victory = new SimpleStringProperty();
     private SimpleIntegerProperty totalPlayers = new SimpleIntegerProperty();
-    private SimpleObjectProperty<Duration> totalTime = new SimpleObjectProperty<>(Duration.ZERO);//TODO to prevent NUllPointerException Duration.ZERO is set
-
-    public SimpleStringProperty victoryStringProperty() {
-        return victoryString;
-    }
-
-    public SimpleIntegerProperty totalPlayersProperty() {
-        return totalPlayers;
-    }
-
-    public SimpleObjectProperty<Duration> totalTimeProperty() {
-        return totalTime;
-    }
+    private SimpleObjectProperty<Duration> totalTime = new SimpleObjectProperty<>(Duration.ZERO);//TODO to prevent NullPointerException Duration.ZERO is set
 
     /**
      * Starts a new game
@@ -44,6 +32,18 @@ public class FinishedViewModel implements ViewModel {
      */
     public void disconnect() {
         // TODO: Implement
+    }
+
+    public SimpleStringProperty victoryProperty() {
+        return victory;
+    }
+
+    public SimpleIntegerProperty totalPlayersProperty() {
+        return totalPlayers;
+    }
+
+    public SimpleObjectProperty<Duration> totalTimeProperty() {
+        return totalTime;
     }
 
 }

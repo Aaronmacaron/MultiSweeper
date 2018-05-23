@@ -5,21 +5,13 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class AuthenticationViewModel implements ViewModel {
 
-    private SimpleStringProperty passwordString = new SimpleStringProperty("");
-
-    public String getPasswordString() {
-        return passwordString.get();
-    }
-
-    public SimpleStringProperty passwordStringProperty() {
-        return passwordString;
-    }
-
-    public void setPasswordString(String passwordString) {
-        this.passwordString.set(passwordString);
-    }
+    private SimpleStringProperty password = new SimpleStringProperty("");
 
     public void submit() {
         //TODO implement
+    }
+
+    public SimpleStringProperty passwordProperty() {
+        return password;
     }
 }

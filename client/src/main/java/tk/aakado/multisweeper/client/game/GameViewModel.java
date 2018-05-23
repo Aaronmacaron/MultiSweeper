@@ -12,6 +12,16 @@ public class GameViewModel implements ViewModel {
     private SimpleIntegerProperty numberOfPlayers = new SimpleIntegerProperty();
     private SimpleIntegerProperty remainingMines = new SimpleIntegerProperty();
 
+    // Restarts the game
+    public void restart() {
+        // TODO: Implement
+    }
+
+    // Disconnects player from the game
+    public void disconnect() {
+        // TODO: Implement
+    }
+
     public SimpleObjectProperty<Duration> elapsedTimeProperty() {
         return elapsedTime;
     }
@@ -22,16 +32,6 @@ public class GameViewModel implements ViewModel {
 
     public SimpleIntegerProperty remainingMinesProperty() {
         return remainingMines;
-    }
-
-    // Restarts the game
-    public void restart() {
-        // TODO: Implement
-    }
-
-    // Disconnects player from the game
-    public void disconnect() {
-        // TODO: Implement
     }
 
 }

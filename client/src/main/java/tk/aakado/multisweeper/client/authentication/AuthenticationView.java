@@ -16,12 +16,12 @@ public class AuthenticationView implements FxmlView<AuthenticationViewModel>, In
     private AuthenticationViewModel viewModel;
 
     @FXML
-    private PasswordField passwordString;
+    private PasswordField passwordField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Bind passwordString bidirectional
-        passwordString.textProperty().bindBidirectional(viewModel.passwordStringProperty());
+        // Bind passwordField bidirectional
+        passwordField.textProperty().bindBidirectional(viewModel.passwordProperty());
     }
 
     /**

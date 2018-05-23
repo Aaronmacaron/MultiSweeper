@@ -29,25 +29,25 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="mineDensity" />
+                  <TextField fx:id="mineDensityField" />
                   <Label text="Field width">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="fieldWidth" />
+                  <TextField fx:id="fieldWidthField" />
                   <Label text="Field height">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="fieldHeight" />
+                  <TextField fx:id="fieldHeightField" />
                   <Label text="Password (if required)">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="passwordString" />
+                  <PasswordField fx:id="passwordField" />
                   <AnchorPane nodeOrientation="RIGHT_TO_LEFT">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
@@ -65,7 +65,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="playersList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="players" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

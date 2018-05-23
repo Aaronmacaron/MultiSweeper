@@ -19,36 +19,36 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     private ConfigurationViewModel viewModel;
 
     @FXML
-    private TextField mineDensity;
+    private TextField mineDensityField;
 
     @FXML
-    private TextField fieldWidth;
+    private TextField fieldWidthField;
 
     @FXML
-    private TextField fieldHeight;
+    private TextField fieldHeightField;
 
     @FXML
-    private PasswordField passwordString;
+    private PasswordField passwordField;
 
     @FXML
     private ListView<String> playersList;//TODO: List type should be gamelogic.Player
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Bind mineDensity bidirectional with a NumberStringConverter
-        Bindings.bindBidirectional(mineDensity.textProperty(), viewModel.mineDensitiyProperty(), new NumberStringConverter());
+        // Bind mineDensityField bidirectional with a NumberStringConverter
+        Bindings.bindBidirectional(mineDensityField.textProperty(), viewModel.mineDensitiyProperty(), new NumberStringConverter());
 
-        // Bind fieldWidth bidirectional with a NumberStringConverter
-        Bindings.bindBidirectional(fieldWidth.textProperty(), viewModel.fieldWidthProperty(), new NumberStringConverter());
+        // Bind fieldWidthField bidirectional with a NumberStringConverter
+        Bindings.bindBidirectional(fieldWidthField.textProperty(), viewModel.fieldWidthProperty(), new NumberStringConverter());
 
-        // Bind fieldHeight bidirectional with a NumberStringConverter
-        Bindings.bindBidirectional(fieldHeight.textProperty(), viewModel.fieldHeightProperty(), new NumberStringConverter());
+        // Bind fieldHeightField bidirectional with a NumberStringConverter
+        Bindings.bindBidirectional(fieldHeightField.textProperty(), viewModel.fieldHeightProperty(), new NumberStringConverter());
 
         // Bind passwordstring bidirectional
-        passwordString.textProperty().bindBidirectional(viewModel.passwordStringProperty());
+        passwordField.textProperty().bindBidirectional(viewModel.passwordProperty());
 
         // Bind playerslist unidirectional
-        playersList.itemsProperty().bind(viewModel.playersListProperty());
+        playersList.itemsProperty().bind(viewModel.playersProperty());
 
         //TODO: use the following to show the correct and formatted data
         //        playersList.setCellFactory();

@@ -20,36 +20,36 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     private GameViewModel viewModel;
 
     @FXML
-    public AnchorPane gameContainer;
+    public AnchorPane gamePane;
     @FXML
-    private Label timeElapsed;
+    private Label timeElapsedLabel;
     @FXML
-    private Label numberOfPlayers;
+    private Label numberOfPlayersLabel;
     @FXML
-    private Label remainingMines;
+    private Label remainingMinesLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Convert Duration to String and bind it to timeElapsed
-        timeElapsed.textProperty().bind(Bindings.createStringBinding(() -> {
+        // Convert Duration to String and bind it to timeElapsedLabel
+        timeElapsedLabel.textProperty().bind(Bindings.createStringBinding(() -> {
             Duration duration = viewModel.elapsedTimeProperty().get();
             return String.format("%s:%s", duration.toMinutes(), duration.getSeconds());
         }));
 
-        // Convert Int to String and bind it to numberOfPlayers
-        numberOfPlayers.textProperty().bind(Bindings.createStringBinding(() ->
+        // Convert Int to String and bind it to numberOfPlayersLabel
+        numberOfPlayersLabel.textProperty().bind(Bindings.createStringBinding(() ->
                 Integer.toString(viewModel.numberOfPlayersProperty().get())));
 
-        // Convert Int to String and bind it to remainingMines
-        remainingMines.textProperty().bind(Bindings.createStringBinding(() ->
+        // Convert Int to String and bind it to remainingMinesLabel
+        remainingMinesLabel.textProperty().bind(Bindings.createStringBinding(() ->
                 Integer.toString(viewModel.remainingMinesProperty().get())));
 
         // Adds the GridPane of the MineSweeper Game
         // Now called GamePane
-        gameContainer.getChildren().add(createGamePane());
+        gamePane.getChildren().add(createGamePane());
         // Sets a useable size for the GamePane
-        gameContainer.setPrefSize(100, 100);
+        gamePane.setPrefSize(100, 100);
 
     }
 
@@ -63,13 +63,21 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
         return new GridPane();
     }
 
-    // Click handler for onRestart-button
+    /**
+     * Handle restart button
+     *
+     * @param actionEvent ActionEvent
+     */
     @FXML
     public void onRestart(ActionEvent actionEvent) {
         viewModel.restart();
     }
 
-    // Click handler for onDisconnect-button
+    /**
+     * Handle disconnect button
+     *
+     * @param actionEvent ActionEvent
+     */
     @FXML
     public void onDisconnect(ActionEvent actionEvent) {
         viewModel.disconnect();

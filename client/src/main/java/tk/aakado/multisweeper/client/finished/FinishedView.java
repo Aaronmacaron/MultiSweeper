@@ -10,7 +10,6 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class FinishedView implements FxmlView<FinishedViewModel>, Initializable {
@@ -29,7 +28,7 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Labels
-        victoryLabel.textProperty().bind(viewModel.victoryStringProperty());
+        victoryLabel.textProperty().bind(viewModel.victoryProperty());
         totalPlayersLabel.textProperty().bind(viewModel.totalPlayersProperty().asString());
         timeLabel.textProperty().bind(Bindings.createStringBinding(() -> {
             //TODO: should we outsource large lambdas in own mehtods?

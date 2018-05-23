@@ -23,7 +23,7 @@
       </Label>
       <HBox spacing="10.0">
          <children>
-            <PasswordField fx:id="passwordString" />
+            <PasswordField fx:id="passwordField" />
             <Button defaultButton="true" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
          </children>
       </HBox>

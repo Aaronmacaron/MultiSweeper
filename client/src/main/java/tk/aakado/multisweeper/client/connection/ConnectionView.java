@@ -16,9 +16,9 @@ import javafx.scene.control.TextField;
 public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializable {
 
     @FXML
-    public TextField connectionString;
+    public TextField connectionField;
     @FXML
-    public Label errorMessage;
+    public Label errorMessageLabel;
     @FXML
     public Button connectButton;
 
@@ -29,12 +29,12 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // bind connectionString bidirectional to viewModel
-        connectionString.textProperty().bindBidirectional(viewModel.connectionStringProperty());
+        // bind connectionField bidirectional to viewModel
+        connectionField.textProperty().bindBidirectional(viewModel.connectionProperty());
 
-        // Set the disabled state of the connectButton to connectionString.isEmpty
-        connectButton.disableProperty().bind(connectionString.textProperty().isEmpty());
-        //TODO: the disableProperty could also be bind with a valdate method, which checks the connectionString with a Pattern
+        // Set the disabled state of the connectButton to connectionField.isEmpty
+        connectButton.disableProperty().bind(connectionField.textProperty().isEmpty());
+        //TODO: the disableProperty could also be bind with a valdate method, which checks the connectionField with a Pattern
     }
 
     /**
@@ -50,8 +50,8 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
                 "z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$");
 
         // Validate
-        if (pattern.matcher(connectionString.textProperty().getValue()).matches()) {
-            errorMessage.setVisible(true);
+        if (pattern.matcher(connectionField.textProperty().getValue()).matches()) {
+            errorMessageLabel.setVisible(true);
         } else {
             viewModel.connect();
         }
