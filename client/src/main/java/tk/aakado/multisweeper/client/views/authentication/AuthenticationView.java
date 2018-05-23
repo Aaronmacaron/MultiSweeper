@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.authentication;
+package tk.aakado.multisweeper.client.views.authentication;
 
 import java.net.URL;
 import java.util.ResourceBundle;

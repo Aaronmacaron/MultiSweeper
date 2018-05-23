@@ -1,9 +1,10 @@
-package tk.aakado.multisweeper.client.configuration;
+package tk.aakado.multisweeper.client.views.configuration;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 
 public class ConfigurationViewModel implements ViewModel {
 
@@ -11,7 +12,7 @@ public class ConfigurationViewModel implements ViewModel {
     private SimpleIntegerProperty fieldWidth = new SimpleIntegerProperty();
     private SimpleIntegerProperty fieldHeight = new SimpleIntegerProperty();
     private SimpleStringProperty password = new SimpleStringProperty();
-    private SimpleListProperty<String> players = new SimpleListProperty<>();//TODO: List type should be gamelogic.Player, in the #initialize Method we can specify the data to show
+    private SimpleListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());//TODO: List type should be gamelogic.Player, in the #initialize Method we can specify the data to show
 
     public void start() {
         //TODO implement

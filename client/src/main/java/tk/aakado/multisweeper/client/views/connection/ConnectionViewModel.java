@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.connection;
+package tk.aakado.multisweeper.client.views.connection;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.SimpleStringProperty;

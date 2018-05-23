@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.connection;
+package tk.aakado.multisweeper.client.views.connection;
 
 import java.net.URL;
 import java.util.ResourceBundle;

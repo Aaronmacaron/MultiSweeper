@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.authentication;
+package tk.aakado.multisweeper.client.views.authentication;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.SimpleStringProperty;

@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.game;
+package tk.aakado.multisweeper.client.views.game;
 
 import java.time.Duration;
 

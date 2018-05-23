@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.finished;
+package tk.aakado.multisweeper.client.views.finished;
 
 import java.net.URL;
 import java.time.Duration;
