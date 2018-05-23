@@ -23,6 +23,6 @@ public class ConnectionViewModel implements ViewModel {
      * Connects player to MultiSweeper server
      */
     void connect() {
-
+        //TODO implement
     }
 }

@@ -1,14 +1,14 @@
 package tk.aakado.multisweeper.client.game;
 
+import java.time.Duration;
+
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import java.time.Duration;
-
 public class GameViewModel implements ViewModel {
 
-    private SimpleObjectProperty<Duration> elapsedTime = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<Duration> elapsedTime = new SimpleObjectProperty<>(Duration.ZERO);//TODO to prevent NUllPointerException Duration.ZERO is set
     private SimpleIntegerProperty numberOfPlayers = new SimpleIntegerProperty();
     private SimpleIntegerProperty remainingMines = new SimpleIntegerProperty();
 
