@@ -1,5 +1,8 @@
 package tk.aakado.multisweeper.client.authentication;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.event.ActionEvent;
@@ -7,10 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class AuthenticationView implements FxmlView<AuthenticationViewModel>, Initializable {
+
     @InjectViewModel
     private AuthenticationViewModel viewModel;
 
@@ -19,11 +20,17 @@ public class AuthenticationView implements FxmlView<AuthenticationViewModel>, In
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // Bind passwordString bidirectional
+        passwordString.textProperty().bindBidirectional(viewModel.passwordStringProperty());
     }
 
+    /**
+     * Handle submit button
+     *
+     * @param event ActionEvent
+     */
     @FXML
-    void submit(ActionEvent event) {
-
+    void onSubmit(ActionEvent event) {
+        viewModel.submit();
     }
 }

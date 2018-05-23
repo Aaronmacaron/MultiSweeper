@@ -28,15 +28,18 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         // bind connectionString bidirectional to viewModel
         connectionString.textProperty().bindBidirectional(viewModel.connectionStringProperty());
 
         // Set the disabled state of the connectButton to connectionString.isEmpty
         connectButton.disableProperty().bind(connectionString.textProperty().isEmpty());
+        //TODO: the disableProperty could also be bind with a valdate method, which checks the connectionString with a Pattern
     }
 
     /**
-     * Handles click on the onConnect button
+     * Handles connect button
+     *
      * @param actionEvent event of click
      */
     @FXML
@@ -49,8 +52,9 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
         // Validate
         if (pattern.matcher(connectionString.textProperty().getValue()).matches()) {
             errorMessage.setVisible(true);
+        } else {
+            viewModel.connect();
         }
 
-        viewModel.connect();
     }
 }
