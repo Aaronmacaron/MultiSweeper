@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.client;
 
-import javax.security.auth.login.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
@@ -8,16 +9,8 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tk.aakado.multisweeper.client.authentication.AuthenticationView;
-import tk.aakado.multisweeper.client.authentication.AuthenticationViewModel;
-import tk.aakado.multisweeper.client.configuration.ConfigurationView;
-import tk.aakado.multisweeper.client.configuration.ConfigurationViewModel;
-import tk.aakado.multisweeper.client.connection.ConnectionView;
-import tk.aakado.multisweeper.client.connection.ConnectionViewModel;
-import tk.aakado.multisweeper.client.finished.FinishedView;
-import tk.aakado.multisweeper.client.finished.FinishedViewModel;
-import tk.aakado.multisweeper.client.game.GameView;
-import tk.aakado.multisweeper.client.game.GameViewModel;
+import tk.aakado.multisweeper.client.views.finished.FinishedView;
+import tk.aakado.multisweeper.client.views.finished.FinishedViewModel;
 
 /**
  * The client Application
@@ -36,6 +29,8 @@ public class App extends Application {
 //        ViewTuple<GameView, GameViewModel> tuple = FluentViewLoader.fxmlView(GameView.class).load();
         ViewTuple<FinishedView, FinishedViewModel> tuple = FluentViewLoader.fxmlView(FinishedView.class).load();
 
+        Logger logger = LoggerFactory.getLogger(getClass());
+        logger.error
 
 
         Parent root = tuple.getView();
