@@ -1,7 +1,6 @@
 package tk.aakado.multisweeper.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.security.auth.login.Configuration;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
@@ -29,8 +28,6 @@ public class App extends Application {
 //        ViewTuple<GameView, GameViewModel> tuple = FluentViewLoader.fxmlView(GameView.class).load();
         ViewTuple<FinishedView, FinishedViewModel> tuple = FluentViewLoader.fxmlView(FinishedView.class).load();
 
-        Logger logger = LoggerFactory.getLogger(getClass());
-        logger.error
 
 
         Parent root = tuple.getView();
