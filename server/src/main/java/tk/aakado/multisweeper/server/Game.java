@@ -8,20 +8,10 @@ public interface Game {
 
     void flagField(Player player, FieldCords fieldCords);
 
-    void start(Player player);
+    void startNewGame(Player player);
 
-    void setNumberOfMines(Player player, int numberOfMines);
-
-    void setFieldWidth(Player player, int width);
-
-    void setFieldHeight(Player player, int height);
-
-    void setPassword(Player player, String password);
+    void configure(Player player, int numberOfMines, int width, int height, String password);
 
     void disconnect(Player player);
-
-    void restart(Player player);
-
-    void reconfigure(Player player);
 
 }

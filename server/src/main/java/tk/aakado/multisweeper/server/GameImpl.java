@@ -23,22 +23,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public void setNumberOfMines(Player player, int numberOfMines) {
-
-    }
-
-    @Override
-    public void setFieldWidth(Player player, int width) {
-
-    }
-
-    @Override
-    public void setFieldHeight(Player player, int height) {
-
-    }
-
-    @Override
-    public void setPassword(Player player, String password) {
+    public void configure(Player player, int numberOfMines, int width, int height, String password) {
 
     }
 
@@ -52,8 +37,4 @@ public class GameImpl implements Game {
 
     }
 
-    @Override
-    public void reconfigure(Player player) {
-
-    }
 }
