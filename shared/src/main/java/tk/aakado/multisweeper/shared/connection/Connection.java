@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client.connection;
+package tk.aakado.multisweeper.shared.connection;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;

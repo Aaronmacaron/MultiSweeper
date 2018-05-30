@@ -1,10 +1,10 @@
 package tk.aakado.multisweeper.server.connection;
 
 import com.google.gson.JsonObject;
-import tk.aakado.multisweeper.client.connection.AbstractConnector;
-import tk.aakado.multisweeper.client.connection.Action;
-import tk.aakado.multisweeper.client.connection.ActionType;
-import tk.aakado.multisweeper.client.connection.Connection;
+import tk.aakado.multisweeper.shared.connection.AbstractConnector;
+import tk.aakado.multisweeper.shared.connection.Action;
+import tk.aakado.multisweeper.shared.connection.ActionType;
+import tk.aakado.multisweeper.shared.connection.Connection;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;
