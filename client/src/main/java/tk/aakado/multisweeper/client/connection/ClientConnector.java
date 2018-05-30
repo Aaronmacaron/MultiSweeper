@@ -1,11 +1,10 @@
-package tk.aakado.multisweeper.shared.connection;
+package tk.aakado.multisweeper.client.connection;
 
 import com.google.gson.JsonObject;
-
-import tk.aakado.multisweeper.client.AbstractConnector;
-import tk.aakado.multisweeper.client.Action;
-import tk.aakado.multisweeper.client.ActionType;
-import tk.aakado.multisweeper.client.Connection;
+import tk.aakado.multisweeper.shared.connection.AbstractConnector;
+import tk.aakado.multisweeper.shared.connection.Action;
+import tk.aakado.multisweeper.shared.connection.ActionType;
+import tk.aakado.multisweeper.shared.connection.Connection;
 
 public class ClientConnector extends AbstractConnector {
 
