@@ -3,7 +3,7 @@ package tk.aakado.multisweeper.client.views.connection;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.SimpleStringProperty;
 
-public class ConnectionViewModel implements ViewModel {
+public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
     private SimpleStringProperty connection = new SimpleStringProperty("");
 
@@ -17,5 +17,15 @@ public class ConnectionViewModel implements ViewModel {
 
     public SimpleStringProperty connectionProperty() {
         return connection;
+    }
+
+    @Override
+    public void connected(boolean authRequired) {
+
+    }
+
+    @Override
+    public void rejected() {
+
     }
 }

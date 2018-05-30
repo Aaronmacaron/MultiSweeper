@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 
-public class ConfigurationViewModel implements ViewModel {
+public class ConfigurationViewModel implements ViewModel,ConfigurationNotificator {
 
     private SimpleIntegerProperty mineDensitiy = new SimpleIntegerProperty();
     private SimpleIntegerProperty fieldWidth = new SimpleIntegerProperty();
@@ -47,4 +47,18 @@ public class ConfigurationViewModel implements ViewModel {
         return players;
     }
 
+    @Override
+    public void playerDisconnected(String players) {
+
+    }
+
+    @Override
+    public void playerConnected(String players) {
+
+    }
+
+    @Override
+    public void gameStarted() {
+
+    }
 }
