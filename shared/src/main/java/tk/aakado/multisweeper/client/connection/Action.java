@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.client;
+package tk.aakado.multisweeper.client.connection;
 
 import com.google.gson.Gson;
 

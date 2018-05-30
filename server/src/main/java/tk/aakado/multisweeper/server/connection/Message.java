@@ -1,7 +1,7 @@
-package tk.aakado.multisweeper.server;
+package tk.aakado.multisweeper.server.connection;
 
 import com.google.gson.JsonObject;
-import tk.aakado.multisweeper.client.Connection;
+import tk.aakado.multisweeper.client.connection.Connection;
 
 public class Message {
     private ServerConnector server;

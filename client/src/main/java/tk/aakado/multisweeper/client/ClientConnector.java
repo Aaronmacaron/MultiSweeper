@@ -1,6 +1,10 @@
 package tk.aakado.multisweeper.client;
 
 import com.google.gson.JsonObject;
+import tk.aakado.multisweeper.client.connection.AbstractConnector;
+import tk.aakado.multisweeper.client.connection.Action;
+import tk.aakado.multisweeper.client.connection.ActionType;
+import tk.aakado.multisweeper.client.connection.Connection;
 
 public class ClientConnector extends AbstractConnector {
 

@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.server;
+package tk.aakado.multisweeper.server.game;
 
 public class GameImpl implements Game {
 
@@ -18,7 +18,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public void start(Player player) {
+    public void startNewGame(Player player) {
 
     }
 
@@ -29,11 +29,6 @@ public class GameImpl implements Game {
 
     @Override
     public void disconnect(Player player) {
-
-    }
-
-    @Override
-    public void restart(Player player) {
 
     }
 
