@@ -1,6 +1,9 @@
-package tk.aakado.multisweeper.server;
+package tk.aakado.multisweeper.logic;
 
 import java.util.List;
+
+import tk.aakado.multisweeper.logic.Field;
+import tk.aakado.multisweeper.logic.FieldCords;
 
 public class PlayingField {
 

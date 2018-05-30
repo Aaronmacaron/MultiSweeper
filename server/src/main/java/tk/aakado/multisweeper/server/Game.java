@@ -1,5 +1,8 @@
 package tk.aakado.multisweeper.server;
 
+import tk.aakado.multisweeper.logic.FieldCords;
+import tk.aakado.multisweeper.logic.Player;
+
 public interface Game {
 
     void addPlayer(Player player);

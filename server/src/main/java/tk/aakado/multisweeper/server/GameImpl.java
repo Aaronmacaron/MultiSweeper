@@ -1,6 +1,10 @@
 package tk.aakado.multisweeper.server;
 
-public class GameImpl implements Game {
+import tk.aakado.multisweeper.logic.FieldCords;
+import tk.aakado.multisweeper.logic.Player;
+
+public class
+GameImpl implements Game {
 
     @Override
     public void addPlayer(Player player) {
