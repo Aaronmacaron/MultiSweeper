@@ -5,27 +5,29 @@ import java.util.Optional;
 public class Field {
 
     private final FieldCords fieldCords;
-    private final int fieldValue;
+    private final FieldType type;
     private boolean isDiscovered;
     private Optional<Player> discoverPlayer;
 
-    public Field(FieldCords fieldCords, int fieldValue) {
+    public Field(FieldCords fieldCords, FieldType type) {
         this.fieldCords = fieldCords;
-        this.fieldValue = fieldValue;
+        this.type = type;
     }
 
     public void discover(Player player) {
 
     }
 
-    // TODO: isMine() -> how to handle different kinds of field has to be discussed
+    public boolean isMine() {
+        return type == FieldType.MINE;
+    }
 
     public FieldCords getFieldCords() {
         return fieldCords;
     }
 
     public int getFieldValue() {
-        return fieldValue;
+        return this.type.ordinal();
     }
 
     public boolean isDiscovered() {
@@ -34,6 +36,10 @@ public class Field {
 
     public Optional<Player> getDiscoverPlayer() {
         return discoverPlayer;
+    }
+
+    public enum FieldType {
+        MINE, FIELD_1, FIELD_2, FIELD_3, FIELD_4, FIELD_5,  FIELD_6, FIELD_7, FIELD_8;
     }
 
 }
