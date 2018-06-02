@@ -14,11 +14,6 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
         //TODO implement
     }
 
-
-    public SimpleStringProperty connectionProperty() {
-        return connection;
-    }
-
     @Override
     public void connected(boolean authRequired) {
 
@@ -28,4 +23,12 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     public void rejected() {
 
     }
+
+    // property getters
+
+    public SimpleStringProperty connectionProperty() {
+        return connection;
+    }
+
+
 }

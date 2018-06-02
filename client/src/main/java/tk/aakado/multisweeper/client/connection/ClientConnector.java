@@ -8,8 +8,8 @@ import tk.aakado.multisweeper.shared.connection.Connection;
 
 public class ClientConnector extends AbstractConnector {
 
-    final private String host;
-    final private int port;
+    private final String host;
+    private final int port;
     private boolean isStarted = false;
 
     public ClientConnector(String host, int port) {

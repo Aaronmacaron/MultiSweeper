@@ -15,28 +15,25 @@ import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
 
 public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Initializable {
+
     @InjectViewModel
     private ConfigurationViewModel viewModel;
 
     @FXML
     private TextField mineDensityField;
-
     @FXML
     private TextField fieldWidthField;
-
     @FXML
     private TextField fieldHeightField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private ListView<String> playersList;//TODO: List type should be gamelogic.Player
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Bind mineDensityField bidirectional with a NumberStringConverter
-        Bindings.bindBidirectional(mineDensityField.textProperty(), viewModel.mineDensitiyProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(mineDensityField.textProperty(), viewModel.mineDensityProperty(), new NumberStringConverter());
 
         // Bind fieldWidthField bidirectional with a NumberStringConverter
         Bindings.bindBidirectional(fieldWidthField.textProperty(), viewModel.fieldWidthProperty(), new NumberStringConverter());
@@ -44,10 +41,10 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         // Bind fieldHeightField bidirectional with a NumberStringConverter
         Bindings.bindBidirectional(fieldHeightField.textProperty(), viewModel.fieldHeightProperty(), new NumberStringConverter());
 
-        // Bind passwordstring bidirectional
+        // Bind password string bidirectional
         passwordField.textProperty().bindBidirectional(viewModel.passwordProperty());
 
-        // Bind playerslist unidirectional
+        // Bind players list unidirectional
         playersList.itemsProperty().bind(viewModel.playersProperty());
 
         //TODO: use the following to show the correct and formatted data
@@ -55,7 +52,7 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     }
 
     /**
-     * Hanlde disconnect button
+     * Handle disconnect button
      *
      * @param event ActionEvent
      */

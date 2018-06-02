@@ -15,16 +15,15 @@ import javafx.scene.control.TextField;
 
 public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializable {
 
+    @InjectViewModel
+    private ConnectionViewModel viewModel;
+
     @FXML
     public TextField connectionField;
     @FXML
     public Label errorMessageLabel;
     @FXML
     public Button connectButton;
-
-
-    @InjectViewModel
-    private ConnectionViewModel viewModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,7 +33,7 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
 
         // Set the disabled state of the connectButton to connectionField.isEmpty
         connectButton.disableProperty().bind(connectionField.textProperty().isEmpty());
-        //TODO: the disableProperty could also be bind with a valdate method, which checks the connectionField with a Pattern
+        //TODO: the disableProperty could also be bind with a validate method, which checks the connectionField with a Pattern
     }
 
     /**

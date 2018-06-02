@@ -11,10 +11,6 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
         //TODO implement
     }
 
-    public SimpleStringProperty passwordProperty() {
-        return password;
-    }
-
     @Override
     public void rejected() {
 
@@ -24,4 +20,11 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
     public void success() {
 
     }
+
+    // property getters
+
+    public SimpleStringProperty passwordProperty() {
+        return password;
+    }
+
 }

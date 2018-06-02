@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 
-public class ConfigurationViewModel implements ViewModel,ConfigurationNotificator {
+public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
-    private SimpleIntegerProperty mineDensitiy = new SimpleIntegerProperty();
+    private SimpleIntegerProperty mineDensity = new SimpleIntegerProperty();
     private SimpleIntegerProperty fieldWidth = new SimpleIntegerProperty();
     private SimpleIntegerProperty fieldHeight = new SimpleIntegerProperty();
     private SimpleStringProperty password = new SimpleStringProperty();
@@ -26,9 +26,25 @@ public class ConfigurationViewModel implements ViewModel,ConfigurationNotificato
         //TODO implement
     }
 
+    @Override
+    public void playerDisconnected(String players) {
 
-    public SimpleIntegerProperty mineDensitiyProperty() {
-        return mineDensitiy;
+    }
+
+    @Override
+    public void playerConnected(String players) {
+
+    }
+
+    @Override
+    public void gameStarted() {
+
+    }
+
+    // property getters
+
+    public SimpleIntegerProperty mineDensityProperty() {
+        return mineDensity;
     }
 
     public SimpleIntegerProperty fieldWidthProperty() {
@@ -47,18 +63,5 @@ public class ConfigurationViewModel implements ViewModel,ConfigurationNotificato
         return players;
     }
 
-    @Override
-    public void playerDisconnected(String players) {
 
-    }
-
-    @Override
-    public void playerConnected(String players) {
-
-    }
-
-    @Override
-    public void gameStarted() {
-
-    }
 }

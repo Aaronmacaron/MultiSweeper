@@ -1,7 +1,5 @@
 package tk.aakado.multisweeper.client;
 
-import javax.security.auth.login.Configuration;
-
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
