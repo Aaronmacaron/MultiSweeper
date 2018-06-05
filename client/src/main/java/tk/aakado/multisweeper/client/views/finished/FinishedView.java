@@ -53,7 +53,7 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     }
 
     @FXML
-    public void onReonfigure(ActionEvent actionEvent) {
+    public void onReconfigure(ActionEvent actionEvent) {
         viewModel.reconfigure();
     }
 
