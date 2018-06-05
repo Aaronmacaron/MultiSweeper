@@ -1,4 +1,4 @@
-package tk.aakado.multisweeper.server;
+package tk.aakado.multisweeper.server.game;
 
 import java.util.UUID;
 
