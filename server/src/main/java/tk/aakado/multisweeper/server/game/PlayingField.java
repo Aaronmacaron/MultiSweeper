@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * This class is the playing field of the mine sweeper game.
+ * This class is the playing field of the minesweeper game.
  */
 public class PlayingField {
 
     private final int width;
     private final int height;
     private final int numberOfMines;
-    public List<Field> fields;
+    private List<Field> fields;
 
     /**
      * Constructor.
@@ -44,14 +44,14 @@ public class PlayingField {
      * @param fieldCords The coordinates of the field.
      * @return Optional containing the field if there is one at the given coordinates.
      */
-    public Optional<Field> getField(FieldCords fieldCords) {
+    private Optional<Field> getField(FieldCords fieldCords) {
         return this.fields.stream().filter(field -> field.getFieldCords().equals(fieldCords)).findFirst();
     }
 
     /**
-     * Generates the playing field
+     * Generates the playing field.
      */
-    public void generate() {
+    private void generate() {
         List<FieldCords> allCords = new ArrayList<>();
 
         // generate all coordinates
@@ -140,7 +140,20 @@ public class PlayingField {
     public void flagField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
-        theField.flag(player);
+        if (theField.isFlagged()) {
+            theField.unflag();
+        } else {
+            theField.flag(player);
+        }
+    }
+
+    /**
+     * Checks if the given field coordinates are in the playing field.
+     * @param fieldCords The coordinates to test.
+     * @return If the field coordinates are valid.
+     */
+    public boolean isValidCoordinate(FieldCords fieldCords) {
+        return this.fields.stream().map(Field::getFieldCords).anyMatch(cords -> cords.equals(fieldCords));
     }
 
     // Getters
