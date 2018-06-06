@@ -2,7 +2,9 @@ package tk.aakado.multisweeper.server.connection;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import tk.aakado.multisweeper.shared.connection.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +19,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import tk.aakado.multisweeper.shared.connection.*;
 
 /**
  * This class is the Connector that connects the server to the client. It extends the AbstractConnector and thus
@@ -30,6 +34,7 @@ public class ServerConnector extends AbstractConnector {
     private ExecutorService queue = Executors.newFixedThreadPool(20);
     private final int port;
     private boolean isStarted = false;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnector.class);
 
     /**
      * Constructor
@@ -111,37 +116,33 @@ public class ServerConnector extends AbstractConnector {
      * @param connection The connection which the message originates from
      */
     private void executeAllMatchingActionHandlers(ActionType actionType, JsonObject json, Connection connection) {
-        getAllMatchingMethods(actionHandlers, actionType).forEach(method -> {
-            try {
-                ServerMessage serverMessage = new ServerMessage(this, json, connection);
-                method.invoke(method.getDeclaringClass().newInstance(), serverMessage);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                // Do nothing if method hasn't got the right parameters.
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        });
+        actionHandlers.stream()
+                .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods())) // create a Stream of all declard Methods in aClass
+                .filter(method -> actionType.equals(method.getAnnotation(ActionHandler.class).actionType())) // Remove Methods without the right Annotations
+                .forEach(method -> this.executeMethod(method, json, connection)); // Execute all Methods
     }
 
     /**
-     * Gets all ActionHandler Methods of all actionHandlers and an ActionType
-     * @param actionHandlers The ActionHandlers to get methods from
-     * @param actionType The ActionType to Match.
-     * @return A Collection of all matched methods
+     * Executes a given Method with a Message containing a json and a connection as parameter.
+     *
+     * @param method     Method tho execute
+     * @param json       Json containing relevant informations.
+     * @param connection Current connection
      */
-    private Collection<Method> getAllMatchingMethods(Collection<Class> actionHandlers, ActionType actionType) {
-        return actionHandlers.stream().collect(
-                ArrayList::new,
-                (methods, aClass) -> methods.addAll(Arrays.stream(aClass.getDeclaredMethods())
-                        .filter(method -> method.isAnnotationPresent(ActionHandler.class))
-                        .filter(method -> method.getAnnotation(ActionHandler.class).actionType().equals(actionType))
-                        .collect(Collectors.toList())),
-                ArrayList::addAll
-        );
+    private void executeMethod(Method method, JsonObject json, Connection connection) {
+        try {
+            Message message = new ServerMessage(this, json, connection);
+            method.invoke(method.getDeclaringClass().newInstance(), message);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            // Do nothing if method hasn't got the right parameters.
+            LOGGER.warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
+        } catch (InstantiationException e) {
+            LOGGER.error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
+        }
     }
 
     /**
-     * Sends a ServerMessage containing Action to all connected clients.
+     * Sends a Message containing Action to all connected clients.
      * @param action The Action to be sent through the Connector.
      */
     @Override
@@ -156,7 +157,7 @@ public class ServerConnector extends AbstractConnector {
     }
 
     /**
-     * Sends a ServerMessage containing an Action to all but one Client.
+     * Sends a Message containing an Action to all but one Client.
      * @param action The Action to be sent through the Connector
      * @param except The Connection that should be ignored.
      */
