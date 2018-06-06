@@ -13,7 +13,7 @@ abstract public class AbstractConnector implements Connector {
     /**
      * This List stores the ActionsHandlers.
      */
-    private List<Class> actionHandlers = new ArrayList<>();
+    protected List<Class> actionHandlers = new ArrayList<>();
 
     /**
      * Adds new ActionHandler to Connector.

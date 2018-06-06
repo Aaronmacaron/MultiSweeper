@@ -27,7 +27,6 @@ public class ServerConnector extends AbstractConnector {
 
     private ServerSocket server;
     private List<Connection> connections = new ArrayList<>();
-    private List<Class> actionHandlers = new ArrayList<>();
     private ExecutorService queue = Executors.newFixedThreadPool(20);
     private final int port;
     private boolean isStarted = false;
