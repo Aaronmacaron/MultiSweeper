@@ -114,8 +114,8 @@ public class ServerConnector extends AbstractConnector {
     private void executeAllMatchingActionHandlers(ActionType actionType, JsonObject json, Connection connection) {
         getAllMatchingMethods(actionHandlers, actionType).forEach(method -> {
             try {
-                Message message = new Message(this, connection, json);
-                method.invoke(method.getDeclaringClass().newInstance(), message);
+                ServerMessage serverMessage = new ServerMessage(this, json, connection);
+                method.invoke(method.getDeclaringClass().newInstance(), serverMessage);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 // Do nothing if method hasn't got the right parameters.
             } catch (InstantiationException e) {
@@ -142,7 +142,7 @@ public class ServerConnector extends AbstractConnector {
     }
 
     /**
-     * Sends a Message containing Action to all connected clients.
+     * Sends a ServerMessage containing Action to all connected clients.
      * @param action The Action to be sent through the Connector.
      */
     @Override
@@ -157,7 +157,7 @@ public class ServerConnector extends AbstractConnector {
     }
 
     /**
-     * Sends a Message containing an Action to all but one Client.
+     * Sends a ServerMessage containing an Action to all but one Client.
      * @param action The Action to be sent through the Connector
      * @param except The Connection that should be ignored.
      */
