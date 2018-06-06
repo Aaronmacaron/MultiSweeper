@@ -3,15 +3,25 @@ package tk.aakado.multisweeper.server.game;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * A field of the minesweeper game.
+ */
 public class Field {
 
     private final FieldCords fieldCords;
     private final FieldType type;
+
     private boolean isDiscovered;
     private Player discoverPlayer;
+
     private boolean isFlagged;
     private Player flagPlayer;
 
+    /**
+     * Constructor.
+     * @param fieldCords The coordinates of this field.
+     * @param type The type of this field.
+     */
     public Field(FieldCords fieldCords, FieldType type) {
         this.fieldCords = fieldCords;
         this.type = type;
@@ -19,7 +29,7 @@ public class Field {
 
     /**
      * Discovers this field.
-     * @param player
+     * @param player The player which discovers this field.
      */
     public void discover(Player player) {
         if (this.isDiscovered) {
@@ -29,29 +39,43 @@ public class Field {
         this.discoverPlayer = player;
     }
 
+    /**
+     * Flags this field. This means that it is potentially a mined field.
+     * @param player The player that flags the field.
+     */
     public void flag(Player player) {
-        if (getFlagPlayer().isPresent()) {
+        if (this.isFlagged) {
             throw new IllegalStateException("The field has already been flagged.");
         }
         this.isFlagged = true;
         this.flagPlayer = player;
     }
 
+    /**
+     * Unflaggs this field.
+     */
     public void unflag() {
+        if (! this.isFlagged) {
+            throw new IllegalStateException("The field is not flagged and thus cannot be unflagged.");
+        }
         this.isFlagged = false;
         this.flagPlayer = null;
     }
+
+    // Getters
 
     public boolean isMine() {
         return type == FieldType.MINE;
     }
 
-    // Getters
-
     public FieldCords getFieldCords() {
         return this.fieldCords;
     }
 
+    /**
+     * Returns the value / number of mines nearby of this field.
+     * @return Value / number of mines.
+     */
     public int getFieldValue() {
         return this.type.getValue();
     }
@@ -80,9 +104,13 @@ public class Field {
     public enum FieldType {
         FIELD_0, FIELD_1, FIELD_2, FIELD_3, FIELD_4, FIELD_5,  FIELD_6, FIELD_7, FIELD_8, MINE;
 
+        /**
+         * Returns the value of this {@link FieldType}.
+         * @return The value.
+         */
         public int getValue() {
             if (this == MINE) {
-                return -1;
+                throw new IllegalStateException("A mine does not have a value.");
             }
             return this.ordinal();
         }
