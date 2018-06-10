@@ -3,9 +3,14 @@ package tk.aakado.multisweeper.client.views.finished;
 import java.time.Duration;
 
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
-public class FinishedViewModel implements ViewModel {
+public class FinishedViewModel implements ViewModel, FinishedNotificator {
 
     private BooleanProperty victory = new SimpleBooleanProperty(false);
     private IntegerProperty totalPlayers = new SimpleIntegerProperty(0);
@@ -18,16 +23,19 @@ public class FinishedViewModel implements ViewModel {
         // TODO: Implement
     }
 
-    /**
-     * Reconfigure the game settings
-     */
+    @Override
+    public void restart() {
+        //TODO: Implement
+    }
+
+
+    @Override
     public void reconfigure() {
         // TODO: Implement
     }
 
-    /**
-     * Disconnect from the server
-     */
+
+    @Override
     public void disconnect() {
         // TODO: Implement
     }

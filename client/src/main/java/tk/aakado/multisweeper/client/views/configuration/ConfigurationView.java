@@ -9,6 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -31,12 +32,18 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     private PasswordField passwordField;
 
     @FXML
-    private ListView<String> playersList;//TODO: List type should be gamelogic.Player
+    private ListView<String> playersList;
+
+    @FXML
+    private Button startButton;
+
+    @FXML
+    private Button saveButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Bind mineDensityField bidirectional with a NumberStringConverter
-        Bindings.bindBidirectional(mineDensityField.textProperty(), viewModel.mineDensitiyProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(mineDensityField.textProperty(), viewModel.mineDensityProperty(), new NumberStringConverter());
 
         // Bind fieldWidthField bidirectional with a NumberStringConverter
         Bindings.bindBidirectional(fieldWidthField.textProperty(), viewModel.fieldWidthProperty(), new NumberStringConverter());
@@ -50,8 +57,17 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         // Bind playerslist unidirectional
         playersList.itemsProperty().bind(viewModel.playersProperty());
 
-        //TODO: use the following to show the correct and formatted data
+        //TODO: use the following method to beautify the listview
         //        playersList.setCellFactory();
+
+        // Make all Configuration Properties not editable when Player isn't an admin
+        passwordField.editableProperty().bind(viewModel.adminProperty());
+        mineDensityField.editableProperty().bind(viewModel.adminProperty());
+        fieldHeightField.editableProperty().bind(viewModel.adminProperty());
+        fieldWidthField.editableProperty().bind(viewModel.adminProperty());
+        // Make all Configuration Buttons disabled when Player isn't an admin
+        startButton.disableProperty().bind(viewModel.adminProperty().not());
+        saveButton.disableProperty().bind(viewModel.adminProperty().not());
     }
 
     /**
