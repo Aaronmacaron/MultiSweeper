@@ -22,6 +22,12 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
     @FXML
     public Button connectButton;
 
+    /**
+     * Regex that checks if string is hostname or ip address
+     */
+    private static final Pattern pattern = Pattern.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9" +
+            "]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-" +
+            "z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$");
 
     @InjectViewModel
     private ConnectionViewModel viewModel;
@@ -32,9 +38,22 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
         // bind connectionField bidirectional to viewModel
         connectionField.textProperty().bindBidirectional(viewModel.connectionProperty());
 
-        // Set the disabled state of the connectButton to connectionField.isEmpty
-        connectButton.disableProperty().bind(connectionField.textProperty().isEmpty());
-        //TODO: the disableProperty could also be bind with a valdate method, which checks the connectionField with a Pattern
+        // Only shows enabled Connect Button when the Connection String is correct
+        viewModel.connectionProperty().addListener((observable, oldValue, newValue) -> viewModel.setCorrectAddress(isCorrectAddress(newValue)));
+        connectButton.disableProperty().bind(viewModel.correctAddressProperty().not());
+
+        // Shows error message when the connection failed
+        errorMessageLabel.visibleProperty().bind(viewModel.rejectedProperty());
+    }
+
+    /**
+     * Checks if the given String matches the Address pattern
+     *
+     * @param address Address to check
+     * @return match or no match
+     */
+    private boolean isCorrectAddress(String address) {
+        return pattern.matcher(address).matches();
     }
 
     /**
@@ -44,17 +63,6 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
      */
     @FXML
     public void onConnect(ActionEvent actionEvent) {
-        // Regex that checks if string is hostname or ip address
-        Pattern pattern = Pattern.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9" +
-                "]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-" +
-                "z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$");
-
-        // Validate
-        if (pattern.matcher(connectionField.textProperty().getValue()).matches()) {
-            errorMessageLabel.setVisible(true);
-        } else {
-            viewModel.connect();
-        }
-
+        viewModel.connect();
     }
 }
