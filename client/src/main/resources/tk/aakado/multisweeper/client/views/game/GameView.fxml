@@ -44,6 +44,11 @@
             </HBox.margin>
         </Label>
     </HBox>
+    <AnchorPane fx:id="gamePane">
+        <VBox.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+        </VBox.margin>
+    </AnchorPane>
     <HBox spacing="15.0">
         <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -51,9 +56,4 @@
         <Button mnemonicParsing="false" onAction="#onRestart" text="Restart" />
         <Button mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
     </HBox>
-    <AnchorPane fx:id="gamePane">
-        <VBox.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-        </VBox.margin>
-    </AnchorPane>
 </VBox>

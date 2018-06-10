@@ -6,13 +6,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.configuration.ConfigurationView">
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.configuration.ConfigurationView">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
          <children>
@@ -23,6 +23,18 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <Label text="Password (if required)">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox spacing="10.0">
+                     <children>
+                        <PasswordField fx:id="passwordField" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSave" text="Save" />
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
                   <Label text="Mine density">
                      <font>
                         <Font size="18.0" />
@@ -41,17 +53,6 @@
                      </font>
                   </Label>
                   <TextField fx:id="fieldHeightField" />
-                  <Label text="Password (if required)">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <PasswordField fx:id="passwordField" />
-                  <AnchorPane nodeOrientation="RIGHT_TO_LEFT">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
-                     </children>
-                  </AnchorPane>
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -75,7 +76,7 @@
       <ButtonBar prefHeight="40.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <buttons>
           <Button cancelButton="true" mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onStart" text="Start!" />
+            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onStart" text="Start!" />
         </buttons>
          <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
