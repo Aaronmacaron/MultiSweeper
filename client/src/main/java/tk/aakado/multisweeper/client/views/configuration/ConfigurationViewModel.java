@@ -1,18 +1,24 @@
 package tk.aakado.multisweeper.client.views.configuration;
 
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
-public class ConfigurationViewModel implements ViewModel {
+public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
-    private SimpleIntegerProperty mineDensitiy = new SimpleIntegerProperty();
-    private SimpleIntegerProperty fieldWidth = new SimpleIntegerProperty();
-    private SimpleIntegerProperty fieldHeight = new SimpleIntegerProperty();
-    private SimpleStringProperty password = new SimpleStringProperty();
-    private SimpleListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());//TODO: List type should be gamelogic.Player, in the #initialize Method we can specify the data to show
+    private BooleanProperty admin = new SimpleBooleanProperty(false);
+    private IntegerProperty mineDensity = new SimpleIntegerProperty();
+    private IntegerProperty fieldWidth = new SimpleIntegerProperty();
+    private IntegerProperty fieldHeight = new SimpleIntegerProperty();
+    private StringProperty password = new SimpleStringProperty();
+    private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
 
     public void start() {
         //TODO implement
@@ -26,25 +32,51 @@ public class ConfigurationViewModel implements ViewModel {
         //TODO implement
     }
 
-
-    public SimpleIntegerProperty mineDensitiyProperty() {
-        return mineDensitiy;
+    @Override
+    public void playerDisconnected(String player, boolean isNewAdmin) {
+        //TODO implement
     }
 
-    public SimpleIntegerProperty fieldWidthProperty() {
+    @Override
+    public void playerConnected(String player) {
+        //TODO implement
+    }
+
+    @Override
+    public void gameStarted() {
+        //TODO implement
+    }
+
+
+    public IntegerProperty mineDensityProperty() {
+        return mineDensity;
+    }
+
+    public IntegerProperty fieldWidthProperty() {
         return fieldWidth;
     }
 
-    public SimpleIntegerProperty fieldHeightProperty() {
+    public IntegerProperty fieldHeightProperty() {
         return fieldHeight;
     }
 
-    public SimpleStringProperty passwordProperty() {
+    public StringProperty passwordProperty() {
         return password;
     }
 
-    public SimpleListProperty<String> playersProperty() {
+    public ListProperty<String> playersProperty() {
         return players;
     }
 
+    public boolean isAdmin() {
+        return admin.get();
+    }
+
+    public BooleanProperty adminProperty() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin.set(admin);
+    }
 }
