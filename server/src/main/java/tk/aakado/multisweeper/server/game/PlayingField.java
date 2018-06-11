@@ -20,8 +20,9 @@ public class PlayingField {
 
     /**
      * Constructor.
-     * @param width The width of the playing field (number of fields on the x-axis).
-     * @param height The height of the playing field (number of fields on the y-axis).
+     *
+     * @param width         The width of the playing field (number of fields on the x-axis).
+     * @param height        The height of the playing field (number of fields on the y-axis).
      * @param numberOfMines Total number of mines the playing field has. May not exceed the number of total fields.
      */
     public PlayingField(int width, int height, int numberOfMines) {
@@ -41,6 +42,7 @@ public class PlayingField {
 
     /**
      * Returns a field of this playing field by its coordinates.
+     *
      * @param fieldCords The coordinates of the field.
      * @return Optional containing the field if there is one at the given coordinates.
      */
@@ -75,6 +77,7 @@ public class PlayingField {
 
     /**
      * Creates a non-mined field at the given coordinates if it does not already exist.
+     *
      * @param cords The coordinates of the field.
      */
     private void createField(FieldCords cords) {
@@ -84,11 +87,12 @@ public class PlayingField {
         }
 
         List<FieldCords> surroundingCords = getSurroundingCords(cords);
-        List<Field> surroundingFields = this.fields.stream()
-                .filter(field -> surroundingCords.contains(field.getFieldCords()))
-                .collect(Collectors.toList());
 
-        int value = (int) surroundingFields.stream().filter(Field::isMine).count();
+        int value = (int) this.fields.stream()
+                .filter(field -> surroundingCords.contains(field.getFieldCords()))// only count the surrounding fields
+                .filter(Field::isMine)// only count the mines
+                .count();
+        //TODO: Is it easier to add a "&&" as binary operator or call the filter method multiple times in a chain?
 
         FieldType type = FieldType.getByValue(value);
         Field field = new Field(cords, type);
@@ -97,6 +101,7 @@ public class PlayingField {
 
     /**
      * Returns a list of all coordinates which are surrounding the given coordinate.
+     *
      * @param fieldCords The coordinates of which to get the surrounding ones.
      * @return All surrounding coordinates.
      */
@@ -119,8 +124,9 @@ public class PlayingField {
     /**
      * Discovers a field of this playing field.
      * If the field is a mine the game ends.
+     *
      * @param fieldCords The coordinates of the field to discover.
-     * @param player The player which triggered the action.
+     * @param player     The player which triggered the action.
      */
     public void discoverField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
@@ -134,13 +140,14 @@ public class PlayingField {
 
     /**
      * Flags a field of this playing field.
+     *
      * @param fieldCords The coordinates of the field to flag.
-     * @param player The player which triggered the action.
+     * @param player     The player which triggered the action.
      */
     public void flagField(FieldCords fieldCords, Player player) {
-        Field theField = this.getField(fieldCords)
-                .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
-        theField.flag(player);
+        this.getField(fieldCords)
+                .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."))
+                .flag(player);
     }
 
     // Getters
