@@ -20,9 +20,17 @@ public class Player {
     }
 
     @Override
-    public boolean equals(Object o) {
-        //TODO implement
+    public boolean equals(Object obj) {
+        if (obj instanceof Player) {
+            Player other = (Player) obj;
+            return this.uuid.equals(other.uuid);
+        }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", this.name, this.uuid);
     }
 
 }

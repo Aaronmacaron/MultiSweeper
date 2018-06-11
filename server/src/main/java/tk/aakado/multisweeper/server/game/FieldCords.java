@@ -1,18 +1,21 @@
 package tk.aakado.multisweeper.server.game;
 
+/**
+ * The coordinates of a field.
+ */
 public class FieldCords {
 
     private final int x;
     private final int y;
 
+    /**
+     * Constructor.
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     */
     public FieldCords(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public boolean isValid(PlayingField playingField) {
-        // TODO: Implement
-        return false;
     }
 
     @Override
