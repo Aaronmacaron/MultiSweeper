@@ -86,10 +86,9 @@ public class PlayingField {
         List<FieldCords> surroundingCords = getSurroundingCords(cords);
 
         int value = (int) this.fields.stream()
-                .filter(field -> surroundingCords.contains(field.getFieldCords()))// only count the surrounding fields
-                .filter(Field::isMine)// only count the mines
+                .filter(field -> surroundingCords.contains(field.getFieldCords())) // only the surrounding fields
+                .filter(Field::isMine) // only count the mines
                 .count();
-        //TODO: Is it easier to add a "&&" as binary operator or call the filter method multiple times in a chain?
 
         FieldType type = FieldType.getByValue(value);
         Field field = new Field(cords, type);
