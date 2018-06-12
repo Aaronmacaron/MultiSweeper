@@ -124,7 +124,10 @@ public class Field {
             if (value < 0 || value > 8) {
                 throw new IllegalArgumentException("The given value is invalid.");
             }
-            return Stream.of(values()).filter(fieldType -> fieldType.ordinal() == value).findFirst().get();
+            return Stream.of(values())
+                    .filter(fieldType -> fieldType.ordinal() == value)
+                    .findFirst()
+                    .get();
         }
     }
 

@@ -84,11 +84,11 @@ public class PlayingField {
         }
 
         List<FieldCords> surroundingCords = getSurroundingCords(cords);
-        List<Field> surroundingFields = this.fields.stream()
-                .filter(field -> surroundingCords.contains(field.getFieldCords()))
-                .collect(Collectors.toList());
 
-        int value = (int) surroundingFields.stream().filter(Field::isMine).count();
+        int value = (int) this.fields.stream()
+                .filter(field -> surroundingCords.contains(field.getFieldCords())) // only the surrounding fields
+                .filter(Field::isMine) // only count the mines
+                .count();
 
         FieldType type = FieldType.getByValue(value);
         Field field = new Field(cords, type);
