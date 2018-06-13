@@ -32,9 +32,10 @@ public class Field {
      * @param player The player which discovers this field.
      */
     public void discover(Player player) {
-        if (this.isDiscovered) {
+        if (this.isDiscovered ||this.isFlagged) {
             throw new IllegalStateException("This field has already been discovered.");
         }
+
         this.isDiscovered = true;
         this.discoverPlayer = player;
     }
@@ -44,7 +45,7 @@ public class Field {
      * @param player The player that flags the field.
      */
     public void flag(Player player) {
-        if (this.isFlagged) {
+        if (this.isFlagged || this.isDiscovered) {
             throw new IllegalStateException("The field has already been flagged.");
         }
         this.isFlagged = true;
@@ -55,7 +56,7 @@ public class Field {
      * Unflaggs this field.
      */
     public void unflag() {
-        if (! this.isFlagged) {
+        if (! this.isFlagged || this.isDiscovered) {
             throw new IllegalStateException("The field is not flagged and thus cannot be unflagged.");
         }
         this.isFlagged = false;
