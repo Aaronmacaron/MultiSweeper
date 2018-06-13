@@ -1,14 +1,12 @@
 package tk.aakado.multisweeper.server.game;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import tk.aakado.multisweeper.shared.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameImpl implements Game {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
     private static final GameConfig DEFAULT_CONFIGURATION = new GameConfig(15, 15, 20);
 
     private List<Player> players = new ArrayList<>();
@@ -107,7 +105,7 @@ public class GameImpl implements Game {
         if (checkPlayer(player)) {
             return this.players.get(0).equals(player);
         }
-        LOGGER.warn("Player {} tried to invoke a admin action.", player);
+        Logger.get(this).warn("Player {} tried to invoke a admin action.", player);
         return false;
     }
 

@@ -2,8 +2,7 @@ package tk.aakado.multisweeper.client.connection;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.*;
 
 import java.io.BufferedReader;
@@ -31,7 +30,6 @@ public class ClientConnector extends AbstractConnector {
     private PrintWriter output;
     private BufferedReader input;
     private ExecutorService queue = Executors.newFixedThreadPool(20);
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientConnector.class);
 
     /**
      * Constructor
@@ -121,9 +119,9 @@ public class ClientConnector extends AbstractConnector {
             method.invoke(method.getDeclaringClass().newInstance(), message);
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
-            LOGGER.warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
+            Logger.get(this).warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
         } catch (InstantiationException e) {
-            LOGGER.error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
+            Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }
     }
 
