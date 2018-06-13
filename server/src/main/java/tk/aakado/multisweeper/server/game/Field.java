@@ -1,5 +1,7 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.shared.game.FieldState;
+
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -11,10 +13,11 @@ public class Field {
     private final FieldCords fieldCords;
     private final FieldType type;
 
-    private boolean isDiscovered;
+    private final FieldState initialState;
+    private FieldState state;
+
     private Player discoverPlayer;
 
-    private boolean isFlagged;
     private Player flagPlayer;
 
     /**
@@ -25,6 +28,14 @@ public class Field {
     public Field(FieldCords fieldCords, FieldType type) {
         this.fieldCords = fieldCords;
         this.type = type;
+
+        if (isMine()) {
+            this.initialState = FieldState.MINE;
+        } else {
+            this.initialState = FieldState.UNDEFINED;
+        }
+
+        this.state = initialState;
     }
 
     /**
@@ -32,11 +43,11 @@ public class Field {
      * @param player The player which discovers this field.
      */
     public void discover(Player player) {
-        if (this.isDiscovered ||this.isFlagged) {
+        if (this.isDiscovered() || this.isFlagged()) {
             throw new IllegalStateException("This field has already been discovered.");
         }
 
-        this.isDiscovered = true;
+        this.state = FieldState.DISCOVERED;
         this.discoverPlayer = player;
     }
 
@@ -45,10 +56,11 @@ public class Field {
      * @param player The player that flags the field.
      */
     public void flag(Player player) {
-        if (this.isFlagged || this.isDiscovered) {
+        if (this.isFlagged() || this.isDiscovered()) {
             throw new IllegalStateException("The field has already been flagged.");
         }
-        this.isFlagged = true;
+
+        this.state = FieldState.FLAG;
         this.flagPlayer = player;
     }
 
@@ -56,11 +68,16 @@ public class Field {
      * Unflaggs this field.
      */
     public void unflag() {
-        if (! this.isFlagged || this.isDiscovered) {
+        if (! this.isFlagged() || this.isDiscovered()) {
             throw new IllegalStateException("The field is not flagged and thus cannot be unflagged.");
         }
-        this.isFlagged = false;
+
+        this.state = this.initialState;
         this.flagPlayer = null;
+    }
+
+    public FieldState toFieldState() {
+        return this.state;
     }
 
     // Getters
@@ -82,7 +99,7 @@ public class Field {
     }
 
     public boolean isDiscovered() {
-        return this.isDiscovered;
+        return this.state == FieldState.DISCOVERED;
     }
 
     public Optional<Player> getDiscoverPlayer() {
@@ -90,7 +107,7 @@ public class Field {
     }
 
     public boolean isFlagged() {
-        return this.isFlagged;
+        return this.state == FieldState.FLAG;
     }
 
     public Optional<Player> getFlagPlayer() {
