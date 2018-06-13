@@ -1,5 +1,6 @@
 package tk.aakado.multisweeper.server.game;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -21,30 +22,49 @@ public class FieldTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    private Field dummyNormalField;
+
+    @Before
+    public void setUp() {
+        this.dummyNormalField = new Field(DUMMY_CORDS, FieldType.FIELD_0);
+    }
+
     @Test
     public void discover() {
-        Field field = new Field(DUMMY_CORDS, FieldType.FIELD_0);
-        field.discover(DUMMY_PLAYER);
+        dummyNormalField.discover(DUMMY_PLAYER);
 
         exception.expect(IllegalStateException.class);
-        field.discover(DUMMY_PLAYER);
+        dummyNormalField.discover(DUMMY_PLAYER);
     }
 
     @Test
     public void flag() {
-        Field field = new Field(DUMMY_CORDS, FieldType.FIELD_0);
-        field.flag(DUMMY_PLAYER);
+        dummyNormalField.flag(DUMMY_PLAYER);
 
         exception.expect(IllegalStateException.class);
-        field.flag(DUMMY_PLAYER);
+        dummyNormalField.flag(DUMMY_PLAYER);
     }
 
     @Test
     public void unflag() {
-        Field field = new Field(DUMMY_CORDS, FieldType.FIELD_0);
+        exception.expect(IllegalStateException.class);
+        dummyNormalField.unflag();
+    }
+
+    @Test
+    public void testDiscoverFlaggedField() {
+        this.dummyNormalField.flag(DUMMY_PLAYER);
 
         exception.expect(IllegalStateException.class);
-        field.unflag();
+        this.dummyNormalField.discover(DUMMY_PLAYER);
+    }
+
+    @Test
+    public void testFlagDiscoveredField() {
+        this.dummyNormalField.discover(DUMMY_PLAYER);
+
+        exception.expect(IllegalStateException.class);
+        this.dummyNormalField.flag(DUMMY_PLAYER);
     }
 
     @Test
@@ -57,8 +77,7 @@ public class FieldTest {
 
     @Test
     public void getFieldCords() {
-        Field field = new Field(DUMMY_CORDS, FieldType.FIELD_0);
-        assertEquals(DUMMY_CORDS, field.getFieldCords());
+        assertEquals(DUMMY_CORDS, dummyNormalField.getFieldCords());
     }
 
     @Test
