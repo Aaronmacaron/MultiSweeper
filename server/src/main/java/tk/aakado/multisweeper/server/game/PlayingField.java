@@ -125,6 +125,12 @@ public class PlayingField {
     public void discoverField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
+
+        if (theField.isFlagged()) {
+            // Do not discover flagged field
+            return;
+        }
+
         theField.discover(player);
 
         if (theField.isMine()) {
@@ -140,6 +146,12 @@ public class PlayingField {
     public void flagField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
+
+        if (theField.isDiscovered()) {
+            // Already discovered field cannot be flagged
+            return;
+        }
+
         if (theField.isFlagged()) {
             theField.unflag();
         } else {
@@ -164,10 +176,6 @@ public class PlayingField {
 
     public int getHeight() {
         return height;
-    }
-
-    public int getNumberOfMines() {
-        return numberOfMines;
     }
 
 }
