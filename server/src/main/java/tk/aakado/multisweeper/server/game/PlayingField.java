@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.server.game;
 
 import tk.aakado.multisweeper.server.game.Field.FieldType;
+import tk.aakado.multisweeper.shared.game.FieldState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,13 +123,15 @@ public class PlayingField {
      * @param fieldCords The coordinates of the field to discover.
      * @param player The player which triggered the action.
      */
-    public void discoverField(FieldCords fieldCords, Player player) {
+    public List<FieldState> discoverField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
 
+        List<FieldState> changedFields = new ArrayList<>();
+
         if (theField.isFlagged()) {
             // Do not discover flagged field
-            return;
+            return changedFields;
         }
 
         theField.discover(player);
@@ -136,6 +139,19 @@ public class PlayingField {
         if (theField.isMine()) {
             // TODO: end game
         }
+
+        changedFields.add(theField.toFieldState());
+
+        if (theField.getFieldValue() == FieldType.FIELD_0.getValue()) {
+            // for empty field also discover the surrounding fields
+            final List<FieldCords> surrounding = getSurroundingCords(theField.getFieldCords());
+            this.fields.stream()
+                    // get surrounding fields
+                    .filter(field -> surrounding.contains(field.getFieldCords()))
+                    .forEach(field -> changedFields.addAll(discoverField(field.getFieldCords(), player)));
+        }
+
+        return changedFields;
     }
 
     /**
