@@ -16,8 +16,8 @@ public class ConnectionTest {
 
     @Before
     public void setUp() throws IOException {
-        testFile = new File("tesfile");
-        testFile.createNewFile();
+        testFile = File.createTempFile("MultiSweeperTests", ".tmp");
+        testFile.deleteOnExit();
         connection = new Connection(new Socket(), new PrintWriter(testFile),
                 new BufferedReader(new StringReader("")));
     }

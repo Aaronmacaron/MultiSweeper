@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.server.game;
 
 import tk.aakado.multisweeper.server.game.Field.FieldType;
+import tk.aakado.multisweeper.shared.game.FieldState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,10 +87,9 @@ public class PlayingField {
         List<FieldCords> surroundingCords = getSurroundingCords(cords);
 
         int value = (int) this.fields.stream()
-                .filter(field -> surroundingCords.contains(field.getFieldCords()))// only count the surrounding fields
-                .filter(Field::isMine)// only count the mines
+                .filter(field -> surroundingCords.contains(field.getFieldCords())) // only the surrounding fields
+                .filter(Field::isMine) // only count the mines
                 .count();
-        //TODO: Is it easier to add a "&&" as binary operator or call the filter method multiple times in a chain?
 
         FieldType type = FieldType.getByValue(value);
         Field field = new Field(cords, type);
@@ -123,14 +123,35 @@ public class PlayingField {
      * @param fieldCords The coordinates of the field to discover.
      * @param player The player which triggered the action.
      */
-    public void discoverField(FieldCords fieldCords, Player player) {
+    public List<FieldState> discoverField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
+
+        List<FieldState> changedFields = new ArrayList<>();
+
+        if (theField.isFlagged()) {
+            // Do not discover flagged field
+            return changedFields;
+        }
+
         theField.discover(player);
 
         if (theField.isMine()) {
             // TODO: end game
         }
+
+        changedFields.add(theField.toFieldState());
+
+        if (theField.getFieldValue() == FieldType.FIELD_0.getValue()) {
+            // for empty field also discover the surrounding fields
+            final List<FieldCords> surrounding = getSurroundingCords(theField.getFieldCords());
+            this.fields.stream()
+                    // get surrounding fields
+                    .filter(field -> surrounding.contains(field.getFieldCords()))
+                    .forEach(field -> changedFields.addAll(discoverField(field.getFieldCords(), player)));
+        }
+
+        return changedFields;
     }
 
     /**
@@ -141,6 +162,12 @@ public class PlayingField {
     public void flagField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
+
+        if (theField.isDiscovered()) {
+            // Already discovered field cannot be flagged
+            return;
+        }
+
         if (theField.isFlagged()) {
             theField.unflag();
         } else {
@@ -165,10 +192,6 @@ public class PlayingField {
 
     public int getHeight() {
         return height;
-    }
-
-    public int getNumberOfMines() {
-        return numberOfMines;
     }
 
 }

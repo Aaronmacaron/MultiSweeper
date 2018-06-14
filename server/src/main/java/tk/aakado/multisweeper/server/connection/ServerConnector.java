@@ -3,9 +3,6 @@ package tk.aakado.multisweeper.server.connection;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,6 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.*;
 
 /**
@@ -34,7 +32,6 @@ public class ServerConnector extends AbstractConnector {
     private ExecutorService queue = Executors.newFixedThreadPool(20);
     private final int port;
     private boolean isStarted = false;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnector.class);
 
     /**
      * Constructor
@@ -135,9 +132,9 @@ public class ServerConnector extends AbstractConnector {
             method.invoke(method.getDeclaringClass().newInstance(), message);
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
-            LOGGER.warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
+            Logger.get(this).warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
         } catch (InstantiationException e) {
-            LOGGER.error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
+            Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }
     }
 

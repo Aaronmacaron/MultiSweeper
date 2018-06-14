@@ -4,11 +4,16 @@ import java.util.UUID;
 
 public class Player {
 
-    private String name;
-    private UUID uuid;
+    private final String name;
+    private final UUID uuid;
 
     public Player(String name) {
+        this(name, UUID.randomUUID());
+    }
+
+    public Player(String name, UUID uuid) {
         this.name = name;
+        this.uuid = uuid;
     }
 
     public String getName() {
