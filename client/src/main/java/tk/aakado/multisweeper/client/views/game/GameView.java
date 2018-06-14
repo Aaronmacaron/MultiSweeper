@@ -3,6 +3,7 @@ package tk.aakado.multisweeper.client.views.game;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ResourceBundle;
+import java.util.concurrent.ThreadLocalRandom;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -12,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import tk.aakado.multisweeper.client.views.game.model.Field;
+import tk.aakado.multisweeper.client.views.game.view.FieldButton;
+import tk.aakado.multisweeper.client.views.game.view.FieldGrid;
 
 public class GameView implements FxmlView<GameViewModel>, Initializable {
 
@@ -45,22 +48,30 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
         remainingMinesLabel.textProperty().bind(Bindings.createStringBinding(() ->
                 Integer.toString(viewModel.remainingMinesProperty().get())));
 
-        // Adds the GridPane of the MineSweeper Game
-        // Now called GamePane
-        gamePane.getChildren().add(createGamePane());
+        // Creates a new FieldGrid and add it to the AchnorPane
+        gamePane.getChildren().add(new FieldGrid(viewModel.fieldsProperty(), viewModel.fieldWidthProperty(), viewModel.fieldHeightProperty(), this::onClick));
+
         // Sets a useable size for the GamePane
-        gamePane.setPrefSize(100, 100);
+//        gamePane.setPrefSize(100, 100);
 
     }
 
     /**
-     * Creates the GridPane for the MineSweeper game
+     * Handles the click on a Field.
+     * Set a method reference to this method on the FieldButton.setOnAction method
      *
-     * @return The MineSweeper GridPane
+     * @param actionEvent Click on a Field
      */
-    private GridPane createGamePane() {
-        //TODO implement
-        return new GridPane();
+    private void onClick(ActionEvent actionEvent) {
+        // check if the source is a @FieldButton
+        if (!(actionEvent.getSource() instanceof FieldButton)) {
+            throw new IllegalStateException("This method should only be called by a FieldButton");
+        }
+        // get the source
+        FieldButton fieldButton = (FieldButton) actionEvent.getSource();
+
+        // delegate the click to the @GameViewModel
+        viewModel.click(fieldButton.getX(), fieldButton.getY());
     }
 
     /**
@@ -70,7 +81,11 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
      */
     @FXML
     public void onRestart(ActionEvent actionEvent) {
-        viewModel.restart();
+        // TODO: implement
+        // for test reasons a random field is generated
+        int x = ThreadLocalRandom.current().nextInt(3, 20);
+        int y = ThreadLocalRandom.current().nextInt(3, 20);
+        viewModel.restart(x, x);
     }
 
     /**
@@ -81,5 +96,9 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     @FXML
     public void onDisconnect(ActionEvent actionEvent) {
         viewModel.disconnect();
+    }
+
+    public void click(Field field) {
+        //TODO: Implement
     }
 }
