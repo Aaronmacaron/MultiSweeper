@@ -55,7 +55,7 @@ public class Server {
             return Optional.empty();
         }
 
-        if (port < 1 || port < 0x10000) { // Check if invalid port
+        if (port > 0 && port < 0x10000) { // Check if invalid port
             return Optional.of(port);
         }
 
