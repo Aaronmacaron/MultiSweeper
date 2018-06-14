@@ -6,7 +6,7 @@ public interface GameNotificator {
     /**
      * A player disconnected the game
      *
-     * @param player    Players IP
+     * @param player     Players IP
      * @param isNewAdmin When the admin disconnected, an other Player becomes the admin
      */
     void playerDisconnected(String player, boolean isNewAdmin);
@@ -20,14 +20,17 @@ public interface GameNotificator {
 
     /**
      * Admin restarts the game
+     *
+     * @param x x-axis size
+     * @param y y-axis size
      */
-    void restart();
+    void restart(int x, int y);
 
     /**
      * A player clicks a Field and every Player gets Notificated
      *
      * @param coords   Coordinates of the field
-     * @param newState The new State of the field
+     * @param newState The new FieldState of the field
      */
     void updateField(int[] coords, String newState);
 
