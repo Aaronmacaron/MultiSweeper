@@ -29,10 +29,10 @@ public interface GameNotificator {
     /**
      * A player clicks a Field and every Player gets Notificated
      *
-     * @param coords   Coordinates of the field
+     * @param cords   Coordinates of the field
      * @param newState The new FieldState of the field
      */
-    void updateField(int[] coords, String newState);
+    void updateField(int[] cords, String newState);
 
     /**
      * The Game is finished

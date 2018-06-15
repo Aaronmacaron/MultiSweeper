@@ -54,7 +54,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     @Override
-    public void updateField(int[] coords, String newState) {
+    public void updateField(int[] cords, String newState) {
         //TODO: Implement
         // to update the state of a field, the setFieldState method of the Field method should be called
     }
