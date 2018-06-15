@@ -6,5 +6,5 @@ package tk.aakado.multisweeper.shared.game;
  * @author Dominik Strässle
  */
 public enum FieldState {
-    DISCOVERED, MINE, FLAG, FALSE_FLAGGED_MINE, UNDEFINED;
+    DISCOVERED, MINE, FLAG, FALSE_FLAGGED_MINE, UNDEFINED, MINE_EXPLODED
 }

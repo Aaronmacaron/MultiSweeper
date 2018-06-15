@@ -127,6 +127,9 @@ public class FieldButton extends Button {
             case FALSE_FLAGGED_MINE: {
                 return TileType.WRONG_MINE;
             }
+            case MINE_EXPLODED: {
+                return TileType.MINE_EXPLODED;
+            }
             case UNDEFINED:
             default: {
                 return TileType.UNDISCOVERED;
