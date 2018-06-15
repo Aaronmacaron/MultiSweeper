@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,7 @@ public class FieldButton extends Button {
     private IntegerProperty y = new SimpleIntegerProperty();
     private ObjectProperty<FieldState> fieldState = new SimpleObjectProperty<>();
     private IntegerProperty value = new SimpleIntegerProperty();
+    final private static double size = 45;
 
     /**
      * Create a new FieldButton.
@@ -43,18 +45,18 @@ public class FieldButton extends Button {
         fieldState.bind(field.fieldStateProperty());
         value.bind(field.valueProperty());
 
+        // Remove padding
+        setPadding(new Insets(0));
 
         // change the graphic when the state changes
         fieldState.addListener(this::onChange);
-
 
         // send a click with the coordinates
         this.setOnAction(onClick);
 
         // set the size
-        this.setPrefSize(45, 45);
+        this.setPrefSize(size, size);
         this.setStyle("-fx-background-radius: 0");
-
 
         // set the graphic
         changeImage();
@@ -77,7 +79,15 @@ public class FieldButton extends Button {
      * Sets the correct graphic according to object state (fieldState and value)
      */
     private void changeImage() {
+
+        // Get correct image
         ImageView imageView = new ImageView(getImage(getTileType()));
+
+        // Make sure image is not bigger than button
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(size);
+        imageView.setFitWidth(size);
+
         setGraphic(imageView);
     }
 
