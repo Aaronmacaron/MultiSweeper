@@ -1,10 +1,9 @@
-package tk.aakado.multisweeper.client.connection.params;
+package tk.aakado.multisweeper.shared.connection.dtos;
 
 /**
  * POJO for start action params. This is used to store information when starting a new game about the game.
- * @see tk.aakado.multisweeper.client.connection.Transmitter#start
  */
-public class StartInfo {
+public class StartInfoDTO {
 
     private double mineDensity;
     private int fieldWidth;
@@ -16,7 +15,7 @@ public class StartInfo {
      * @param fieldWidth fieldWidth of game
      * @param fieldHeight fieldHeight of game
      */
-    public StartInfo(double mineDensity, int fieldWidth, int fieldHeight) {
+    public StartInfoDTO(double mineDensity, int fieldWidth, int fieldHeight) {
         this.mineDensity = mineDensity;
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;

@@ -1,7 +1,8 @@
 package tk.aakado.multisweeper.client.connection;
 
 
-import tk.aakado.multisweeper.client.connection.params.StartInfo;
+import javafx.scene.input.MouseButton;
+import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
 import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 
@@ -46,10 +47,10 @@ public class Transmitter {
 
     /**
      * Starts game with given information
-     * @param startInfo The info to start the game
+     * @param startInfoDTO The info to start the game
      */
-    public void start(StartInfo startInfo) {
-        Action action = new Action(ActionType.START, startInfo);
+    public void start(StartInfoDTO startInfoDTO) {
+        Action action = new Action(ActionType.START, startInfoDTO);
         clientConnector.send(action);
     }
 

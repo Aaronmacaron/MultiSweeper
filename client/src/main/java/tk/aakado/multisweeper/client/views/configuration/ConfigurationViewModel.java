@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.App;
-import tk.aakado.multisweeper.client.connection.params.StartInfo;
+import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
 
 public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
@@ -28,7 +28,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      * Starts the configured game
      */
     public void start() {
-        App.getInstance().getTransmitter().start(new StartInfo(
+        App.getInstance().getTransmitter().start(new StartInfoDTO(
                 mineDensity.get(),
                 fieldWidth.get(),
                 fieldHeight.get()
