@@ -170,4 +170,17 @@ public class ServerConnector extends AbstractConnector {
         }
     }
 
+    /**
+     * Sends a Message containing an Action to one specific Client.
+     * @param action The Action to be sent through the connector
+     * @param to The Connection the message should be sent to
+     */
+    public void sendTo(Action action, Connection to) {
+        if (!isStarted) {
+            throw new IllegalStateException("Server is not started yet.");
+        }
+
+        to.getOutput().println(action.toJson());
+    }
+
 }
