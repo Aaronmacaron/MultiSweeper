@@ -1,7 +1,9 @@
 package tk.aakado.multisweeper.client.views.game;
 
 
-public interface GameNotificator {
+import tk.aakado.multisweeper.client.views.Notificator;
+
+public interface GameNotificator extends Notificator  {
 
     /**
      * A player disconnected the game

@@ -1,6 +1,8 @@
 package tk.aakado.multisweeper.client.views.configuration;
 
-public interface ConfigurationNotificator {
+import tk.aakado.multisweeper.client.views.Notificator;
+
+public interface ConfigurationNotificator extends Notificator {
 
     /**
      * A player disconnected

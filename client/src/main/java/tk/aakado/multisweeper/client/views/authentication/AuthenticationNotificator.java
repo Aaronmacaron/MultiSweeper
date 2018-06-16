@@ -1,6 +1,8 @@
 package tk.aakado.multisweeper.client.views.authentication;
 
-public interface AuthenticationNotificator {
+import tk.aakado.multisweeper.client.views.Notificator;
+
+public interface AuthenticationNotificator extends Notificator {
 
     /**
      * The authentication failed

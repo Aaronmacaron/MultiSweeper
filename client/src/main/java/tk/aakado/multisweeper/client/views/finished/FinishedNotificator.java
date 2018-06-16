@@ -1,6 +1,8 @@
 package tk.aakado.multisweeper.client.views.finished;
 
-public interface FinishedNotificator {
+import tk.aakado.multisweeper.client.views.Notificator;
+
+public interface FinishedNotificator extends Notificator {
 
     /**
      * Restart the game

@@ -1,19 +1,23 @@
 package tk.aakado.multisweeper.client;
 
-import de.saxsys.mvvmfx.FluentViewLoader;
-import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tk.aakado.multisweeper.client.views.MultiSweeperView;
+import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationViewModel;
+import tk.aakado.multisweeper.client.views.configuration.ConfigurationNotificator;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationViewModel;
+import tk.aakado.multisweeper.client.views.connection.ConnectionNotificator;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.connection.ConnectionViewModel;
+import tk.aakado.multisweeper.client.views.finished.FinishedNotificator;
 import tk.aakado.multisweeper.client.views.finished.FinishedView;
 import tk.aakado.multisweeper.client.views.finished.FinishedViewModel;
+import tk.aakado.multisweeper.client.views.game.GameNotificator;
 import tk.aakado.multisweeper.client.views.game.GameView;
 import tk.aakado.multisweeper.client.views.game.GameViewModel;
 
@@ -28,15 +32,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ViewTuple<ConnectionView, ConnectionViewModel> tuple1 = FluentViewLoader.fxmlView(ConnectionView.class).load();
-        ViewTuple<AuthenticationView, AuthenticationViewModel> tuple2 = FluentViewLoader.fxmlView(AuthenticationView.class).load();
-        ViewTuple<ConfigurationView, ConfigurationViewModel> tuple3 = FluentViewLoader.fxmlView(ConfigurationView.class).load();
-        ViewTuple<GameView, GameViewModel> tuple4 = FluentViewLoader.fxmlView(GameView.class).load();
-        ViewTuple<FinishedView, FinishedViewModel> tuple5 = FluentViewLoader.fxmlView(FinishedView.class).load();
+        MultiSweeperView<ConnectionView, ConnectionViewModel, ConnectionNotificator> connectionView = new MultiSweeperView<>(ConnectionView.class);
+        MultiSweeperView<AuthenticationView, AuthenticationViewModel, AuthenticationNotificator> authenticationView = new MultiSweeperView<>(AuthenticationView.class);
+        MultiSweeperView<ConfigurationView, ConfigurationViewModel, ConfigurationNotificator> configurationView = new MultiSweeperView<>(ConfigurationView.class);
+        MultiSweeperView<GameView, GameViewModel, GameNotificator> gameView = new MultiSweeperView<>(GameView.class);
+        MultiSweeperView<FinishedView, FinishedViewModel, FinishedNotificator> finishedView = new MultiSweeperView<>(FinishedView.class);
 
 
-        Parent root = tuple4.getView();
-        tuple4.getViewModel().restart(3, 3);
+        Parent root = connectionView.getView();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
