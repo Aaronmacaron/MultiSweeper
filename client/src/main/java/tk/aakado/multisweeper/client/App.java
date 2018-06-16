@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationViewModel;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
@@ -22,12 +23,17 @@ import tk.aakado.multisweeper.client.views.game.GameViewModel;
  */
 public class App extends Application {
 
+    private Transmitter transmitter;
+    private static App instance;
+
     public static void main(String[] args) {
         Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
+        instance = this;
+
         ViewTuple<ConnectionView, ConnectionViewModel> tuple1 = FluentViewLoader.fxmlView(ConnectionView.class).load();
         ViewTuple<AuthenticationView, AuthenticationViewModel> tuple2 = FluentViewLoader.fxmlView(AuthenticationView.class).load();
         ViewTuple<ConfigurationView, ConfigurationViewModel> tuple3 = FluentViewLoader.fxmlView(ConfigurationView.class).load();
@@ -35,10 +41,21 @@ public class App extends Application {
         ViewTuple<FinishedView, FinishedViewModel> tuple5 = FluentViewLoader.fxmlView(FinishedView.class).load();
 
 
-        Parent root = tuple4.getView();
-        tuple4.getViewModel().restart(3, 3);
+        Parent root = tuple1.getView();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+    }
+
+    public static App getInstance() {
+        return instance;
+    }
+
+    public Transmitter getTransmitter() {
+        return transmitter;
+    }
+
+    public void setTransmitter(Transmitter transmitter) {
+        this.transmitter = transmitter;
     }
 
 }
