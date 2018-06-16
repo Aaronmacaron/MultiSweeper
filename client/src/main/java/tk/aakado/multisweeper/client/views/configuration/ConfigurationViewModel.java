@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.connection.params.StartInfo;
 
 public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
@@ -22,16 +24,29 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
     private StringProperty password = new SimpleStringProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
 
+    /**
+     * Starts the configured game
+     */
     public void start() {
-        //TODO implement
+        App.getInstance().getTransmitter().start(new StartInfo(
+                mineDensity.get(),
+                fieldWidth.get(),
+                fieldHeight.get()
+        ));
     }
 
+    /**
+     * Saves the password to persistence
+     */
     public void save() {
-        //TODO implement
+        App.getInstance().getTransmitter().savePassword(password.get());
     }
 
+    /**
+     * Disconnects from server
+     */
     public void disconnect() {
-        //TODO implement
+        App.getInstance().getTransmitter().disconnect();
     }
 
     @Override
