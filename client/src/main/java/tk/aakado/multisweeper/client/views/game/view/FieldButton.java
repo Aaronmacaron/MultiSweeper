@@ -5,12 +5,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
@@ -36,9 +36,9 @@ public class FieldButton extends Button {
      * Binds all properties, creates a istener for a changing state of a field and beautify the button appearance.
      *
      * @param field   Field containing the state, value and coordinates
-     * @param onClick Action will be called on a click
+     * @param onClick Action will be called on a leftClick
      */
-    public FieldButton(Field field, EventHandler<ActionEvent> onClick) {
+    public FieldButton(Field field, EventHandler<MouseEvent> onClick) {
         // bind the properties
         x.bind(field.xProperty());
         y.bind(field.yProperty());
@@ -51,8 +51,8 @@ public class FieldButton extends Button {
         // change the graphic when the state changes
         fieldState.addListener(this::onChange);
 
-        // send a click with the coordinates
-        this.setOnAction(onClick);
+        // send a leftClick with the coordinates
+        this.setOnMouseClicked(onClick);
 
         // set the size
         this.setPrefSize(size, size);

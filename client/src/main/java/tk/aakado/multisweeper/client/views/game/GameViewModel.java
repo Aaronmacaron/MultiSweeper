@@ -72,19 +72,30 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     /**
-     * Handles a click on a field
-     * Send the click to the server over the transmitter
+     * Handles a leftClick on a field
+     * Send the leftClick to the server over the transmitter
      *
      * @param x x-coordinate of the field
      * @param y y-coordinate of the field
      */
-    public void click(int x, int y) {
+    public void leftClick(int x, int y) {
         fields.stream()
                 .filter(field -> field.getX() == x && field.getY() == y)
                 .findAny()
                 .get()
                 .setFieldState(FieldState.FLAG);
         //TODO: Implement
+    }
+
+    /**
+     * Handles a rightClick on a field
+     * Send the rightClick to the server over the transmitter
+     *
+     * @param x x-coordinate of the field
+     * @param y y-coordinate of the field
+     */
+    public void rightClick(int x, int y) {
+
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {
