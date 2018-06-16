@@ -1,5 +1,7 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.shared.connection.Connection;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -12,6 +14,7 @@ public class GameManager {
     private final AtomicInteger idGenerator = new AtomicInteger();
 
     private Map<Integer, Game> allGames = new HashMap<>();
+    private Map<Connection, Player> allPlayers = new HashMap<>();
 
     /**
      * Creates a new game.
@@ -22,6 +25,31 @@ public class GameManager {
         int id = idGenerator.incrementAndGet();
         this.allGames.put(id, game);
         return id;
+    }
+
+    /**
+     * Creates a player which is linked to the connection.
+     * @param connection The connection the player is linked to.
+     */
+    public Player createPlayer(Connection connection) {
+        Player player = new Player(connection.getSocket().getInetAddress().toString());
+        this.allPlayers.put(connection, player);
+        return player;
+    }
+
+    public Optional<Game> getGameOf(Player player) {
+        return this.allGames.values().stream()
+                .filter(game -> game.hasPlayer(player))
+                .findAny();
+    }
+
+    /**
+     * Retrieve the player by a connection.
+     * @param connection The connection which belongs to a player.
+     * @return Optional of the player, empty if the connection has no mapping to a player.
+     */
+    public Optional<Player> getPlayer(Connection connection) {
+        return Optional.ofNullable(this.allPlayers.get(connection));
     }
 
     /**

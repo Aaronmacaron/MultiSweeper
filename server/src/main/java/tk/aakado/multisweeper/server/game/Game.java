@@ -20,6 +20,13 @@ public interface Game {
     void removePlayer(Player player);
 
     /**
+     * Check if the given player is part of this game.
+     * @param player The player
+     * @return Whether the game has a password or not.
+     */
+    boolean hasPlayer(Player player);
+
+    /**
      * Configure the game.
      * This configuration will be set for this game but this does not mean it is directly in use.
      * The configuration will be in use the next time the game is started.
@@ -34,6 +41,12 @@ public interface Game {
      * @param password The password to set.
      */
     void setPassword(Player player, String password);
+
+    /**
+     * Check if the game has a password configured.
+     * @return Whether the game has a password or not.
+     */
+    boolean hasPassword();
 
     /**
      * Starts a new game round.
