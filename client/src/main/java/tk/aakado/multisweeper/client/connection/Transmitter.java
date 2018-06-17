@@ -12,10 +12,11 @@ import tk.aakado.multisweeper.shared.connection.ActionType;
  */
 public class Transmitter {
 
-    final private ClientConnector clientConnector;
+    private final ClientConnector clientConnector;
 
     /**
      * Constructor
+     * @param clientConnector The Connector that the Transmitter transmits through.
      */
     public Transmitter(ClientConnector clientConnector) {
         this.clientConnector = clientConnector;
@@ -82,6 +83,7 @@ public class Transmitter {
      * @param password The password that the user submits
      */
     public void authenticate(String password) {
+        // TODO: add gameId
         Action action = new Action(ActionType.AUTHENTICATE, password);
         clientConnector.send(action);
     }
@@ -91,6 +93,15 @@ public class Transmitter {
      */
     public void restart() {
         Action action = new Action(ActionType.RESTART, new Object());
+        clientConnector.send(action);
+    }
+
+    /**
+     * Join a game.
+     * @param gameId The game to join.
+     */
+    public void joinGame(int gameId) {
+        Action action = new Action(ActionType.JOIN_GAME, gameId);
         clientConnector.send(action);
     }
 
