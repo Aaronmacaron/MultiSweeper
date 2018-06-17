@@ -10,6 +10,9 @@ import javafx.scene.control.ListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * View where the player can choose a game to join.
+ */
 public class GameSelectionView implements FxmlView<GameSelectionViewModel>, Initializable {
 
     @InjectViewModel
@@ -31,11 +34,17 @@ public class GameSelectionView implements FxmlView<GameSelectionViewModel>, Init
                 .addListener(((observable, oldValue, newValue) -> this.joinButton.setDisable(newValue == null)));
     }
 
+    /**
+     * Handle cancel button.
+     */
     @FXML
     private void onCancel() {
         // TODO: Go back to server selection
     }
 
+    /**
+     * Handle join button.
+     */
     @FXML
     private void onJoin() {
         String selectedGame = this.gamesListView.getSelectionModel().getSelectedItem();

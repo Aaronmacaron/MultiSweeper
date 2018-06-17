@@ -4,6 +4,9 @@ import tk.aakado.multisweeper.client.views.Notificator;
 
 import java.util.Set;
 
+/**
+ * Notificator for the game selection view.
+ */
 public interface GameSelectionNotificator extends Notificator {
 
     /**

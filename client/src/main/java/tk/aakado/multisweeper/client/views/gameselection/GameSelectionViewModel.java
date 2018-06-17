@@ -7,6 +7,9 @@ import javafx.collections.FXCollections;
 
 import java.util.Set;
 
+/**
+ * View model for the game selection view.
+ */
 public class GameSelectionViewModel implements ViewModel, GameSelectionNotificator {
 
     private ListProperty<Integer> gameIds = new SimpleListProperty<>(FXCollections.emptyObservableList());
