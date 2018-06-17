@@ -1,12 +1,12 @@
-package tk.aakado.multisweeper.server.game;
+package tk.aakado.multisweeper.shared.connection.dtos;
 
-public class GameConfig {
+public class GameConfigDTO {
 
     private final int width;
     private final int height;
     private final int minesPercentage;
 
-    public GameConfig(int width, int height, int minesPercentage) {
+    public GameConfigDTO(int width, int height, int minesPercentage) {
         this.width = width;
         this.height = height;
         this.minesPercentage = minesPercentage;
