@@ -11,10 +11,10 @@ public class GameConfigDTOTest {
 
     final private static int width = 20;
     final private static int height = 30;
-    final private static int minesPercentage = 19;
+    final private static double minesPercentage = 19;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         gameConfigDTO = new GameConfigDTO(width, height, minesPercentage);
     }
 
@@ -30,7 +30,7 @@ public class GameConfigDTOTest {
 
     @Test
     public void getMinesPercentage() {
-        assertEquals(minesPercentage, gameConfigDTO.getMinesPercentage());
+        assertEquals(minesPercentage, gameConfigDTO.getMinesPercentage(), 0.00001);
     }
 
 }

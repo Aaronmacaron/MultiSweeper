@@ -7,7 +7,7 @@ public class GameConfigDTO {
 
     private final int width;
     private final int height;
-    private final int minesPercentage;
+    private final double minesPercentage;
 
     /**
      * Constructor
@@ -15,7 +15,7 @@ public class GameConfigDTO {
      * @param height The width of the playingField
      * @param minesPercentage The percentage of field that are mines in this game
      */
-    public GameConfigDTO(int width, int height, int minesPercentage) {
+    public GameConfigDTO(int width, int height, double minesPercentage) {
         this.width = width;
         this.height = height;
         this.minesPercentage = minesPercentage;
@@ -41,7 +41,7 @@ public class GameConfigDTO {
      * Getter for minesPercentage
      * @return minesPercentage
      */
-    public int getMinesPercentage() {
+    public double getMinesPercentage() {
         return minesPercentage;
     }
 

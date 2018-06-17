@@ -52,9 +52,13 @@ public class GameImpl implements Game {
 
         int width = runConfig.getWidth();
         int height = runConfig.getHeight();
-        int mines = width * height * runConfig.getMinesPercentage();
+        double mines = width * height * runConfig.getMinesPercentage();
 
-        this.currentPlayingField = new PlayingField(width, height, mines);
+        this.currentPlayingField = new PlayingField(
+                width,
+                height,
+                (int) Math.round(mines) // Convert from double to int
+        );
     }
 
     @Override
