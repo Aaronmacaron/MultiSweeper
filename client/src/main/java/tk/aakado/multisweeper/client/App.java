@@ -20,6 +20,9 @@ import tk.aakado.multisweeper.client.views.finished.FinishedViewModel;
 import tk.aakado.multisweeper.client.views.game.GameNotificator;
 import tk.aakado.multisweeper.client.views.game.GameView;
 import tk.aakado.multisweeper.client.views.game.GameViewModel;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificator;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
 
 /**
  * The client Application
@@ -33,6 +36,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         MultiSweeperView<ConnectionView, ConnectionViewModel, ConnectionNotificator> connectionView = new MultiSweeperView<>(ConnectionView.class);
+        MultiSweeperView<GameSelectionView, GameSelectionViewModel, GameSelectionNotificator> gameSelectionView = new MultiSweeperView<>(GameSelectionView.class);
         MultiSweeperView<AuthenticationView, AuthenticationViewModel, AuthenticationNotificator> authenticationView = new MultiSweeperView<>(AuthenticationView.class);
         MultiSweeperView<ConfigurationView, ConfigurationViewModel, ConfigurationNotificator> configurationView = new MultiSweeperView<>(ConfigurationView.class);
         MultiSweeperView<GameView, GameViewModel, GameNotificator> gameView = new MultiSweeperView<>(GameView.class);
