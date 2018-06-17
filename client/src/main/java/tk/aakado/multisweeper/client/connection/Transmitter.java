@@ -3,7 +3,7 @@ package tk.aakado.multisweeper.client.connection;
 
 import javafx.scene.input.MouseButton;
 import tk.aakado.multisweeper.shared.connection.dtos.ClickDTO;
-import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
+import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 
@@ -48,10 +48,13 @@ public class Transmitter {
 
     /**
      * Starts game with given information
-     * @param startInfoDTO The info to start the game
+     * @param fieldWidth Width of playingField
+     * @param fieldHeight Height of playingField
+     * @param minesPercentage Percentage of mine Fields in playingField
      */
-    public void start(StartInfoDTO startInfoDTO) {
-        Action action = new Action(ActionType.START, startInfoDTO);
+    public void start(int fieldWidth, int fieldHeight, double minesPercentage) {
+        GameConfigDTO gameConfigDTO = new GameConfigDTO(fieldWidth, fieldHeight, minesPercentage);
+        Action action = new Action(ActionType.START, gameConfigDTO);
         clientConnector.send(action);
     }
 
