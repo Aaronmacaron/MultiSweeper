@@ -11,6 +11,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.input.MouseButton;
+import tk.aakado.multisweeper.client.App;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
@@ -72,19 +74,34 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     /**
-     * Handles a click on a field
-     * Send the click to the server over the transmitter
+     * Handles a leftClick on a field
+     * Send the leftClick to the server over the transmitter
      *
      * @param x x-coordinate of the field
      * @param y y-coordinate of the field
      */
-    public void click(int x, int y) {
+    public void leftClick(int x, int y) {
+
+        // TODO: I'm not sure but this probably has to be removed since the field state should not be set until server executes notificator
         fields.stream()
                 .filter(field -> field.getX() == x && field.getY() == y)
                 .findAny()
                 .get()
                 .setFieldState(FieldState.FLAG);
-        //TODO: Implement
+
+
+        App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
+    }
+
+    /**
+     * Handles a rightClick on a field
+     * Send the rightClick to the server over the transmitter
+     *
+     * @param x x-coordinate of the field
+     * @param y y-coordinate of the field
+     */
+    public void rightClick(int x, int y) {
+        App.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {

@@ -7,8 +7,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 
@@ -30,9 +30,9 @@ public class FieldGrid extends GridPane {
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     /**
-     * Event which will be called on a click on a FieldButton
+     * Event which will be called on a leftClick on a FieldButton
      */
-    private EventHandler<ActionEvent> onClick;
+    private EventHandler<MouseEvent> onClick;
 
     /**
      * Create a new FieldGrid
@@ -42,7 +42,7 @@ public class FieldGrid extends GridPane {
      * @param fieldHeight the height of the field / length of the y-axis
      * @param onClick     the action that should be called, when a FieldButton is clicked
      */
-    public FieldGrid(ListProperty<Field> fields, IntegerProperty fieldWidth, IntegerProperty fieldHeight, EventHandler<ActionEvent> onClick) {
+    public FieldGrid(ListProperty<Field> fields, IntegerProperty fieldWidth, IntegerProperty fieldHeight, EventHandler<MouseEvent> onClick) {
         // bind all variables
         this.fields.bind(fields);
         this.fieldWidth.bind(fieldWidth);

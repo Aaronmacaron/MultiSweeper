@@ -12,6 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.client.views.game.view.FieldButton;
@@ -57,21 +59,29 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     }
 
     /**
-     * Handles the click on a Field.
+     * Handles the leftClick on a Field.
      * Set a method reference to this method on the FieldButton.setOnAction method
      *
-     * @param actionEvent Click on a Field
+     * @param mouseEvent Click on a Field
      */
-    private void onClick(ActionEvent actionEvent) {
+    private void onClick(MouseEvent mouseEvent) {
         // check if the source is a @FieldButton
-        if (!(actionEvent.getSource() instanceof FieldButton)) {
+        if (!(mouseEvent.getSource() instanceof FieldButton)) {
             throw new IllegalStateException("This method should only be called by a FieldButton");
         }
         // get the source
-        FieldButton fieldButton = (FieldButton) actionEvent.getSource();
+        FieldButton fieldButton = (FieldButton) mouseEvent.getSource();
 
-        // delegate the click to the @GameViewModel
-        viewModel.click(fieldButton.getX(), fieldButton.getY());
+        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) { // If left click
+            // delegate the leftClick to the @GameViewModel
+            viewModel.leftClick(fieldButton.getX(), fieldButton.getY());
+        }
+
+        if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) { // If right click
+            // delegate the rightClick to the @GameViewModel
+            viewModel.rightClick(fieldButton.getX(), fieldButton.getY());
+        }
+
     }
 
     /**

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.views.MultiSweeperView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
@@ -26,12 +27,17 @@ import tk.aakado.multisweeper.client.views.game.GameViewModel;
  */
 public class App extends Application {
 
+    private Transmitter transmitter;
+    private static App instance;
+
     public static void main(String[] args) {
         Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
+        instance = this;
+
         MultiSweeperView<ConnectionView, ConnectionViewModel, ConnectionNotificator> connectionView = new MultiSweeperView<>(ConnectionView.class);
         MultiSweeperView<AuthenticationView, AuthenticationViewModel, AuthenticationNotificator> authenticationView = new MultiSweeperView<>(AuthenticationView.class);
         MultiSweeperView<ConfigurationView, ConfigurationViewModel, ConfigurationNotificator> configurationView = new MultiSweeperView<>(ConfigurationView.class);
@@ -42,6 +48,18 @@ public class App extends Application {
         Parent root = connectionView.getView();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+    }
+
+    public static App getInstance() {
+        return instance;
+    }
+
+    public Transmitter getTransmitter() {
+        return transmitter;
+    }
+
+    public void setTransmitter(Transmitter transmitter) {
+        this.transmitter = transmitter;
     }
 
 }

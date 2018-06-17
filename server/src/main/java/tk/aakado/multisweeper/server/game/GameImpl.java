@@ -1,17 +1,18 @@
 package tk.aakado.multisweeper.server.game;
 
 import tk.aakado.multisweeper.shared.Logger;
+import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameImpl implements Game {
 
-    private static final GameConfig DEFAULT_CONFIGURATION = new GameConfig(15, 15, 20);
+    private static final GameConfigDTO DEFAULT_CONFIGURATION = new GameConfigDTO(15, 15, 20);
 
     private List<Player> players = new ArrayList<>();
     private PlayingField currentPlayingField;
-    private GameConfig configuration;
+    private GameConfigDTO configuration;
     private String password = ""; // Default no password
 
     @Override
@@ -49,22 +50,26 @@ public class GameImpl implements Game {
 
     @Override
     public void startNewRound(Player player) {
-        GameConfig runConfig = this.configuration;
+        GameConfigDTO runConfig = this.configuration;
         if (this.configuration == null) {
             runConfig = DEFAULT_CONFIGURATION;
         }
 
         int width = runConfig.getWidth();
         int height = runConfig.getHeight();
-        int mines = width * height * runConfig.getMinesPercentage();
+        double mines = width * height * runConfig.getMinesPercentage();
 
-        this.currentPlayingField = new PlayingField(width, height, mines);
+        this.currentPlayingField = new PlayingField(
+                width,
+                height,
+                (int) Math.round(mines) // Convert from double to int
+        );
     }
 
     @Override
-    public void configure(Player player, GameConfig gameConfig) {
+    public void configure(Player player, GameConfigDTO gameConfigDTO) {
         if (checkAdmin(player)) {
-            this.configuration = gameConfig;
+            this.configuration = gameConfigDTO;
         }
     }
 
