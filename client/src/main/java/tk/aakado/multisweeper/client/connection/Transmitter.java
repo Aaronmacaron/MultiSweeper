@@ -77,4 +77,13 @@ public class Transmitter {
         clientConnector.send(action);
     }
 
+    /**
+     * Submits password to server and thus tries to authenticate user to server
+     * @param password The password that the user submits
+     */
+    public void authenticate(String password) {
+        Action action = new Action(ActionType.AUTHENTICATE, password);
+        clientConnector.send(action);
+    }
+
 }

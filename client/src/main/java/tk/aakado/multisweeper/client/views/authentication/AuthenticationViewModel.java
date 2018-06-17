@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import tk.aakado.multisweeper.client.App;
 
 public class AuthenticationViewModel implements ViewModel, AuthenticationNotificator {
 
@@ -12,8 +13,11 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
     private BooleanProperty rejected = new SimpleBooleanProperty(false);
 
 
+    /**
+     * Is called when user submits password
+     */
     public void submit() {
-        //TODO implement
+        App.getInstance().getTransmitter().authenticate(password.get());
     }
 
     @Override
