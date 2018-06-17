@@ -17,6 +17,7 @@ cmake-build-debug/
 
 # IntelliJ
 /out/
+**/out/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
