@@ -34,7 +34,9 @@ public class Server {
 
     /**
      * Starts the server.
-     * @param arguments The parsed arguments
+     * @param arguments The parsed arguments. First argument is the server port. This argument is necessary. The second
+     *                  argument is the number of concurrent games that should be running on the server. This argument
+     *                  is not necessary and the default is one game.
      */
     private static void startServer(MultiSweeperArguments arguments) {
         // set up game manager
@@ -49,6 +51,11 @@ public class Server {
 
     }
 
+    /**
+     * Parses commandline arguments from main method into MultiSweeperArguments
+     * @param args Default String array containing arguments
+     * @return The MultiSweeperArguments object containing all the parsed arguments
+     */
     public static MultiSweeperArguments parseArguments(String[] args) {
         // port
         Optional<Integer> parsedPort = getPort(args);
@@ -59,7 +66,7 @@ public class Server {
         int port = parsedPort.get();
 
         // number of games
-        int numberOfGames = getNumberOfGames(args).orElse(1);
+        int numberOfGames = getNumberOfGames(args).orElse(1); // Default number of games is one
 
         return new MultiSweeperArguments(port, numberOfGames);
     }

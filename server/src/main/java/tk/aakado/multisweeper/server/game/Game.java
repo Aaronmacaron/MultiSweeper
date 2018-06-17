@@ -1,5 +1,7 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
+
 /**
  * Interface of a game.
  */
@@ -31,9 +33,9 @@ public interface Game {
      * This configuration will be set for this game but this does not mean it is directly in use.
      * The configuration will be in use the next time the game is started.
      * @param player The player which configures it. The player has to be an admin.
-     * @param gameConfig The config.
+     * @param gameConfigDTO The config.
      */
-    void configure(Player player, GameConfig gameConfig);
+    void configure(Player player, GameConfigDTO gameConfigDTO);
 
     /**
      * Sets the password for this game.

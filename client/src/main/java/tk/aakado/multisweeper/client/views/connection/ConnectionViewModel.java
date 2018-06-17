@@ -5,6 +5,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.connection.ClientConnector;
+import tk.aakado.multisweeper.client.connection.Transmitter;
+import tk.aakado.multisweeper.shared.Logger;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
@@ -16,7 +23,18 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
      * Connects player to MultiSweeper server
      */
     void connect() {
-        //TODO implement
+        try {
+            URI uri = new URI(connection.get());
+            ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
+            clientConnector.start(); //TODO: catch on potential fail of connecting to server
+            Transmitter transmitter = new Transmitter(clientConnector);
+            App.getInstance().setTransmitter(transmitter);
+            transmitter.connect();
+        } catch (URISyntaxException e) {
+            Logger.get(this).warn("The provided URI is not formatted correctly.");
+            // TODO: Show error message to user.
+        }
+
     }
 
 
