@@ -9,6 +9,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import tk.aakado.multisweeper.client.App;
 
 public class FinishedViewModel implements ViewModel, FinishedNotificator {
 
@@ -20,7 +21,7 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
      * Starts a new game
      */
     public void startNewGame() {
-        // TODO: Implement
+        App.getInstance().getTransmitter().restart();
     }
 
     @Override
@@ -37,7 +38,7 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
 
     @Override
     public void disconnect() {
-        // TODO: Implement
+        App.getInstance().getTransmitter().disconnect();
     }
 
     public BooleanProperty victoryProperty() {

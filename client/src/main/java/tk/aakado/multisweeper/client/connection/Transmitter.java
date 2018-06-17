@@ -86,4 +86,12 @@ public class Transmitter {
         clientConnector.send(action);
     }
 
+    /**
+     * Restarts the game with the same settings
+     */
+    public void restart() {
+        Action action = new Action(ActionType.RESTART, new Object());
+        clientConnector.send(action);
+    }
+
 }
