@@ -1,5 +1,8 @@
 package tk.aakado.multisweeper.client.views.game.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -13,9 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.game.FieldState;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Special Button representing a @{@link Field} on the @{@link FieldGrid}
@@ -93,6 +93,7 @@ public class FieldButton extends Button {
 
     /**
      * Returns a mapping of values and TileTypes
+     *
      * @return Mapping of value and TileType
      */
     private Map<Integer, TileType> getValueTileTypeMap() {
@@ -111,6 +112,7 @@ public class FieldButton extends Button {
 
     /**
      * Evaluates TileType based on fieldState and value
+     *
      * @return The correct TileType
      */
     private TileType getTileType() {
@@ -130,7 +132,7 @@ public class FieldButton extends Button {
             case MINE_EXPLODED: {
                 return TileType.MINE_EXPLODED;
             }
-            case UNDEFINED:
+            case UNDISCOVERED:
             default: {
                 return TileType.UNDISCOVERED;
             }
@@ -139,6 +141,7 @@ public class FieldButton extends Button {
 
     /**
      * Returns Tile Image by image name
+     *
      * @param name The name of the image (without extension)
      * @return The Image object associated with the name
      */
@@ -148,6 +151,7 @@ public class FieldButton extends Button {
 
     /**
      * Returns Tile Image by TileType
+     *
      * @param tileType TileType of Image
      * @return The Image object associated with the TileType
      */
@@ -172,6 +176,10 @@ public class FieldButton extends Button {
         return y;
     }
 
+    public static double getSize() {
+        return size;
+    }
+
     /**
      * Represents the different tiles a FieldButton can morph into. TileTypes can directly be mapped to images of tiles.
      */
@@ -181,9 +189,10 @@ public class FieldButton extends Button {
 
         /**
          * Returns imageName of TileType (without extension)
+         *
          * @return Image name
          */
-        public String getImageName () {
+        public String getImageName() {
             return name().toLowerCase();
         }
 
