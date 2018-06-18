@@ -35,8 +35,8 @@ public class App extends Application {
         ViewTuple<FinishedView, FinishedViewModel> tuple5 = FluentViewLoader.fxmlView(FinishedView.class).load();
 
 
-
-        Parent root = tuple1.getView();
+        Parent root = tuple3.getView();
+//        tuple4.getViewModel().restart(3, 3);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
