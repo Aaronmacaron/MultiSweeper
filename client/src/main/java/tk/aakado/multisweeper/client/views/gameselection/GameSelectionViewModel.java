@@ -6,6 +6,7 @@ import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import tk.aakado.multisweeper.client.App;
 
 /**
  * View model for the game selection view.
@@ -23,7 +24,11 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
         return gameIds;
     }
 
+    /**
+     * Join a game.
+     * @param gameId The id of the game.
+     */
     public void join(int gameId) {
-        // TODO: Transmitter call
+        App.getInstance().getTransmitter().joinGame(gameId);
     }
 }
