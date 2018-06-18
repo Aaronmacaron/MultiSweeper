@@ -12,4 +12,10 @@ dependencies {
     compile project(':shared')
 }
 
+run {
+    if ( project.hasProperty('appArgs') ) {
+        args Eval.me(appArgs)
+    }
+}
+
 mainClassName = 'tk.aakado.multisweeper.server.Server'
