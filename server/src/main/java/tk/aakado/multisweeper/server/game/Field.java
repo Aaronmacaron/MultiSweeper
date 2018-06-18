@@ -32,7 +32,7 @@ public class Field {
         if (isMine()) {
             this.initialState = FieldState.MINE;
         } else {
-            this.initialState = FieldState.UNDEFINED;
+            this.initialState = FieldState.UNDISCOVERED;
         }
 
         this.state = initialState;
