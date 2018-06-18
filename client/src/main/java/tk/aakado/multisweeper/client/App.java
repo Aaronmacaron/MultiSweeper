@@ -1,5 +1,8 @@
 package tk.aakado.multisweeper.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,7 +34,10 @@ import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
 public class App extends Application {
 
     private Transmitter transmitter;
+    private Map<Class, MultiSweeperView> views = new HashMap<>();
+    private Stage stage;
     private static App instance;
+
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -40,7 +46,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         instance = this;
+        this.stage = primaryStage;
 
+        // create all views
         MultiSweeperView<ConnectionView, ConnectionViewModel, ConnectionNotificator> connectionView = new MultiSweeperView<>(ConnectionView.class);
         MultiSweeperView<GameSelectionView, GameSelectionViewModel, GameSelectionNotificator> gameSelectionView = new MultiSweeperView<>(GameSelectionView.class);
         MultiSweeperView<AuthenticationView, AuthenticationViewModel, AuthenticationNotificator> authenticationView = new MultiSweeperView<>(AuthenticationView.class);
@@ -48,8 +56,15 @@ public class App extends Application {
         MultiSweeperView<GameView, GameViewModel, GameNotificator> gameView = new MultiSweeperView<>(GameView.class);
         MultiSweeperView<FinishedView, FinishedViewModel, FinishedNotificator> finishedView = new MultiSweeperView<>(FinishedView.class);
 
+        // cache all views
+        views.put(ConnectionView.class, connectionView);
+        views.put(GameSelectionView.class, gameSelectionView);
+        views.put(AuthenticationView.class, authenticationView);
+        views.put(ConfigurationView.class, configurationView);
+        views.put(GameView.class, gameView);
+        views.put(FinishedView.class, finishedView);
 
-        Parent root = connectionView.getView();
+        Parent root = views.get(GameView.class).getView();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
@@ -66,4 +81,24 @@ public class App extends Application {
         this.transmitter = transmitter;
     }
 
+    /**
+     * Change to the given view
+     *
+     * @param viewType The Class Object of the requested View Class
+     */
+    public void changeView(Class viewType) {
+        // check if the requested view exists
+        if (this.views.entrySet().stream().noneMatch(entry -> entry.getKey().equals(viewType))) {
+            throw new IllegalArgumentException("The requested view: " + viewType.getName() + " does not exists.");
+        }
+
+        // set the new view
+        Parent parent = this.views.get(viewType).getView();
+        Scene scene = new Scene(parent);
+        this.stage.setScene(scene);
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
 }
