@@ -34,12 +34,26 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
 
     @Override
     public void playerDisconnected(String player, boolean isNewAdmin) {
-        //TODO implement
+        // check if the given player exists
+        String playerToRemove = players.get().stream()
+                .filter(s -> s.equals(player))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Can't remove player that don't exist"));
+
+        // remove the player
+        players.get().remove(playerToRemove);
+
+        // set the new admin
+        admin.setValue(isNewAdmin);
     }
 
     @Override
     public void playerConnected(String player) {
-        //TODO implement
+        // check if a player with the same name already exists
+        if (players.get().stream().anyMatch(s -> s.equals(player))) {
+            throw new IllegalArgumentException("Player with the same name already exists");
+        }
+        players.get().add(player);
     }
 
     @Override
