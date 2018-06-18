@@ -7,14 +7,12 @@ import javafx.event.ActionEvent;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
-import static org.junit.Assert.assertTrue;
-
 public class FieldButtonTest {
     private FieldButton fieldButton;
     private Field field;
     private int x = 4;
     private int y = 10;
-    private FieldState fieldState = FieldState.UNDEFINED;
+    private FieldState fieldState = FieldState.UNDISCOVERED;
     private int value = 8;
     private boolean onClickWorks = false;
 

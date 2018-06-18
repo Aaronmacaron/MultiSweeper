@@ -53,9 +53,6 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
         // Creates a new FieldGrid and add it to the AchnorPane
         gamePane.getChildren().add(new FieldGrid(viewModel.fieldsProperty(), viewModel.fieldWidthProperty(), viewModel.fieldHeightProperty(), this::onClick));
 
-        // Sets a useable size for the GamePane
-//        gamePane.setPrefSize(100, 100);
-
     }
 
     /**

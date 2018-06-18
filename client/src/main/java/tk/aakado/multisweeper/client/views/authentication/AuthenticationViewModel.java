@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 
 public class AuthenticationViewModel implements ViewModel, AuthenticationNotificator {
 
@@ -27,7 +28,7 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
 
     @Override
     public void success() {
-        //TODO: Implement
+        App.getInstance().changeView(ConfigurationView.class);
     }
 
     public StringProperty passwordProperty() {

@@ -12,7 +12,7 @@ public class FieldTest {
     private Field field;
     private int x = 4;
     private int y = 10;
-    private FieldState fieldState = FieldState.UNDEFINED;
+    private FieldState fieldState = FieldState.UNDISCOVERED;
     private int value = 8;
 
     @Before

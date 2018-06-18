@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.client.views.game;
 
 import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.IntegerProperty;
@@ -13,7 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseButton;
 import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.views.connection.ConnectionView;
+import tk.aakado.multisweeper.client.views.finished.FinishedView;
 import tk.aakado.multisweeper.client.views.game.model.Field;
+import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
 public class GameViewModel implements ViewModel, GameNotificator {
@@ -47,7 +51,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
         // Create all required Fields and add them to the fields list
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                newFields.add(new Field(i, j, FieldState.UNDEFINED, 0));
+                newFields.add(new Field(i, j, FieldState.UNDISCOVERED, 0));
             }
         }
 
@@ -57,20 +61,32 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void updateField(int[] cords, String newState) {
-        //TODO: Implement
-        // to update the state of a field, the setFieldState method of the Field method should be called
+
+        Field field = fields.get().stream()
+                .filter(f -> f.getX() == cords[0] && f.getY() == cords[1])
+                .findFirst()
+                .orElseThrow(() -> {
+                    Logger.get(this).error("A field with the coordinates %s:%s does not exist", cords[0], cords[1]);
+                    return new IllegalArgumentException("A field with the coordinates " + cords[0] + ":" + cords[1] + " does not exist");
+                });
+
+        try {
+            field.setFieldState(FieldState.valueOf(newState));
+        } catch (IllegalArgumentException ex) {
+            Logger.get(this).error("The field state %s does not exists", newState);
+        }
     }
 
     @Override
     public void finished() {
-        //TODO: Implement
+        App.getInstance().changeView(FinishedView.class);
     }
 
     /**
      * The Player disconnects from the game
      */
     public void disconnect() {
-        // TODO: Implement
+        App.getInstance().changeView(ConnectionView.class);
     }
 
     /**
@@ -83,13 +99,16 @@ public class GameViewModel implements ViewModel, GameNotificator {
     public void leftClick(int x, int y) {
 
         // TODO: I'm not sure but this probably has to be removed since the field state should not be set until server executes notificator
+        // This exists only for testing
+        int rand = ThreadLocalRandom.current().nextInt(0, 6);
         fields.stream()
                 .filter(field -> field.getX() == x && field.getY() == y)
                 .findAny()
                 .get()
-                .setFieldState(FieldState.FLAG);
+                .setFieldState(FieldState.getByValue(rand));
 
 
+        //TODO: This method call throws a nullpointer
         App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
     }
 
