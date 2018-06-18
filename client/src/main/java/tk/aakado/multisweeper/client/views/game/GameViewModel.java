@@ -51,7 +51,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
         // Create all required Fields and add them to the fields list
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                newFields.add(new Field(i, j, FieldState.UNDEFINED, 0));
+                newFields.add(new Field(i, j, FieldState.UNDISCOVERED, 0));
             }
         }
 
@@ -100,13 +100,15 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
         // TODO: I'm not sure but this probably has to be removed since the field state should not be set until server executes notificator
         // This exists only for testing
+        int rand = ThreadLocalRandom.current().nextInt(0, 6);
         fields.stream()
                 .filter(field -> field.getX() == x && field.getY() == y)
                 .findAny()
                 .get()
-                .setFieldState(FieldState.FLAG);
+                .setFieldState(FieldState.getByValue(rand));
 
 
+        //TODO: This method call throws a nullpointer
         App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
     }
 
