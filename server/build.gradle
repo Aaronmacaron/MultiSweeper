@@ -12,4 +12,4 @@ dependencies {
     compile project(':shared')
 }
 
-mainClassName = 'tk.aakado.multisweeper.Main'
+mainClassName = 'tk.aakado.multisweeper.server.Server'
