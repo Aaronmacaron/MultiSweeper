@@ -1,6 +1,8 @@
 package tk.aakado.multisweeper.client.views.connection;
 
-public interface ConnectionNotificator {
+import tk.aakado.multisweeper.client.views.Notificator;
+
+public interface ConnectionNotificator extends Notificator {
 
     /**
      * Connection was successful

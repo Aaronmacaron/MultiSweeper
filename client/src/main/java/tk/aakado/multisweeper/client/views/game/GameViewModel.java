@@ -9,6 +9,15 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import tk.aakado.multisweeper.client.views.game.model.Field;
+import tk.aakado.multisweeper.shared.Logger;
+import tk.aakado.multisweeper.shared.game.FieldState;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.input.MouseButton;
+import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.views.game.model.Field;
+import tk.aakado.multisweeper.shared.game.FieldState;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tk.aakado.multisweeper.client.views.game.model.Field;
@@ -55,22 +64,21 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     @Override
-    public void updateField(int[] coords, String newState) {
+    public void updateField(int[] cords, String newState) {
 
         Field field = fields.get().stream()
-                .filter(f -> f.getX() == coords[0] && f.getY() == coords[1])
+                .filter(f -> f.getX() == cords[0] && f.getY() == cords[1])
                 .findFirst()
                 .orElseThrow(() -> {
-                    Logger.get(this).error("A field with the coordinates %s:%s does not exist", coords[0], coords[1]);
-                    return new IllegalArgumentException("A field with the coordinates " + coords[0] + ":" + coords[1] + " does not exist");
+                    Logger.get(this).error("A field with the coordinates %s:%s does not exist", cords[0], cords[1]);
+                    return new IllegalArgumentException("A field with the coordinates " + cords[0] + ":" + cords[1] + " does not exist");
                 });
 
         try {
             field.setFieldState(FieldState.valueOf(newState));
         } catch (IllegalArgumentException ex) {
             Logger.get(this).error("The field state %s does not exists", newState);
-        }
-    }
+        }}
 
     @Override
     public void finished() {
@@ -85,19 +93,35 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     /**
-     * Handles a click on a field
-     * Send the click to the server over the transmitter
+     * Handles a leftClick on a field
+     * Send the leftClick to the server over the transmitter
      *
      * @param x x-coordinate of the field
      * @param y y-coordinate of the field
      */
-    public void click(int x, int y) {
+    public void leftClick(int x, int y) {
+
+        // TODO: I'm not sure but this probably has to be removed since the field state should not be set until server executes notificator
+        // This exists only for testing
         fields.stream()
                 .filter(field -> field.getX() == x && field.getY() == y)
                 .findAny()
                 .get()
                 .setFieldState(FieldState.FLAG);
-        //TODO: Implement
+
+
+        App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
+    }
+
+    /**
+     * Handles a rightClick on a field
+     * Send the rightClick to the server over the transmitter
+     *
+     * @param x x-coordinate of the field
+     * @param y y-coordinate of the field
+     */
+    public void rightClick(int x, int y) {
+        App.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {

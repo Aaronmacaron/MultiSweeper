@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
 
@@ -20,7 +21,7 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     private ConfigurationViewModel viewModel;
 
     @FXML
-    private TextField mineDensityField;
+    private Slider mineDensitySlider;
 
     @FXML
     private TextField fieldWidthField;
@@ -42,8 +43,8 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Bind mineDensityField bidirectional with a NumberStringConverter
-        Bindings.bindBidirectional(mineDensityField.textProperty(), viewModel.mineDensityProperty(), new NumberStringConverter());
+        // Bind mineDensityField bidirectional
+        mineDensitySlider.valueProperty().bindBidirectional(viewModel.mineDensityProperty());
 
         // Bind fieldWidthField bidirectional with a NumberStringConverter
         Bindings.bindBidirectional(fieldWidthField.textProperty(), viewModel.fieldWidthProperty(), new NumberStringConverter());
@@ -62,12 +63,15 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
 
         // Make all Configuration Properties not editable when Player isn't an admin
         passwordField.editableProperty().bind(viewModel.adminProperty());
-        mineDensityField.editableProperty().bind(viewModel.adminProperty());
         fieldHeightField.editableProperty().bind(viewModel.adminProperty());
         fieldWidthField.editableProperty().bind(viewModel.adminProperty());
         // Make all Configuration Buttons disabled when Player isn't an admin
+        mineDensitySlider.disableProperty().bind(viewModel.adminProperty().not());
         startButton.disableProperty().bind(viewModel.adminProperty().not());
         saveButton.disableProperty().bind(viewModel.adminProperty().not());
+
+        // only enable start button if the input is correct
+        startButton.disableProperty().bind(Bindings.createBooleanBinding(this::correctParams).not());
     }
 
     /**
@@ -98,5 +102,18 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     @FXML
     void onStart(ActionEvent event) {
         viewModel.start();
+    }
+
+    /**
+     * Checks if the given height and width are valid.
+     *
+     * @return true if valid
+     */
+    private boolean correctParams() {
+        if (viewModel.fieldHeightProperty().get() > 50) return false;
+        if (viewModel.fieldHeightProperty().get() < 1) return false;
+        if (viewModel.fieldWidthProperty().get() < 1) return false;
+        if (viewModel.fieldWidthProperty().get() > 50) return false;
+        return true;
     }
 }

@@ -2,34 +2,46 @@ package tk.aakado.multisweeper.client.views.configuration;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import tk.aakado.multisweeper.client.App;
 
 public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
     private BooleanProperty admin = new SimpleBooleanProperty(false);
-    private IntegerProperty mineDensity = new SimpleIntegerProperty();
+    private DoubleProperty mineDensity = new SimpleDoubleProperty();
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private StringProperty password = new SimpleStringProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
 
+    /**
+     * Starts the configured game
+     */
     public void start() {
-        //TODO implement
+        App.getInstance().getTransmitter().start(fieldWidth.get(), fieldHeight.get(), mineDensity.get());
     }
 
+    /**
+     * Saves the password to persistence
+     */
     public void save() {
-        //TODO implement
+        App.getInstance().getTransmitter().savePassword(password.get());
     }
 
+    /**
+     * Disconnects from server
+     */
     public void disconnect() {
-        //TODO implement
+        App.getInstance().getTransmitter().disconnect();
     }
 
     @Override
@@ -62,7 +74,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
     }
 
 
-    public IntegerProperty mineDensityProperty() {
+    public DoubleProperty mineDensityProperty() {
         return mineDensity;
     }
 

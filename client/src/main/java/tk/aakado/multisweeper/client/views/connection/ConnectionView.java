@@ -16,11 +16,11 @@ import javafx.scene.control.TextField;
 public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializable {
 
     @FXML
-    public TextField connectionField;
+    private TextField connectionField;
     @FXML
-    public Label errorMessageLabel;
+    private Label errorMessageLabel;
     @FXML
-    public Button connectButton;
+    private Button connectButton;
 
     /**
      * Regex that checks if string is hostname or ip address
