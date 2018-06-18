@@ -31,7 +31,7 @@ public class GameViewModelTest {
         // create new fields
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                exceptedFields.add(new Field(i, j, FieldState.UNDEFINED, 0));
+                exceptedFields.add(new Field(i, j, FieldState.UNDISCOVERED, 0));
             }
         }
 
@@ -52,7 +52,7 @@ public class GameViewModelTest {
         ObservableList<Field> fieldList = FXCollections.observableArrayList();
         int[] coords = {0, 0};
         String newState = "MINE";
-        fieldList.add(new Field(coords[0], coords[1], FieldState.UNDEFINED, 0));
+        fieldList.add(new Field(coords[0], coords[1], FieldState.UNDISCOVERED, 0));
 
         // set the list as value
         this.viewModel.fieldsProperty().setValue(fieldList);
