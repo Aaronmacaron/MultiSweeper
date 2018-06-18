@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.client.views.game;
 
 import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.IntegerProperty;
@@ -9,17 +10,12 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import tk.aakado.multisweeper.client.views.game.model.Field;
-import tk.aakado.multisweeper.shared.Logger;
-import tk.aakado.multisweeper.shared.game.FieldState;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseButton;
 import tk.aakado.multisweeper.client.App;
-import tk.aakado.multisweeper.client.views.game.model.Field;
-import tk.aakado.multisweeper.shared.game.FieldState;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import tk.aakado.multisweeper.client.views.connection.ConnectionView;
+import tk.aakado.multisweeper.client.views.finished.FinishedView;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.game.FieldState;
@@ -78,18 +74,19 @@ public class GameViewModel implements ViewModel, GameNotificator {
             field.setFieldState(FieldState.valueOf(newState));
         } catch (IllegalArgumentException ex) {
             Logger.get(this).error("The field state %s does not exists", newState);
-        }}
+        }
+    }
 
     @Override
     public void finished() {
-        //TODO: Implement
+        App.getInstance().changeView(FinishedView.class);
     }
 
     /**
      * The Player disconnects from the game
      */
     public void disconnect() {
-        // TODO: Implement
+        App.getInstance().changeView(ConnectionView.class);
     }
 
     /**

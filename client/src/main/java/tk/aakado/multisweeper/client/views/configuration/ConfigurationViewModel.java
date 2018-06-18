@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.views.game.GameView;
 
 public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
@@ -50,7 +51,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
         String playerToRemove = players.get().stream()
                 .filter(s -> s.equals(player))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Can't remove player that don't exist"));
+                .orElseThrow(() -> new IllegalArgumentException("Can't remove player that doesn't exist"));
 
         // remove the player
         players.get().remove(playerToRemove);
@@ -70,7 +71,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
 
     @Override
     public void gameStarted() {
-        //TODO implement
+        App.getInstance().changeView(GameView.class);
     }
 
 

@@ -1,5 +1,8 @@
 package tk.aakado.multisweeper.client.views.connection;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,10 +11,9 @@ import javafx.beans.property.StringProperty;
 import tk.aakado.multisweeper.client.App;
 import tk.aakado.multisweeper.client.connection.ClientConnector;
 import tk.aakado.multisweeper.client.connection.Transmitter;
+import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
+import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 import tk.aakado.multisweeper.shared.Logger;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
@@ -40,7 +42,11 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
     @Override
     public void connected(boolean authRequired, boolean isAdmin) {
-        //TODO: Implement
+        if (authRequired && !isAdmin) {
+            App.getInstance().changeView(AuthenticationView.class);
+        } else {
+            App.getInstance().changeView(ConfigurationView.class);
+        }
     }
 
     @Override
