@@ -86,6 +86,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
      * The Player disconnects from the game
      */
     public void disconnect() {
+        App.getInstance().getTransmitter().disconnect();
         App.getInstance().changeView(ConnectionView.class);
     }
 
@@ -97,18 +98,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
      * @param y y-coordinate of the field
      */
     public void leftClick(int x, int y) {
-
-        // TODO: I'm not sure but this probably has to be removed since the field state should not be set until server executes notificator
-        // This exists only for testing
-        int rand = ThreadLocalRandom.current().nextInt(0, 6);
-        fields.stream()
-                .filter(field -> field.getX() == x && field.getY() == y)
-                .findAny()
-                .get()
-                .setFieldState(FieldState.getByValue(rand));
-
-
-        //TODO: This method call throws a nullpointer
+        //TODO: This method call throws a nullpointer when the transmitter isn't initialized
         App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
     }
 
