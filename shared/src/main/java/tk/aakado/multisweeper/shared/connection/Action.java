@@ -23,6 +23,14 @@ public class Action {
     }
 
     /**
+     * Construct an action with no parameters.
+     * @param actionType ActionType of Action
+     */
+    public Action(ActionType actionType) {
+        this(actionType, new Object());
+    }
+
+    /**
      * Getter for actionType
      * @return actionType
      */
