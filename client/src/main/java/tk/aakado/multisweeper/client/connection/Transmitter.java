@@ -2,6 +2,7 @@ package tk.aakado.multisweeper.client.connection;
 
 
 import javafx.scene.input.MouseButton;
+import tk.aakado.multisweeper.shared.connection.dtos.AuthenticationDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.ClickDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 import tk.aakado.multisweeper.shared.connection.Action;
@@ -82,9 +83,9 @@ public class Transmitter {
      * Submits password to server and thus tries to authenticate user to server
      * @param password The password that the user submits
      */
-    public void authenticate(String password) {
-        // TODO: add gameId
-        Action action = new Action(ActionType.AUTHENTICATE, password);
+    public void authenticate(int gameId, String password) {
+        AuthenticationDTO authData = new AuthenticationDTO(gameId, password);
+        Action action = new Action(ActionType.AUTHENTICATE, authData);
         clientConnector.send(action);
     }
 

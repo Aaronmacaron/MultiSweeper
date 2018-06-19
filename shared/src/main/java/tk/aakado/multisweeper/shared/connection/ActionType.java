@@ -14,5 +14,6 @@ public enum ActionType {
     JOIN_GAME,
     PASSWORD_WRONG,
     PASSWORD_NEEDED,
+    WRONG_GAME_ID,
     ;
 }

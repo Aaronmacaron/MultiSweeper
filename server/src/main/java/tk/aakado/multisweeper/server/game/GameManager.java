@@ -37,12 +37,6 @@ public class GameManager {
         return player;
     }
 
-    public Optional<Game> getGameOf(Player player) {
-        return this.allGames.values().stream()
-                .filter(game -> game.hasPlayer(player))
-                .findAny();
-    }
-
     /**
      * Retrieve the player by a connection.
      * @param connection The connection which belongs to a player.
@@ -53,12 +47,23 @@ public class GameManager {
     }
 
     /**
+     * Retrieve the current game of a player.
+     * @param player The player of which to receive the game.
+     * @return Optional containing the game, empty if player is in no game.
+     */
+    public Optional<Game> getGameOf(Player player) {
+        return this.allGames.values().stream()
+                .filter(game -> game.hasPlayer(player))
+                .findAny();
+    }
+
+    /**
      * Retrieves an existing game by its id. The id has to exist.
      * @param id The id of the game.
      * @return The game.
      */
-    public Game getGame(int id) {
-        return allGames.get(id);
+    public Optional<Game> getGame(int id) {
+        return Optional.ofNullable(allGames.get(id));
     }
 
     /**
