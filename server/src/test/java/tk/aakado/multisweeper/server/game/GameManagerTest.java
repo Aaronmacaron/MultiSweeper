@@ -4,13 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 import tk.aakado.multisweeper.shared.connection.Connection;
 
+import java.net.Socket;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+// TODO: Find out how to mock a socket as currently null pointers occur.
 public class GameManagerTest {
 
-    private static final Connection DUMMY_CONNECTION = new Connection(null, null, null);
+    private static final Connection DUMMY_CONNECTION = new Connection(new Socket(), null, null);
 
     private GameManager gameManager;
 
