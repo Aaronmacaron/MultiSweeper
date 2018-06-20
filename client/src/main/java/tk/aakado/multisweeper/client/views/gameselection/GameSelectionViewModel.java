@@ -24,6 +24,10 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
 
     @Override
     public void gameSelected(int gameId, boolean isAdmin, boolean authRequired) {
+        App.getInstance().getGameProperties().setAdmin(isAdmin);
+        App.getInstance().getGameProperties().setGameId(gameId);
+
+        // display the correct view
         if (authRequired && !isAdmin) {
             App.getInstance().changeView(AuthenticationView.class);
         } else {

@@ -13,6 +13,7 @@ import tk.aakado.multisweeper.client.connection.ClientConnector;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.shared.Logger;
 
 public class ConnectionViewModel implements ViewModel, ConnectionNotificator {

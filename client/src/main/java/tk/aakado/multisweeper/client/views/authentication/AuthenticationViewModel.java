@@ -17,9 +17,8 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
     /**
      * Is called when user submits password
      */
-    //TODO: missing game id as parameter
     public void submit() {
-        App.getInstance().getTransmitter().authenticate(password.get());
+        App.getInstance().getTransmitter().authenticate(App.getInstance().getGameProperties().getGameId(), password.get());
     }
 
     @Override
