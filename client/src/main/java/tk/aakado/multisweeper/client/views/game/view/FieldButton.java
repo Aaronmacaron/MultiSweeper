@@ -29,6 +29,7 @@ public class FieldButton extends Button {
     private IntegerProperty y = new SimpleIntegerProperty();
     private ObjectProperty<FieldState> fieldState = new SimpleObjectProperty<>();
     private IntegerProperty value = new SimpleIntegerProperty();
+    final private FieldGrid fieldGrid;
     final private static double size = 45;
 
     /**
@@ -38,7 +39,9 @@ public class FieldButton extends Button {
      * @param field   Field containing the state, value and coordinates
      * @param onClick Action will be called on a leftClick
      */
-    public FieldButton(Field field, EventHandler<MouseEvent> onClick) {
+    FieldButton(Field field, FieldGrid fieldGrid, EventHandler<MouseEvent> onClick) {
+        this.fieldGrid = fieldGrid;
+
         // bind the properties
         x.bind(field.xProperty());
         y.bind(field.yProperty());
@@ -146,7 +149,8 @@ public class FieldButton extends Button {
      * @return The Image object associated with the name
      */
     private Image getImageByName(String name) {
-        return new Image(this.getClass().getResourceAsStream(String.format("../tiles/%s.png", name)));
+        return fieldGrid.getImageCache().computeIfAbsent(name,
+                key -> new Image(this.getClass().getResourceAsStream(String.format("../tiles/%s.png", key))));
     }
 
     /**
@@ -181,7 +185,7 @@ public class FieldButton extends Button {
     }
 
     /**
-     * Represents the different tiles a FieldButton can morph into. TileTypes can directly be mapped to images of tiles.
+     * Represents the different tiles a FieldButton can morph into. TileTypes can directly be mapped to imageCache of tiles.
      */
     private enum TileType {
 
