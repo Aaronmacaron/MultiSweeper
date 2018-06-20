@@ -7,6 +7,8 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
+import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 
 /**
  * View model for the game selection view.
@@ -18,6 +20,15 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
     @Override
     public void setAvailableGames(Set<Integer> gameIds) {
         this.gameIds.setAll(gameIds);
+    }
+
+    @Override
+    public void gameSelected(int gameId, boolean isAdmin, boolean authRequired) {
+        if (authRequired && !isAdmin) {
+            App.getInstance().changeView(AuthenticationView.class);
+        } else {
+            App.getInstance().changeView(ConfigurationView.class);
+        }
     }
 
     public ListProperty<Integer> gameIdsProperty() {

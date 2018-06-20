@@ -41,12 +41,8 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
 
     @Override
-    public void connected(boolean authRequired, boolean isAdmin) {
-        if (authRequired && !isAdmin) {
-            App.getInstance().changeView(AuthenticationView.class);
-        } else {
-            App.getInstance().changeView(ConfigurationView.class);
-        }
+    public void connected() {
+        App.getInstance().changeView(GameSelectionView.class);
     }
 
     @Override
