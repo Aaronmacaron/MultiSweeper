@@ -1,8 +1,5 @@
 package tk.aakado.multisweeper.client;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,6 +24,9 @@ import tk.aakado.multisweeper.client.views.game.GameViewModel;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificator;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The client Application
@@ -76,8 +76,7 @@ public class Client extends Application {
         views.put(GameView.class, gameView);
         views.put(FinishedView.class, finishedView);
 
-        Parent root = views.get(ConnectionView.class).getView();
-        primaryStage.setScene(new Scene(root));
+        changeView(ConnectionView.class);
         primaryStage.show();
     }
 
@@ -110,7 +109,4 @@ public class Client extends Application {
         this.stage.setScene(scene);
     }
 
-    public Stage getStage() {
-        return stage;
-    }
 }
