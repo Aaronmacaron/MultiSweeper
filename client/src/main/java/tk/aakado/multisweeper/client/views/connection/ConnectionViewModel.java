@@ -38,6 +38,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
             // Show error message if connecting fails
             if (exception.isPresent()) {
                 rejected.setValue(true);
+                Logger.get(this).warn("Could not connect to server because the hostname and port could not be found.");
                 return;
             }
 
@@ -47,7 +48,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
             transmitter.connect();
         } catch (URISyntaxException e) {
             Logger.get(this).warn("The provided URI is not formatted correctly.");
-            // TODO: Show error message to user.
+            rejected.setValue(true);
         }
 
     }
