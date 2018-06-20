@@ -3,9 +3,11 @@ package tk.aakado.multisweeper.client.views.game;
 import java.time.Duration;
 
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,15 +29,36 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private ListProperty<Field> fields = new SimpleListProperty<>(FXCollections.emptyObservableList());
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
+    private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
+    private BooleanProperty admin = new SimpleBooleanProperty(false);
+
 
     @Override
     public void playerDisconnected(String player, boolean isNewAdmin) {
-        //TODO: Implement
+        // check if the given player exists
+        String playerToRemove = players.get().stream()
+                .filter(s -> s.equals(player))
+                .findFirst()
+                .orElseThrow(() -> {
+                    Logger.get(this).error("Can't remove player that doesn't exist");
+                    return new IllegalArgumentException("Can't remove player that doesn't exist");
+                });
+
+        // remove the player
+        players.get().remove(playerToRemove);
+
+        // set the new admin
+        admin.setValue(isNewAdmin);
     }
 
     @Override
     public void playerConnected(String player) {
-        //TODO: Implement
+        // check if a player with the same name already exists
+        if (players.get().stream().anyMatch(s -> s.equals(player))) {
+            Logger.get(this).error("Player with the same name already exists");
+            throw new IllegalArgumentException("Player with the same name already exists");
+        }
+        players.get().add(player);
     }
 
     @Override
@@ -59,7 +82,8 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     @Override
-    public void updateField(int[] cords, String newState) {
+    //TODO: new parameter value is needed
+    public void updateField(int[] cords, FieldState newState) {
 
         Field field = fields.get().stream()
                 .filter(f -> f.getX() == cords[0] && f.getY() == cords[1])
@@ -69,11 +93,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
                     return new IllegalArgumentException("A field with the coordinates " + cords[0] + ":" + cords[1] + " does not exist");
                 });
 
-        try {
-            field.setFieldState(FieldState.valueOf(newState));
-        } catch (IllegalArgumentException ex) {
-            Logger.get(this).error("The field state %s does not exists", newState);
-        }
+            field.setFieldState(newState);
     }
 
     @Override
@@ -146,5 +166,23 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public IntegerProperty fieldHeightProperty() {
         return fieldHeight;
+    }
+
+    public boolean isAdmin() {
+        return admin.get();
+    }
+
+    public BooleanProperty adminProperty() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin.set(admin);
+    }
+
+    public void sendRestart() {
+        if (admin.get()) {
+            Client.getInstance().getTransmitter().restart();
+        }
     }
 }

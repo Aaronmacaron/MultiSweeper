@@ -37,6 +37,8 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
             return String.format("%s:%s", duration.toMinutes(), duration.getSeconds());
         }));
 
+        //TODO add validation for the reconfigure button (see the admin property in the viewmodel)
+
     }
 
     private void onVictoryChanged(ObservableValue<? extends Boolean> observable, boolean oldValue, boolean newValue) {
@@ -53,6 +55,7 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     }
 
     @FXML
+    //TODO: falsche delegation -> es darf nicht die Methode eines Notificators aus der View aufgrufen werden
     public void onReconfigure(ActionEvent actionEvent) {
         viewModel.reconfigure();
     }

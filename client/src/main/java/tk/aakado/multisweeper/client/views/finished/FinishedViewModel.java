@@ -19,6 +19,8 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
     private BooleanProperty victory = new SimpleBooleanProperty(false);
     private IntegerProperty totalPlayers = new SimpleIntegerProperty(0);
     private ObjectProperty<Duration> totalTime = new SimpleObjectProperty<>(Duration.ZERO);//TODO to prevent NullPointerException Duration.ZERO is set
+    //TODO: an admin property is neede, cause not everyone can do every action (reconfigure, restart...)
+    //TODO: a singelton which represents the admin state of the underlying client?
 
     /**
      * Starts a new game

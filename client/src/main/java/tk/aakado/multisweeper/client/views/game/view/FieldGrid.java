@@ -8,9 +8,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import tk.aakado.multisweeper.client.views.game.model.Field;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents the playing field with @{@link FieldButton}.
@@ -33,6 +37,11 @@ public class FieldGrid extends GridPane {
      * Event which will be called on a leftClick on a FieldButton
      */
     private EventHandler<MouseEvent> onClick;
+
+    /**
+     * Cache for all tile images
+     */
+    private Map<String, Image> imageCache = new HashMap<>();
 
     /**
      * Create a new FieldGrid
@@ -78,7 +87,7 @@ public class FieldGrid extends GridPane {
         ObservableList<FieldButton> newFieldButtons = FXCollections.observableArrayList();
 
         // create FieldButtons for every Field
-        fields.get().forEach(field -> newFieldButtons.add(new FieldButton(field, this.onClick)));
+        fields.get().forEach(field -> newFieldButtons.add(new FieldButton(field, this, this.onClick)));
 
         // set the new List as actual list of Buttons
         this.fieldButtons.setValue(newFieldButtons);
@@ -97,5 +106,9 @@ public class FieldGrid extends GridPane {
             }
         }
 
+    }
+
+    public Map<String, Image> getImageCache() {
+        return imageCache;
     }
 }
