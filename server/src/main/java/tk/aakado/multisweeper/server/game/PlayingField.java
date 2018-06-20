@@ -148,6 +148,8 @@ public class PlayingField {
             this.fields.stream()
                     // get surrounding fields
                     .filter(field -> surrounding.contains(field.getFieldCords()))
+                    // skip discovered ones
+                    .filter(field -> !field.isDiscovered())
                     .forEach(field -> changedFields.addAll(discoverField(field.getFieldCords(), player)));
         }
 
