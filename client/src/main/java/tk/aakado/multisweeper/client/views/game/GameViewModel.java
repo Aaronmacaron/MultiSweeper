@@ -1,7 +1,6 @@
 package tk.aakado.multisweeper.client.views.game;
 
 import java.time.Duration;
-import java.util.concurrent.ThreadLocalRandom;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.IntegerProperty;
