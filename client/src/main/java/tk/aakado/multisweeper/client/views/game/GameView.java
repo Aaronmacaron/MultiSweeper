@@ -3,7 +3,6 @@ package tk.aakado.multisweeper.client.views.game;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ResourceBundle;
-import java.util.concurrent.ThreadLocalRandom;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -56,7 +55,7 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     }
 
     /**
-     * Handles the leftClick on a Field.
+     * Handles the Click on a Field.
      * Set a method reference to this method on the FieldButton.setOnAction method
      *
      * @param mouseEvent Click on a Field
@@ -88,11 +87,7 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
      */
     @FXML
     public void onRestart(ActionEvent actionEvent) {
-        // TODO: implement
-        // for test reasons a random field is generated
-        int x = ThreadLocalRandom.current().nextInt(3, 20);
-        int y = ThreadLocalRandom.current().nextInt(3, 20);
-        viewModel.restart(x, x);
+        viewModel.sendRestart();
     }
 
     /**
@@ -103,9 +98,5 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     @FXML
     public void onDisconnect(ActionEvent actionEvent) {
         viewModel.disconnect();
-    }
-
-    public void click(Field field) {
-        //TODO: Implement
     }
 }

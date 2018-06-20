@@ -68,6 +68,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
     public void playerConnected(String player) {
         // check if a player with the same name already exists
         if (players.get().stream().anyMatch(s -> s.equals(player))) {
+            Logger.get(this).error("Player with the same name already exists");
             throw new IllegalArgumentException("Player with the same name already exists");
         }
         players.get().add(player);
