@@ -63,9 +63,8 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     }
 
     @FXML
-    //TODO: falsche delegation -> es darf nicht die Methode eines Notificators aus der View aufgrufen werden
     public void onReconfigure(ActionEvent actionEvent) {
-        viewModel.reconfigure();
+        viewModel.sendReconfigure();
     }
 
     @FXML
