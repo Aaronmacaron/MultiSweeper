@@ -2,6 +2,8 @@ package tk.aakado.multisweeper.server.game;
 
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 
+import java.util.Optional;
+
 /**
  * Interface of a game.
  */
@@ -65,7 +67,6 @@ public interface Game {
      */
     void discoverField(Player player, FieldCords fieldCords);
 
-
     /**
      * Flags/unflags a field.
      * If the field is already flagged it gets unflagged and vice-versa.
@@ -74,5 +75,11 @@ public interface Game {
      * @param fieldCords The coordinates of the field which should be flagged/unflagged.
      */
     void flagField(Player player, FieldCords fieldCords);
+
+    /**
+     * Retrieve the player that is the current admin of this game.
+     * @return Optional containing the admin, empty if no player is in the game.
+     */
+    Optional<Player> getAdmin();
 
 }

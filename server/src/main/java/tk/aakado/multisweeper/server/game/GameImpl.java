@@ -5,6 +5,7 @@ import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GameImpl implements Game {
 
@@ -50,6 +51,10 @@ public class GameImpl implements Game {
 
     @Override
     public void startNewRound(Player player) {
+        if (!checkAdmin(player)) {
+            return;
+        }
+
         GameConfigDTO runConfig = this.configuration;
         if (this.configuration == null) {
             runConfig = DEFAULT_CONFIGURATION;
@@ -57,13 +62,9 @@ public class GameImpl implements Game {
 
         int width = runConfig.getWidth();
         int height = runConfig.getHeight();
-        double mines = width * height * runConfig.getMinesPercentage();
+        int mines = (int) Math.round(width * height * runConfig.getMinesPercentage());
 
-        this.currentPlayingField = new PlayingField(
-                width,
-                height,
-                (int) Math.round(mines) // Convert from double to int
-        );
+        this.currentPlayingField = new PlayingField(width, height, mines);
     }
 
     @Override
@@ -83,6 +84,11 @@ public class GameImpl implements Game {
     @Override
     public boolean hasPassword() {
         return this.password.isEmpty();
+    }
+
+    @Override
+    public Optional<Player> getAdmin() {
+        return Optional.ofNullable(this.players.get(0));
     }
 
     /**
@@ -109,9 +115,9 @@ public class GameImpl implements Game {
      */
     private boolean checkAdmin(Player player) {
         if (hasPlayer(player)) {
-            return this.players.get(0).equals(player);
+            return player.equals(getAdmin().get());
         }
-        Logger.get(this).warn("Player {} tried to invoke a admin action.", player);
+        Logger.get(this).warn("Player {} is not part of this game and tried to invoke admin action.", player);
         return false;
     }
 
