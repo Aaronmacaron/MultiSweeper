@@ -55,7 +55,14 @@ public class Server {
 
         registerActionHandlers();
 
-        connector.start();
+        Optional<Exception> exception = connector.start();
+
+        // Handle potential error
+        if (exception.isPresent()) {
+            Logger.get(Server.class).error("Error occurred while starting server, exiting now: {}",
+                    exception.get().getMessage());
+            System.exit(1);
+        }
     }
 
     /**

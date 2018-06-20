@@ -16,6 +16,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -47,16 +48,16 @@ public class ServerConnector extends AbstractConnector {
      * called clients can connect to the server.
      */
     @Override
-    public void start() {
+    public Optional<Exception> start() {
         try {
             server = new ServerSocket(port);
             Logger.get(this).info("ServerConnector started! Listening for incoming connections on port: {}", port);
+            executeRepeatedly(this::listen);
+            isStarted = true;
+            return Optional.empty();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+            return Optional.of(e);
         }
-        executeRepeatedly(this::listen);
-        isStarted = true;
     }
 
     /**

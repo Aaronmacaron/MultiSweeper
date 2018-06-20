@@ -2,6 +2,7 @@ package tk.aakado.multisweeper.client.views.connection;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.BooleanProperty;
@@ -32,7 +33,13 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
             // Establish connection to server using client connector. Connects to address specified by the user.
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
-            clientConnector.start(); //TODO: catch on potential fail of connecting to server
+            Optional<Exception> exception = clientConnector.start(); //TODO: catch on potential fail of connecting to server
+
+            // Show error message if connecting fails
+            if (exception.isPresent()) {
+                rejected.setValue(true);
+                return;
+            }
 
             // Create new Transmitter of clientConnector and store it in Client Main class
             Transmitter transmitter = new Transmitter(clientConnector);
