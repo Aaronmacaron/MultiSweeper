@@ -6,7 +6,7 @@ import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 
@@ -24,14 +24,14 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
 
     @Override
     public void gameSelected(int gameId, boolean isAdmin, boolean authRequired) {
-        App.getInstance().getGameProperties().setAdmin(isAdmin);
-        App.getInstance().getGameProperties().setGameId(gameId);
+        Client.getInstance().getGameProperties().setAdmin(isAdmin);
+        Client.getInstance().getGameProperties().setGameId(gameId);
 
         // display the correct view
         if (authRequired && !isAdmin) {
-            App.getInstance().changeView(AuthenticationView.class);
+            Client.getInstance().changeView(AuthenticationView.class);
         } else {
-            App.getInstance().changeView(ConfigurationView.class);
+            Client.getInstance().changeView(ConfigurationView.class);
         }
     }
 
@@ -44,6 +44,6 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
      * @param gameId The id of the game.
      */
     public void join(int gameId) {
-        App.getInstance().getTransmitter().joinGame(gameId);
+        Client.getInstance().getTransmitter().joinGame(gameId);
     }
 }

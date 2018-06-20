@@ -32,14 +32,26 @@ import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
 /**
  * The client Application
  */
-public class App extends Application {
+public class Client extends Application {
 
     private Transmitter transmitter;
     private Map<Class, MultiSweeperView> views = new HashMap<>();
     private Stage stage;
-    private static App instance;
+    private static Client instance;
     private GameProperties gameProperties = new GameProperties();
 
+    /**
+     * Constructor.
+     * Checks that this singleton is only instantiated once.
+     */
+    public Client() {
+        synchronized (Client.class) {
+            if (instance != null) {
+                throw new IllegalStateException("Constructor must not be called more than once. Use Client.getInstance().");
+            }
+            instance = this;
+        }
+    }
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -72,7 +84,7 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    public static App getInstance() {
+    public static Client getInstance() {
         return instance;
     }
 

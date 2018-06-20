@@ -5,7 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 
 public class AuthenticationViewModel implements ViewModel, AuthenticationNotificator {
@@ -18,7 +18,7 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
      * Is called when user submits password
      */
     public void submit() {
-        App.getInstance().getTransmitter().authenticate(App.getInstance().getGameProperties().getGameId(), password.get());
+        Client.getInstance().getTransmitter().authenticate(Client.getInstance().getGameProperties().getGameId(), password.get());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AuthenticationViewModel implements ViewModel, AuthenticationNotific
 
     @Override
     public void success() {
-        App.getInstance().changeView(ConfigurationView.class);
+        Client.getInstance().changeView(ConfigurationView.class);
     }
 
     public StringProperty passwordProperty() {

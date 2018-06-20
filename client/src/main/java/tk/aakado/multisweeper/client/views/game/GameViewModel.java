@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseButton;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.finished.FinishedView;
 import tk.aakado.multisweeper.client.views.game.model.Field;
@@ -34,7 +34,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
 
     public GameViewModel() {
-        this.admin.bindBidirectional(App.getInstance().getGameProperties().adminProperty());
+        this.admin.bindBidirectional(Client.getInstance().getGameProperties().adminProperty());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     //TODO: new parameter value is needed
-    public void updateField(int[] cords, String newState) {
+    public void updateField(int[] cords, FieldState newState) {
 
         Field field = fields.get().stream()
                 .filter(f -> f.getX() == cords[0] && f.getY() == cords[1])
@@ -97,24 +97,20 @@ public class GameViewModel implements ViewModel, GameNotificator {
                     return new IllegalArgumentException("A field with the coordinates " + cords[0] + ":" + cords[1] + " does not exist");
                 });
 
-        try {
-            field.setFieldState(FieldState.valueOf(newState));
-        } catch (IllegalArgumentException ex) {
-            Logger.get(this).error("The field state %s does not exists", newState);
-        }
+            field.setFieldState(newState);
     }
 
     @Override
     public void finished() {
-        App.getInstance().changeView(FinishedView.class);
+        Client.getInstance().changeView(FinishedView.class);
     }
 
     /**
      * The Player disconnects from the game
      */
     public void disconnect() {
-        App.getInstance().getTransmitter().disconnect();
-        App.getInstance().changeView(ConnectionView.class);
+        Client.getInstance().getTransmitter().disconnect();
+        Client.getInstance().changeView(ConnectionView.class);
     }
 
     /**
@@ -126,7 +122,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
      */
     public void leftClick(int x, int y) {
         //TODO: This method call throws a nullpointer when the transmitter isn't initialized
-        App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
+        Client.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
     }
 
     /**
@@ -137,7 +133,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
      * @param y y-coordinate of the field
      */
     public void rightClick(int x, int y) {
-        App.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
+        Client.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {
@@ -190,7 +186,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public void sendRestart() {
         if (admin.get()) {
-            App.getInstance().getTransmitter().restart();
+            Client.getInstance().getTransmitter().restart();
         }
     }
 }
