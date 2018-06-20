@@ -10,6 +10,10 @@ import java.util.Optional;
 
 /**
  * This is the main class for the server part of the application.
+ *
+ * @author Aaron Ebnöther
+ * @author Dominik Strässle
+ * @author Kay Mattern
  */
 public class Server {
 

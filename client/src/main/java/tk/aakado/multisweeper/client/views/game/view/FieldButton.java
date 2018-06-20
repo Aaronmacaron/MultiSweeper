@@ -1,8 +1,5 @@
 package tk.aakado.multisweeper.client.views.game.view;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -17,11 +14,11 @@ import javafx.scene.input.MouseEvent;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Special Button representing a @{@link Field} on the @{@link FieldGrid}
- *
- * @author Dominik Strässle
- * @author Aaron Ebnöther
  */
 public class FieldButton extends Button {
 

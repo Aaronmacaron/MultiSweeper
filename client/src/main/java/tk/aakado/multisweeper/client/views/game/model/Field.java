@@ -1,17 +1,15 @@
 package tk.aakado.multisweeper.client.views.game.model;
 
-import java.util.Objects;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
+import java.util.Objects;
+
 /**
  * Model class for fields
- *
- * @author Dominik Strässle
  */
 public class Field {
 

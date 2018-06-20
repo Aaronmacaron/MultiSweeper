@@ -30,7 +30,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The client Application
+ * The client Application of MultiSweeper.
+ * This class is a singleton. It holds the {@link Transmitter}, Views and {@link GameProperties}.
+ *
+ * @author Aaron Ebnöther
+ * @author Dominik Strässle
+ * @author Kay Mattern
  */
 public class Client extends Application {
 

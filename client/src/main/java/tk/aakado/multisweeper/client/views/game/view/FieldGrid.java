@@ -18,8 +18,6 @@ import java.util.Map;
 
 /**
  * Represents the playing field with @{@link FieldButton}.
- *
- * @author Dominik Strässle
  */
 public class FieldGrid extends GridPane {
     /**
