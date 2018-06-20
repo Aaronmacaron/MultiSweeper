@@ -26,9 +26,16 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
      */
     void connect() {
         try {
-            URI uri = new URI(connection.get());
+            // The uri scheme 'multisweeper' is implicitly added so the connection string becomes a valid hierarchical
+            // URI. Thus the connection string can be parsed very easily using the URI class.
+            String uriString = "multisweeper://" + connection.get();
+            URI uri = new URI(uriString);
+
+            // Establish connection to server using client connector. Connects to address specified by the user.
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
             clientConnector.start(); //TODO: catch on potential fail of connecting to server
+
+            // Create new Transmitter of clientConnector and store it in Client Main class
             Transmitter transmitter = new Transmitter(clientConnector);
             App.getInstance().setTransmitter(transmitter);
             transmitter.connect();
