@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.server;
 
 import tk.aakado.multisweeper.server.connection.ServerConnector;
+import tk.aakado.multisweeper.server.connection.handler.JoinGameHandler;
 import tk.aakado.multisweeper.server.game.GameManager;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Connector;
@@ -47,8 +48,10 @@ public class Server {
 
         // set up connector
         connector = new ServerConnector(arguments.getPort());
-        connector.start();
 
+        registerActionHandlers();
+
+        connector.start();
     }
 
     /**
@@ -119,6 +122,13 @@ public class Server {
         }
 
         return Optional.of(numberOfGames);
+    }
+
+    /**
+     * Registers all action handlers which are needed from start on to the connector of the server.
+     */
+    private static void registerActionHandlers() {
+        connector.addActionHandler(JoinGameHandler.class);
     }
 
     /**
