@@ -64,7 +64,7 @@ public class App extends Application {
         views.put(GameView.class, gameView);
         views.put(FinishedView.class, finishedView);
 
-        Parent root = views.get(GameView.class).getView();
+        Parent root = views.get(ConnectionView.class).getView();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

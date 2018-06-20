@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import tk.aakado.multisweeper.client.App;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
+import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.game.GameView;
 
 public class FinishedViewModel implements ViewModel, FinishedNotificator {
@@ -41,6 +42,7 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
     @Override
     public void disconnect() {
         App.getInstance().getTransmitter().disconnect();
+        App.getInstance().changeView(ConnectionView.class);
     }
 
     public BooleanProperty victoryProperty() {
