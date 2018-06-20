@@ -18,15 +18,28 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
 
     private BooleanProperty victory = new SimpleBooleanProperty(false);
     private IntegerProperty totalPlayers = new SimpleIntegerProperty(0);
-    private ObjectProperty<Duration> totalTime = new SimpleObjectProperty<>(Duration.ZERO);//TODO to prevent NullPointerException Duration.ZERO is set
-    //TODO: an admin property is neede, cause not everyone can do every action (reconfigure, restart...)
-    //TODO: a singelton which represents the admin state of the underlying client?
+    private ObjectProperty<Duration> totalTime = new SimpleObjectProperty<>(Duration.ZERO);
+    private BooleanProperty admin = new SimpleBooleanProperty(false);
+
+    /**
+     * Creates a Bidirectional binding to the admin property
+     */
+    public FinishedViewModel() {
+        admin.bindBidirectional(App.getInstance().getGameProperties().adminProperty());
+    }
 
     /**
      * Starts a new game
      */
     public void startNewGame() {
-        App.getInstance().getTransmitter().restart();
+        if (admin.get()) App.getInstance().getTransmitter().restart();
+    }
+
+    /**
+     * Reconfigure the existing game
+     */
+    public void sendReconfigure(){
+        if (admin.get()) App.getInstance().getTransmitter().reconfigure();
     }
 
     @Override
@@ -59,4 +72,11 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
         return totalTime;
     }
 
+    public boolean isAdmin() {
+        return admin.get();
+    }
+
+    public BooleanProperty adminProperty() {
+        return admin;
+    }
 }

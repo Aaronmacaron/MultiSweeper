@@ -33,6 +33,10 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private BooleanProperty admin = new SimpleBooleanProperty(false);
 
 
+    public GameViewModel() {
+        this.admin.bindBidirectional(App.getInstance().getGameProperties().adminProperty());
+    }
+
     @Override
     public void playerDisconnected(String player, boolean isNewAdmin) {
         // check if the given player exists
