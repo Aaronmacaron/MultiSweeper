@@ -39,7 +39,7 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
      * Reconfigure the existing game
      */
     public void sendReconfigure(){
-        if (admin.get()) Client.getInstance().getTransmitter().reconfigure();
+        if (admin.get()) Client.getInstance().changeView(ConfigurationView.class);
     }
 
     @Override

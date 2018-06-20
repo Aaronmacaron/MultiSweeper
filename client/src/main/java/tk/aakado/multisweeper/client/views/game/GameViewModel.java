@@ -121,7 +121,6 @@ public class GameViewModel implements ViewModel, GameNotificator {
      * @param y y-coordinate of the field
      */
     public void leftClick(int x, int y) {
-        //TODO: This method call throws a nullpointer when the transmitter isn't initialized
         Client.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
     }
 
@@ -134,6 +133,12 @@ public class GameViewModel implements ViewModel, GameNotificator {
      */
     public void rightClick(int x, int y) {
         Client.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
+    }
+
+    public void sendRestart() {
+        if (admin.get()) {
+            Client.getInstance().getTransmitter().restart();
+        }
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {
@@ -182,11 +187,5 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public void setAdmin(boolean admin) {
         this.admin.set(admin);
-    }
-
-    public void sendRestart() {
-        if (admin.get()) {
-            Client.getInstance().getTransmitter().restart();
-        }
     }
 }

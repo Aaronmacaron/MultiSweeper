@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
+import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 
 /**
  * View model for the game selection view.
@@ -45,5 +46,12 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
      */
     public void join(int gameId) {
         Client.getInstance().getTransmitter().joinGame(gameId);
+    }
+
+    /**
+     * The players cancels the selection
+     */
+    public void cancel() {
+        Client.getInstance().changeView(ConnectionView.class);
     }
 }

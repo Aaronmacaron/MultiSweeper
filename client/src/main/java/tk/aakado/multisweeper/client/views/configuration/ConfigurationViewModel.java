@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.Client;
+import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.game.GameView;
 import tk.aakado.multisweeper.shared.Logger;
 
@@ -33,14 +34,15 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      * Starts the configured game
      */
     public void start() {
-        Client.getInstance().getTransmitter().start(fieldWidth.get(), fieldHeight.get(), mineDensity.get());
+        if (admin.get())
+            Client.getInstance().getTransmitter().start(fieldWidth.get(), fieldHeight.get(), mineDensity.get());
     }
 
     /**
      * Saves the password to persistence
      */
     public void save() {
-        Client.getInstance().getTransmitter().savePassword(password.get());
+        if (admin.get()) Client.getInstance().getTransmitter().savePassword(password.get());
     }
 
     /**
@@ -48,6 +50,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      */
     public void disconnect() {
         Client.getInstance().getTransmitter().disconnect();
+        Client.getInstance().changeView(ConnectionView.class);
     }
 
     @Override
