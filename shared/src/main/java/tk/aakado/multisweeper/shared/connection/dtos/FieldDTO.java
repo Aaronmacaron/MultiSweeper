@@ -1,4 +1,6 @@
-package tk.aakado.multisweeper.shared.game;
+package tk.aakado.multisweeper.shared.connection.dtos;
+
+import tk.aakado.multisweeper.shared.game.FieldState;
 
 import java.util.Optional;
 
