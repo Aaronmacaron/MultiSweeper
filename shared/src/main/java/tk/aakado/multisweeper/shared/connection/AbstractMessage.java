@@ -1,6 +1,6 @@
 package tk.aakado.multisweeper.shared.connection;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 
 /**
  * Abstract implementation of Message Interface
@@ -8,25 +8,16 @@ import com.google.gson.JsonObject;
 abstract public class AbstractMessage implements Message {
 
     private Connector connector;
-    private JsonObject params;
+    private JsonElement params;
 
     /**
      * Constructor
      * @param connector The connector
      * @param params The params
      */
-    public AbstractMessage(Connector connector, JsonObject params) {
+    public AbstractMessage(Connector connector, JsonElement params) {
         this.connector = connector;
         this.params = params;
-    }
-
-    /**
-     * @see Message#getConnector()
-     * @return connector
-     */
-    @Override
-    public Connector getConnector() {
-        return null;
     }
 
     /**
@@ -34,8 +25,16 @@ abstract public class AbstractMessage implements Message {
      * @return params
      */
     @Override
-    public JsonObject getParams() {
-        return null;
+    public JsonElement getParams() {
+        return params;
+    }
+
+    /**
+     * @see Message#getConnector()
+     */
+    @Override
+    public Connector getConnector() {
+        return connector;
     }
 
 }

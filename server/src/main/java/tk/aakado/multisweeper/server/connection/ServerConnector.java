@@ -1,7 +1,10 @@
 package tk.aakado.multisweeper.server.connection;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import tk.aakado.multisweeper.shared.Logger;
+import tk.aakado.multisweeper.shared.connection.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,15 +14,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
-
-import tk.aakado.multisweeper.shared.Logger;
-import tk.aakado.multisweeper.shared.connection.*;
 
 /**
  * This class is the Connector that connects the server to the client. It extends the AbstractConnector and thus
@@ -96,7 +97,7 @@ public class ServerConnector extends AbstractConnector {
             while((line = connection.getInput().readLine()) != null) {
                 JsonParser parser = new JsonParser();
                 JsonObject json = parser.parse(line).getAsJsonObject();
-                JsonObject params = json.getAsJsonObject("params");
+                JsonElement params = json.get("params");
                 ActionType actionType = ActionType.valueOf(json.get("actionType").getAsString());
                 queue.submit(() -> executeAllMatchingActionHandlers(actionType, params, connection));
             }
@@ -112,7 +113,7 @@ public class ServerConnector extends AbstractConnector {
      * @param json The params in form of a JsonObject
      * @param connection The connection which the message originates from
      */
-    private void executeAllMatchingActionHandlers(ActionType actionType, JsonObject json, Connection connection) {
+    private void executeAllMatchingActionHandlers(ActionType actionType, JsonElement json, Connection connection) {
         actionHandlers.stream()
                 .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods())) // create a Stream of all declard Methods in aClass
                 .filter(method -> actionType.equals(method.getAnnotation(ActionHandler.class).actionType())) // Remove Methods without the right Annotations
@@ -126,7 +127,7 @@ public class ServerConnector extends AbstractConnector {
      * @param json       Json containing relevant informations.
      * @param connection Current connection
      */
-    private void executeMethod(Method method, JsonObject json, Connection connection) {
+    private void executeMethod(Method method, JsonElement json, Connection connection) {
         try {
             Message message = new ServerMessage(this, json, connection);
             method.invoke(method.getDeclaringClass().newInstance(), message);

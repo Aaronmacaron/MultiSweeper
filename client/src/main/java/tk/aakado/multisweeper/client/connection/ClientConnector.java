@@ -1,5 +1,6 @@
 package tk.aakado.multisweeper.client.connection;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import tk.aakado.multisweeper.shared.Logger;
@@ -84,7 +85,7 @@ public class ClientConnector extends AbstractConnector {
             while((line = input.readLine()) != null) {
                 JsonParser parser = new JsonParser();
                 JsonObject json = parser.parse(line).getAsJsonObject();
-                JsonObject params = json.getAsJsonObject("params");
+                JsonElement params = json.get("params");
                 ActionType actionType = ActionType.valueOf(json.get("actionType").getAsString());
                 queue.submit(() -> executeAllMatchingActionHandlers(actionType, params));
             }
@@ -100,7 +101,7 @@ public class ClientConnector extends AbstractConnector {
      * @param actionType The Action Type which the ActionHandler must match
      * @param json       The params in form of a JsonObject
      */
-    private void executeAllMatchingActionHandlers(ActionType actionType, JsonObject json) {
+    private void executeAllMatchingActionHandlers(ActionType actionType, JsonElement json) {
         actionHandlers.stream()
                 .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods())) // create a Stream of all declard Methods in aClass
                 .filter(method -> actionType.equals(method.getAnnotation(ActionHandler.class).actionType())) // Remove Methods without the right Annotations
@@ -113,7 +114,7 @@ public class ClientConnector extends AbstractConnector {
      * @param method     Method tho execute
      * @param json       Json containing relevant information.
      */
-    private void executeMethod(Method method, JsonObject json) {
+    private void executeMethod(Method method, JsonElement json) {
         try {
             Message message = new ClientMessage(this, json);
             method.invoke(method.getDeclaringClass().newInstance(), message);
