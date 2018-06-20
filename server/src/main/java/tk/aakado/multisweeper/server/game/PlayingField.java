@@ -136,11 +136,12 @@ public class PlayingField {
 
         theField.discover(player);
 
+        changedFields.add(theField.toFieldState());
+
         if (theField.isMine()) {
             // TODO: end game
+            return changedFields;
         }
-
-        changedFields.add(theField.toFieldState());
 
         if (theField.getFieldValue() == FieldType.FIELD_0.getValue()) {
             // for empty field also discover the surrounding fields
