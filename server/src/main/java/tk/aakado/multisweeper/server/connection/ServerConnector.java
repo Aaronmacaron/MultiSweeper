@@ -49,7 +49,7 @@ public class ServerConnector extends AbstractConnector {
     public void start() {
         try {
             server = new ServerSocket(port);
-            System.out.println("ServerConnector started! Listening for incoming connections on port " + port);
+            Logger.get(this).info("ServerConnector started! Listening for incoming connections on port: {}", port);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -73,7 +73,7 @@ public class ServerConnector extends AbstractConnector {
     private void listen() {
         try {
             Socket socket = server.accept();
-            System.out.println("Client connected: " + socket.getRemoteSocketAddress());
+            Logger.get(this).info("New client connected to server: {}", socket.getRemoteSocketAddress());
 
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
