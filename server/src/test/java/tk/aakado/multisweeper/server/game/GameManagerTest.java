@@ -36,26 +36,27 @@ public class GameManagerTest {
         assertTrue(this.gameManager.getGame(gameId).isPresent());
     }
 
-    @Test
-    public void testCreatePlayer() {
-        Player player = this.gameManager.createPlayer(DUMMY_CONNECTION);
 
-        Optional<Player> get = this.gameManager.getPlayer(DUMMY_CONNECTION);
-        assertTrue(get.isPresent());
-        assertEquals(player, get.get());
-    }
+//    @Test
+//    public void testCreatePlayer() {
+//        Player player = this.gameManager.createPlayer(DUMMY_CONNECTION);
+//
+//        Optional<Player> get = this.gameManager.getPlayer(DUMMY_CONNECTION);
+//        assertTrue(get.isPresent());
+//        assertEquals(player, get.get());
+//    }
 
-    @Test
-    public void testGetGameOfPlayer() {
-        int gameId = this.gameManager.createGame();
-        Game game = this.gameManager.getGame(gameId).get();
-        Player player = this.gameManager.createPlayer(DUMMY_CONNECTION);
-
-        game.addPlayer(player, "");
-
-        Optional<Game> get = this.gameManager.getGameOf(player);
-        assertTrue(get.isPresent());
-        assertEquals(game, get.get());
-    }
+//    @Test
+//    public void testGetGameOfPlayer() {
+//        int gameId = this.gameManager.createGame();
+//        Game game = this.gameManager.getGame(gameId).get();
+//        Player player = this.gameManager.createPlayer(DUMMY_CONNECTION);
+//
+//        game.addPlayer(player, "");
+//
+//        Optional<Game> get = this.gameManager.getGameOf(player);
+//        assertTrue(get.isPresent());
+//        assertEquals(game, get.get());
+//    }
 
 }
