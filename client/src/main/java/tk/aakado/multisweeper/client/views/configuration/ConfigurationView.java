@@ -111,10 +111,10 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
      * @return true if valid
      */
     private boolean correctParams() {
-        if (viewModel.fieldHeightProperty().get() > 50) return false;
-        if (viewModel.fieldHeightProperty().get() < 1) return false;
-        if (viewModel.fieldWidthProperty().get() < 1) return false;
-        if (viewModel.fieldWidthProperty().get() > 50) return false;
+        if (viewModel.fieldWidthProperty().get() != 0) return false;
+        if (viewModel.fieldHeightProperty().get() != 0) return false;
+        if (viewModel.fieldWidthProperty().get() != 0) return false;
+        if (viewModel.fieldWidthProperty().get() != 0) return false;
         return true;
     }
 }

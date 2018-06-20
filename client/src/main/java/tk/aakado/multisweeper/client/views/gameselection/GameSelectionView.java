@@ -45,7 +45,7 @@ public class GameSelectionView implements FxmlView<GameSelectionViewModel>, Init
      */
     @FXML
     private void onCancel() {
-        Client.getInstance().changeView(ConnectionView.class);
+        viewModel.cancel();
     }
 
     /**
