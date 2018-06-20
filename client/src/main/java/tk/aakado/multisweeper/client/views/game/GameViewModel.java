@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseButton;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.finished.FinishedView;
 import tk.aakado.multisweeper.client.views.game.model.Field;
@@ -102,15 +102,15 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void finished() {
-        App.getInstance().changeView(FinishedView.class);
+        Client.getInstance().changeView(FinishedView.class);
     }
 
     /**
      * The Player disconnects from the game
      */
     public void disconnect() {
-        App.getInstance().getTransmitter().disconnect();
-        App.getInstance().changeView(ConnectionView.class);
+        Client.getInstance().getTransmitter().disconnect();
+        Client.getInstance().changeView(ConnectionView.class);
     }
 
     /**
@@ -122,7 +122,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
      */
     public void leftClick(int x, int y) {
         //TODO: This method call throws a nullpointer when the transmitter isn't initialized
-        App.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
+        Client.getInstance().getTransmitter().click(x, y, MouseButton.PRIMARY);
     }
 
     /**
@@ -133,7 +133,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
      * @param y y-coordinate of the field
      */
     public void rightClick(int x, int y) {
-        App.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
+        Client.getInstance().getTransmitter().click(x, y, MouseButton.SECONDARY);
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {

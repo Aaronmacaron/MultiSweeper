@@ -13,4 +13,4 @@ dependencies {
     compile group: 'de.saxsys', name: 'mvvmfx', version: '1.7.0'
 }
 
-mainClassName = 'tk.aakado.multisweeper.client.App'
+mainClassName = 'tk.aakado.multisweeper.client.Client'

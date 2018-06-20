@@ -1,8 +1,6 @@
 package tk.aakado.multisweeper.server.connection.handler;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.connection.ServerConnector;
 import tk.aakado.multisweeper.server.connection.ServerMessage;
@@ -31,7 +29,7 @@ public class JoinGameHandler {
         int gameId = message.getParams().getAsInt();
 
         GameManager gameManager = Server.getGameManager();
-        ServerConnector connector = (ServerConnector) message.getConnector();
+        ServerConnector connector = message.getConnector();
         Connection sender = message.getSender();
 
         if (! validateGameId(gameId, gameManager, connector, sender)) {
@@ -58,12 +56,11 @@ public class JoinGameHandler {
      */
     @ActionHandler(actionType = ActionType.AUTHENTICATE)
     public void onAuthenticate(ServerMessage message) {
-        // TODO: use message.getParams() and AuthenticationDTO
-        String password = "test";
-        int gameId = 1;
+        AuthenticationDTO authData = new Gson().fromJson(message.getParams(), AuthenticationDTO.class);
+        int gameId = authData.getGameId();
 
         GameManager gameManager = Server.getGameManager();
-        ServerConnector connector = (ServerConnector) message.getConnector();
+        ServerConnector connector = message.getConnector();
         Connection sender = message.getSender();
 
         if (! validateGameId(gameId, gameManager, connector, sender)) {
@@ -77,7 +74,7 @@ public class JoinGameHandler {
         Player player = gameManager.getPlayer(message.getSender())
                 .orElseThrow(() -> new IllegalStateException("Action was called by connection that has never joined a game"));
 
-        boolean wrongPassword = !game.addPlayer(player, password);
+        boolean wrongPassword = !game.addPlayer(player, authData.getPassword());
 
         if (wrongPassword) {
             connector.sendTo(new Action(ActionType.PASSWORD_WRONG), message.getSender());

@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 
 /**
@@ -45,7 +45,7 @@ public class GameSelectionView implements FxmlView<GameSelectionViewModel>, Init
      */
     @FXML
     private void onCancel() {
-        App.getInstance().changeView(ConnectionView.class);
+        Client.getInstance().changeView(ConnectionView.class);
     }
 
     /**
