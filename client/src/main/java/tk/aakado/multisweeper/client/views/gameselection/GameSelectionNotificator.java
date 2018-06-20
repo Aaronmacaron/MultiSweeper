@@ -15,4 +15,13 @@ public interface GameSelectionNotificator extends Notificator {
      */
     void setAvailableGames(Set<Integer> gameIds);
 
+    /**
+     * The selected game will be started with our without authentication.
+     *
+     * @param gameId       Id of the game
+     * @param isAdmin      true if the player is the admin of the game
+     * @param authRequired true if a authentication is required
+     */
+    void gameSelected(int gameId, boolean isAdmin, boolean authRequired);
+
 }

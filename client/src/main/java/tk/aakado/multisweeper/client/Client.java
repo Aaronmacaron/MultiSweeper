@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
+import tk.aakado.multisweeper.client.views.GameProperties;
 import tk.aakado.multisweeper.client.views.MultiSweeperView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
@@ -37,6 +38,7 @@ public class Client extends Application {
     private Map<Class, MultiSweeperView> views = new HashMap<>();
     private Stage stage;
     private static Client instance;
+    private GameProperties gameProperties = new GameProperties();
 
     /**
      * Constructor.
@@ -76,6 +78,7 @@ public class Client extends Application {
         views.put(GameView.class, gameView);
         views.put(FinishedView.class, finishedView);
 
+        // show the connection view
         changeView(ConnectionView.class);
         primaryStage.show();
     }
@@ -109,4 +112,7 @@ public class Client extends Application {
         this.stage.setScene(scene);
     }
 
+    public GameProperties getGameProperties() {
+        return gameProperties;
+    }
 }

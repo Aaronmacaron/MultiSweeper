@@ -62,6 +62,7 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         //        playersList.setCellFactory();
 
         // Make all Configuration Properties not editable when Player isn't an admin
+        //TODO: make the surrounding VBox unvisible instead of each field
         passwordField.editableProperty().bind(viewModel.adminProperty());
         fieldHeightField.editableProperty().bind(viewModel.adminProperty());
         fieldWidthField.editableProperty().bind(viewModel.adminProperty());

@@ -7,10 +7,8 @@ public interface ConnectionNotificator extends Notificator {
     /**
      * Connection was successful
      *
-     * @param authRequired An authentication is required
-     * @param isAdmin      Shows if the player is the admin
      */
-    void connected(boolean authRequired, boolean isAdmin);
+    void connected();
 
     /**
      * The connection failed.

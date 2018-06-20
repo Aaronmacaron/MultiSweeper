@@ -106,4 +106,10 @@ public class Transmitter {
         clientConnector.send(action);
     }
 
+    /**
+     * Reconfigure the existing game
+     */
+    public void reconfigure() {
+        //TODO: Implement
+    }
 }
