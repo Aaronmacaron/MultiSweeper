@@ -33,7 +33,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
             // Establish connection to server using client connector. Connects to address specified by the user.
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
-            Optional<Exception> exception = clientConnector.start(); //TODO: catch on potential fail of connecting to server
+            Optional<Exception> exception = clientConnector.start();
 
             // Show error message if connecting fails
             if (exception.isPresent()) {
