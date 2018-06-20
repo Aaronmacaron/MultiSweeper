@@ -8,7 +8,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.connection.ClientConnector;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
@@ -30,7 +30,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
             clientConnector.start(); //TODO: catch on potential fail of connecting to server
             Transmitter transmitter = new Transmitter(clientConnector);
-            App.getInstance().setTransmitter(transmitter);
+            Client.getInstance().setTransmitter(transmitter);
             transmitter.connect();
         } catch (URISyntaxException e) {
             Logger.get(this).warn("The provided URI is not formatted correctly.");
@@ -43,9 +43,9 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     @Override
     public void connected(boolean authRequired, boolean isAdmin) {
         if (authRequired && !isAdmin) {
-            App.getInstance().changeView(AuthenticationView.class);
+            Client.getInstance().changeView(AuthenticationView.class);
         } else {
-            App.getInstance().changeView(ConfigurationView.class);
+            Client.getInstance().changeView(ConfigurationView.class);
         }
     }
 

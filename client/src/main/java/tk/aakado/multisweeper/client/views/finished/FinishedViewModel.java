@@ -9,7 +9,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import tk.aakado.multisweeper.client.App;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.game.GameView;
@@ -24,25 +24,25 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
      * Starts a new game
      */
     public void startNewGame() {
-        App.getInstance().getTransmitter().restart();
+        Client.getInstance().getTransmitter().restart();
     }
 
     @Override
     public void restart() {
-        App.getInstance().changeView(GameView.class);
+        Client.getInstance().changeView(GameView.class);
     }
 
 
     @Override
     public void reconfigure() {
-        App.getInstance().changeView(ConfigurationView.class);
+        Client.getInstance().changeView(ConfigurationView.class);
     }
 
 
     @Override
     public void disconnect() {
-        App.getInstance().getTransmitter().disconnect();
-        App.getInstance().changeView(ConnectionView.class);
+        Client.getInstance().getTransmitter().disconnect();
+        Client.getInstance().changeView(ConnectionView.class);
     }
 
     public BooleanProperty victoryProperty() {
