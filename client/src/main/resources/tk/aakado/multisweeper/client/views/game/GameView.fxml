@@ -53,7 +53,7 @@
         <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </padding>
-        <Button mnemonicParsing="false" onAction="#onRestart" text="Restart" />
+        <Button fx:id="restartButton" mnemonicParsing="false" onAction="#onRestart" text="Restart" />
         <Button mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
     </HBox>
 </VBox>

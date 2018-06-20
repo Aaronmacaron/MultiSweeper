@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class FinishedView implements FxmlView<FinishedViewModel>, Initializable {
@@ -24,6 +25,11 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     private Label totalPlayersLabel;
     @FXML
     private Label timeLabel;
+    @FXML
+    private Button startNewButton;
+
+    @FXML
+    private Button reconfigureButton;
 
 
     @Override
@@ -37,8 +43,10 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
             return String.format("%s:%s", duration.toMinutes(), duration.getSeconds());
         }));
 
-        //TODO add validation for the reconfigure button (see the admin property in the viewmodel)
 
+        // Hide the restart and reconfigure Button if player isn't admin
+        reconfigureButton.visibleProperty().bind(viewModel.adminProperty());
+        startNewButton.visibleProperty().bind(viewModel.adminProperty());
     }
 
     private void onVictoryChanged(ObservableValue<? extends Boolean> observable, boolean oldValue, boolean newValue) {
@@ -55,9 +63,8 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     }
 
     @FXML
-    //TODO: falsche delegation -> es darf nicht die Methode eines Notificators aus der View aufgrufen werden
     public void onReconfigure(ActionEvent actionEvent) {
-        viewModel.reconfigure();
+        viewModel.sendReconfigure();
     }
 
     @FXML

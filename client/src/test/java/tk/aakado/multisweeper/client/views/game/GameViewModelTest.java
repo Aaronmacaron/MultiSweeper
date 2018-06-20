@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.client.views.game;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
@@ -16,6 +18,11 @@ import static org.junit.Assert.assertEquals;
 public class GameViewModelTest {
 
     private GameViewModel viewModel;
+
+    @BeforeClass
+    public static void setUpApp() {
+        new Client();
+    }
 
     @Before
     public void setUp() throws Exception {

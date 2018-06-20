@@ -25,6 +25,10 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
     private StringProperty password = new SimpleStringProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
 
+    public ConfigurationViewModel() {
+        this.admin.bindBidirectional(Client.getInstance().getGameProperties().adminProperty());
+    }
+
     /**
      * Starts the configured game
      */

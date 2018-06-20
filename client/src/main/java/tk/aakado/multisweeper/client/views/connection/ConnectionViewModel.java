@@ -11,8 +11,7 @@ import javafx.beans.property.StringProperty;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.connection.ClientConnector;
 import tk.aakado.multisweeper.client.connection.Transmitter;
-import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
-import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.shared.Logger;
 
 public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
@@ -48,12 +47,8 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
 
     @Override
-    public void connected(boolean authRequired, boolean isAdmin) {
-        if (authRequired && !isAdmin) {
-            Client.getInstance().changeView(AuthenticationView.class);
-        } else {
-            Client.getInstance().changeView(ConfigurationView.class);
-        }
+    public void connected() {
+        Client.getInstance().changeView(GameSelectionView.class);
     }
 
     @Override
