@@ -2,6 +2,7 @@ package tk.aakado.multisweeper.client.views.game;
 
 
 import tk.aakado.multisweeper.client.views.Notificator;
+import tk.aakado.multisweeper.shared.game.FieldState;
 
 public interface GameNotificator extends Notificator  {
 
@@ -30,11 +31,10 @@ public interface GameNotificator extends Notificator  {
 
     /**
      * A player clicks a Field and every Player gets Notificated
-     *
-     * @param cords   Coordinates of the field
+     *  @param cords   Coordinates of the field
      * @param newState The new FieldState of the field
      */
-    void updateField(int[] cords, String newState);
+    void updateField(int[] cords, FieldState newState);
 
     /**
      * The Game is finished

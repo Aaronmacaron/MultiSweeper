@@ -51,7 +51,7 @@ public class GameViewModelTest {
         // create and add a field to the list
         ObservableList<Field> fieldList = FXCollections.observableArrayList();
         int[] coords = {0, 0};
-        String newState = "MINE";
+        FieldState newState = FieldState.MINE;
         fieldList.add(new Field(coords[0], coords[1], FieldState.UNDISCOVERED, 0));
 
         // set the list as value
@@ -61,14 +61,7 @@ public class GameViewModelTest {
         this.viewModel.updateField(coords, newState);
 
         // check if the new field state is set
-        assertEquals(FieldState.valueOf(newState), this.viewModel.getFields().get(0).getFieldState());
-
-        // try to change the state to an invalid state
-        this.viewModel.updateField(coords, "NOTPOSSIBLE");
-
-        // check if the state changed (should not)
-        assertEquals(FieldState.valueOf(newState), this.viewModel.getFields().get(0).getFieldState());
-
+        assertEquals(newState, this.viewModel.getFields().get(0).getFieldState());
 
     }
 }

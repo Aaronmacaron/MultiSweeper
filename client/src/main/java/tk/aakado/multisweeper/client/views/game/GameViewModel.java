@@ -83,7 +83,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     //TODO: new parameter value is needed
-    public void updateField(int[] cords, String newState) {
+    public void updateField(int[] cords, FieldState newState) {
 
         Field field = fields.get().stream()
                 .filter(f -> f.getX() == cords[0] && f.getY() == cords[1])
@@ -93,11 +93,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
                     return new IllegalArgumentException("A field with the coordinates " + cords[0] + ":" + cords[1] + " does not exist");
                 });
 
-        try {
-            field.setFieldState(FieldState.valueOf(newState));
-        } catch (IllegalArgumentException ex) {
-            Logger.get(this).error("The field state %s does not exists", newState);
-        }
+            field.setFieldState(newState);
     }
 
     @Override
@@ -186,7 +182,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public void sendRestart() {
         if (admin.get()) {
-            App.getInstance().getTransmitter().restart();
+            Client.getInstance().getTransmitter().restart();
         }
     }
 }
