@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.shared.connection;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Interface for all Connectors. A Connector is a piece of the MultiSweeper Software system which connects the server
@@ -33,6 +34,6 @@ public interface Connector {
      * Starts the Connector. This can for example start a socket connection with the Connector on the other side of the
      * System.
      */
-    void start();
+    Optional<Exception> start();
 
 }

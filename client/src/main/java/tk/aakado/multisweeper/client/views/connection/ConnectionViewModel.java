@@ -2,6 +2,7 @@ package tk.aakado.multisweeper.client.views.connection;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.BooleanProperty;
@@ -32,7 +33,14 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
             // Establish connection to server using client connector. Connects to address specified by the user.
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
-            clientConnector.start(); //TODO: catch on potential fail of connecting to server
+            Optional<Exception> exception = clientConnector.start();
+
+            // Show error message if connecting fails
+            if (exception.isPresent()) {
+                rejected.setValue(true);
+                Logger.get(this).warn("Could not connect to server because the hostname and port could not be found.");
+                return;
+            }
 
             // Create new Transmitter of clientConnector and store it in Client Main class
             Transmitter transmitter = new Transmitter(clientConnector);
@@ -40,7 +48,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
             transmitter.connect();
         } catch (URISyntaxException e) {
             Logger.get(this).warn("The provided URI is not formatted correctly.");
-            // TODO: Show error message to user.
+            rejected.setValue(true);
         }
 
     }

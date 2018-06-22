@@ -16,7 +16,7 @@
         </Label>
         <TextField fx:id="connectionField" promptText="hostname or server" />
         <Button defaultButton="true" mnemonicParsing="false" onAction="#onConnect" text="Connect" fx:id="connectButton"/>
-      <Label text="Not a valid Server Name" textFill="#bc0000" visible="false" fx:id="errorMessageLabel">
+      <Label text="Error while connecting (check  spelling of hostname and connection)" textFill="#bc0000" visible="false" fx:id="errorMessageLabel">
          <font>
             <Font size="18.0" />
          </font>

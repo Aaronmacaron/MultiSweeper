@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,15 +47,16 @@ public class ClientConnector extends AbstractConnector {
      * Starts the Connector. This connects to the server and starts listening to server.
      */
     @Override
-    public void start() {
+    public Optional<Exception> start() {
         try {
             connection = new Socket(host, port);
             Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}", host, port);
             output = new PrintWriter(connection.getOutputStream());
             input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             executeRepeatedly(this::handleInput);
+            return Optional.empty();
         } catch (IOException e) {
-            e.printStackTrace();
+            return Optional.of(e);
         }
     }
 
