@@ -7,6 +7,7 @@ import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Connector;
 
 import java.util.Optional;
+import java.util.Scanner;
 
 /**
  * This is the main class for the server part of the application.
@@ -34,7 +35,13 @@ public class Server {
      * @param args The command line args
      */
     public static void main(String[] args) {
-        startServer(parseArguments(args));
+        Arguments.Parser parser = new Arguments.Parser(args);
+        try {
+            startServer(parser.parse());
+        } catch (ArgumentParseException e) {
+            Logger.get(Server.class).error("Server has not been started as the arguments could not be parsed: ", e);
+            System.exit(1);
+        }
     }
 
     /**
@@ -43,7 +50,7 @@ public class Server {
      *                  argument is the number of concurrent games that should be running on the server. This argument
      *                  is not necessary and the default is one game.
      */
-    private static void startServer(MultiSweeperArguments arguments) {
+    private static void startServer(Arguments arguments) {
         // set up game manager
         gameManager = new GameManager();
         for (int i = 0; i < arguments.getNumberOfGames(); i++) {
@@ -56,76 +63,6 @@ public class Server {
         registerActionHandlers();
 
         connector.start();
-    }
-
-    /**
-     * Parses commandline arguments from main method into MultiSweeperArguments
-     * @param args Default String array containing arguments
-     * @return The MultiSweeperArguments object containing all the parsed arguments
-     */
-    public static MultiSweeperArguments parseArguments(String[] args) {
-        // port
-        Optional<Integer> parsedPort = getPort(args);
-        if (!parsedPort.isPresent()) {
-            Logger.get(Server.class).error("Either you did not specify a port or the specified port is not valid.");
-            System.exit(1);
-        }
-        int port = parsedPort.get();
-
-        // number of games
-        int numberOfGames = getNumberOfGames(args).orElse(1); // Default number of games is one
-
-        return new MultiSweeperArguments(port, numberOfGames);
-    }
-
-    /**
-     * Gets port by args
-     * @param args The args array
-     * @return Optional of port. Empty if not available or valid.
-     */
-    public static Optional<Integer> getPort(String[] args) {
-        if (args.length < 1) {
-            return Optional.empty();
-        }
-
-        String portString = args[0];
-        int port;
-
-        try {
-            port = Integer.parseInt(portString);
-        } catch (NumberFormatException exception) {
-            return Optional.empty();
-        }
-
-        if (port > 0 && port < 0x10000) { // Check if invalid port
-            return Optional.of(port);
-        }
-
-        return Optional.empty();
-    }
-
-    /**
-     * Gets number of games by args
-     * @param args The args array
-     * @return Optional of number of games. Empty if not available or valid.
-     */
-    public static Optional<Integer> getNumberOfGames(String[] args) {
-        if (args.length < 2) {
-            return Optional.empty();
-        }
-
-        String gamesString = args[1];
-        int numberOfGames;
-
-        try {
-            numberOfGames = Integer.parseInt(gamesString);
-        } catch (NumberFormatException e) {
-            Logger.get(Server.class).warn("The second parameter (number of games) is not a valid number. " +
-                    "Using the default value.");
-            return Optional.empty();
-        }
-
-        return Optional.of(numberOfGames);
     }
 
     /**
@@ -151,26 +88,5 @@ public class Server {
         return gameManager;
     }
 
-    /**
-     * Simple java bean object to hold the arguments information.
-     */
-    public static class MultiSweeperArguments {
-
-        private final int port;
-        private final int numberOfGames;
-
-        public MultiSweeperArguments(int port, int numberOfGames) {
-            this.port = port;
-            this.numberOfGames = numberOfGames;
-        }
-
-        public int getPort() {
-            return port;
-        }
-
-        public int getNumberOfGames() {
-            return numberOfGames;
-        }
-    }
 
 }
