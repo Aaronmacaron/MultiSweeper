@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -82,6 +83,7 @@ public class ServerConnector extends AbstractConnector {
             Connection connection = new Connection(socket, output, input);
             connections.add(connection);
             executeRepeatedly(() -> handleInput(connection));
+            executeAllMatchingActionHandlers(ActionType.CONNECT, new JsonObject(), connection);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -116,9 +118,10 @@ public class ServerConnector extends AbstractConnector {
      */
     private void executeAllMatchingActionHandlers(ActionType actionType, JsonElement json, Connection connection) {
         actionHandlers.stream()
-                .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods())) // create a Stream of all declard Methods in aClass
-                .filter(method -> actionType.equals(method.getAnnotation(ActionHandler.class).actionType())) // Remove Methods without the right Annotations
-                .forEach(method -> this.executeMethod(method, json, connection)); // Execute all Methods
+                .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods()))
+                .filter(method -> method.isAnnotationPresent(ActionHandler.class))
+                .filter(method -> actionType == method.getAnnotation(ActionHandler.class).actionType())
+                .forEach(method -> this.executeMethod(method, json, connection));
     }
 
     /**
@@ -134,7 +137,7 @@ public class ServerConnector extends AbstractConnector {
             method.invoke(method.getDeclaringClass().newInstance(), message);
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
-            Logger.get(this).warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
+            Logger.get(this).warn("Could not invoke method {} because it has the wrong parameters.", method.getName());
         } catch (InstantiationException e) {
             Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }

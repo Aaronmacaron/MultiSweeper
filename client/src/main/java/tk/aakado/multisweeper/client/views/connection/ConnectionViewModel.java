@@ -33,6 +33,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
             // Establish connection to server using client connector. Connects to address specified by the user.
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
+            clientConnector.addAllActionHandlers(Client.getInstance().getAllActionHandlers());
             Optional<Exception> exception = clientConnector.start();
 
             // Show error message if connecting fails
@@ -45,7 +46,6 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
             // Create new Transmitter of clientConnector and store it in Client Main class
             Transmitter transmitter = new Transmitter(clientConnector);
             Client.getInstance().setTransmitter(transmitter);
-            transmitter.connect();
         } catch (URISyntaxException e) {
             Logger.get(this).warn("The provided URI is not formatted correctly.");
             rejected.setValue(true);

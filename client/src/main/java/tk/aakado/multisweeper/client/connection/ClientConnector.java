@@ -105,9 +105,10 @@ public class ClientConnector extends AbstractConnector {
      */
     private void executeAllMatchingActionHandlers(ActionType actionType, JsonElement json) {
         actionHandlers.stream()
-                .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods())) // create a Stream of all declard Methods in aClass
-                .filter(method -> actionType.equals(method.getAnnotation(ActionHandler.class).actionType())) // Remove Methods without the right Annotations
-                .forEach(method -> this.executeMethod(method, json)); // Execute all Methods
+                .flatMap(aClass -> Stream.of(aClass.getDeclaredMethods()))
+                .filter(method -> method.isAnnotationPresent(ActionHandler.class))
+                .filter(method -> actionType == method.getAnnotation(ActionHandler.class).actionType())
+                .forEach(method -> this.executeMethod(method, json));
     }
 
     /**
@@ -118,11 +119,12 @@ public class ClientConnector extends AbstractConnector {
      */
     private void executeMethod(Method method, JsonElement json) {
         try {
-            Message message = new ClientMessage(this, json);
+            ClientMessage message = new ClientMessage(this, json);
             method.invoke(method.getDeclaringClass().newInstance(), message);
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
-            Logger.get(this).warn("Could not invoke method %s because it has the wrong parameters.", method.getName());
+            Logger.get(this).warn("Could not invoke method {} because it has the wrong parameters.", e);
+            Logger.get(this).debug(method.getName());
         } catch (InstantiationException e) {
             Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }

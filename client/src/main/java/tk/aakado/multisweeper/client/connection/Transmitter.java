@@ -2,6 +2,7 @@ package tk.aakado.multisweeper.client.connection;
 
 
 import javafx.scene.input.MouseButton;
+import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.dtos.AuthenticationDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.ClickDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
@@ -21,14 +22,6 @@ public class Transmitter {
      */
     public Transmitter(ClientConnector clientConnector) {
         this.clientConnector = clientConnector;
-    }
-
-    /**
-     * Connects client to server.
-     */
-    public void connect() {
-        Action action = new Action(ActionType.CONNECT);
-        clientConnector.send(action);
     }
 
     /**

@@ -1,10 +1,12 @@
 package tk.aakado.multisweeper.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
+import tk.aakado.multisweeper.client.connection.handler.ConnectedHandler;
 import tk.aakado.multisweeper.client.views.GameProperties;
 import tk.aakado.multisweeper.client.views.MultiSweeperView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
@@ -26,8 +28,7 @@ import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificato
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The client Application of MultiSweeper.
@@ -44,6 +45,7 @@ public class Client extends Application {
     private Stage stage;
     private static Client instance;
     private GameProperties gameProperties = new GameProperties();
+    private MultiSweeperView activeView;
 
     /**
      * Constructor.
@@ -112,7 +114,8 @@ public class Client extends Application {
         }
 
         // set the new view
-        Parent parent = this.views.get(viewType).getView();
+        activeView = this.views.get(viewType);
+        Parent parent = activeView.getView();
         Scene scene = new Scene(parent);
         this.stage.setScene(scene);
     }
@@ -120,4 +123,25 @@ public class Client extends Application {
     public GameProperties getGameProperties() {
         return gameProperties;
     }
+
+    /**
+     * Returns all actionHandlers
+     */
+    public List<Class> getAllActionHandlers() {
+        return Arrays.asList(
+                ConnectedHandler.class
+        );
+    }
+
+    /**
+     * Returns the currently active view if the given viewType matches with the active one. Else the optional is empty.
+     * @return Optional of activeView
+     */
+    public Optional<MultiSweeperView> getActiveView(Class viewType) {
+        if (viewType.equals(activeView.getCodeBehind().getClass())) {
+            return Optional.of(activeView);
+        }
+        return Optional.empty();
+    }
+
 }

@@ -1,13 +1,13 @@
 package tk.aakado.multisweeper.server;
 
 import tk.aakado.multisweeper.server.connection.ServerConnector;
+import tk.aakado.multisweeper.server.connection.handler.ConnectHandler;
 import tk.aakado.multisweeper.server.connection.handler.JoinGameHandler;
 import tk.aakado.multisweeper.server.game.GameManager;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Connector;
 
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * This is the main class for the server part of the application.
@@ -76,7 +76,12 @@ public class Server {
      * Registers all action handlers which are needed from start on to the connector of the server.
      */
     private static void registerActionHandlers() {
-        connector.addActionHandler(JoinGameHandler.class);
+        Collection<Class> actionHandlers = Arrays.asList(
+                JoinGameHandler.class,
+                ConnectHandler.class
+        );
+
+        connector.addAllActionHandlers(actionHandlers);
     }
 
     /**
