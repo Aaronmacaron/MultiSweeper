@@ -14,6 +14,10 @@ import java.util.Optional;
 
 public class ConnectedHandler {
 
+    /**
+     * Action handler for when client successfully connected and the server accepted the connection
+     * @param message The message sent by the server
+     */
     @ActionHandler(actionType = ActionType.CONNECTED)
     public void onConnected(ClientMessage message) {
         Optional<MultiSweeperView> optionalMultiSweeperView = Client.getInstance().getActiveView(ConnectionView.class);
@@ -29,4 +33,5 @@ public class ConnectedHandler {
         // Use Platform.runLater since this is executed in other thread
         Platform.runLater(notificator::connected);
     }
+
 }

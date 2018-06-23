@@ -50,7 +50,7 @@ public class ClientConnector extends AbstractConnector {
     public Optional<Exception> start() {
         try {
             connection = new Socket(host, port);
-            Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}", host, port);
+            Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}'", host, port);
             output = new PrintWriter(connection.getOutputStream());
             input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             executeRepeatedly(this::handleInput);
