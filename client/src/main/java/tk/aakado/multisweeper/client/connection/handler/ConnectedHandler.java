@@ -29,15 +29,8 @@ public class ConnectedHandler {
      */
     @ActionHandler(actionType = ActionType.CONNECTED)
     public void onConnected(ClientMessage message) {
-        Optional<MultiSweeperView> optionalMultiSweeperView = Client.getInstance().getActiveView(ConnectionView.class);
-        if (!optionalMultiSweeperView.isPresent()) {
-            // Do nothing if the wrong view is set
-            Logger.get(this).warn("An actionHandler was called that does not match the currently set view.");
-            return;
-        }
-
-        // This should be save since the type is being checked in getActiveView
-        ConnectionNotificator notificator = (ConnectionNotificator) optionalMultiSweeperView.get().getNotificator();
+        ConnectionNotificator notificator = (ConnectionNotificator) Client.getInstance()
+                .getActiveView(ConnectionView.class).getNotificator();
 
         // Use Platform.runLater since this is executed in other thread
         Platform.runLater(() -> {
@@ -51,19 +44,13 @@ public class ConnectedHandler {
      * @param message The message sent by server (passed on by onConnected)
      */
     private void setGameIds(ClientMessage message) {
-        Optional<MultiSweeperView> optionalMultiSweeperView = Client.getInstance().getActiveView(GameSelectionView.class);
-        if (!optionalMultiSweeperView.isPresent()) {
-            // Do nothing if the wrong view is set
-            Logger.get(this).warn("An actionHandler was called that does not match the currently set view.");
-            return;
-        }
-
         // Get gameIds of message
         Type setType = new TypeToken<Set<Integer>>(){}.getType(); // GSON hack to get type of generic
         Set<Integer> gameIds = new Gson().fromJson(message.getParams(), setType);
 
         // Set gameIds
-        GameSelectionViewModel viewModel = (GameSelectionViewModel) optionalMultiSweeperView.get().getViewModel();
+        GameSelectionViewModel viewModel = (GameSelectionViewModel) Client.getInstance()
+                .getActiveView(GameSelectionView.class).getViewModel();
         viewModel.setAvailableGames(gameIds);
     }
 

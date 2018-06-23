@@ -137,11 +137,15 @@ public class Client extends Application {
      * Returns the currently active view if the given viewType matches with the active one. Else the optional is empty.
      * @return Optional of activeView
      */
-    public Optional<MultiSweeperView> getActiveView(Class viewType) {
+    public MultiSweeperView getActiveView(Class viewType) {
         if (viewType.equals(activeView.getCodeBehind().getClass())) {
-            return Optional.of(activeView);
+            return activeView;
         }
-        return Optional.empty();
+        throw new IllegalStateException(String.format(
+                "The view of type %s cannot be accessed right now since the active view has the type %s",
+                viewType.getName(),
+                activeView.getCodeBehind().getClass().getName())
+        );
     }
 
 }
