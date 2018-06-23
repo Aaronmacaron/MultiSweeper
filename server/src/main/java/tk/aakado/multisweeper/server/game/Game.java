@@ -60,10 +60,16 @@ public interface Game {
     void startNewRound(Player player);
 
     /**
+     * Tests if the game is currently running or in the setup phase.
+     * @return  If the game is running.
+     */
+    boolean isStarted();
+
+    /**
      * Discovers a field.
      * The game has to be running.
-     * @param player
-     * @param fieldCords
+     * @param player The player who triggered the action.
+     * @param fieldCords The coordinates of the field which should be discovered.
      */
     void discoverField(Player player, FieldCords fieldCords);
 

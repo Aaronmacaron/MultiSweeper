@@ -7,18 +7,28 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 
 public class AuthenticationViewModel implements ViewModel, AuthenticationNotificator {
 
     private StringProperty password = new SimpleStringProperty("");
     private BooleanProperty rejected = new SimpleBooleanProperty(false);
-
+    private int gameId;
 
     /**
      * Is called when user submits password
      */
     public void submit() {
-        Client.getInstance().getTransmitter().authenticate(Client.getInstance().getGameProperties().getGameId(), password.get());
+        Client.getInstance().getTransmitter().authenticate(this.gameId, password.get());
+    }
+
+    public void cancel() {
+        Client.getInstance().changeView(GameSelectionView.class);
+    }
+
+    @Override
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
     @Override

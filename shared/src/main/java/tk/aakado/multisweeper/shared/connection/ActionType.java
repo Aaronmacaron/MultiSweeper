@@ -16,5 +16,6 @@ public enum ActionType {
     PASSWORD_NEEDED,
     WRONG_GAME_ID,
     CONNECTED,
+    GAME_JOINED,
     ;
 }

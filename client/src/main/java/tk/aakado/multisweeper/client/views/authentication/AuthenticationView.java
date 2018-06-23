@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import tk.aakado.multisweeper.client.Client;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 
 public class AuthenticationView implements FxmlView<AuthenticationViewModel>, Initializable {
 
@@ -44,7 +46,12 @@ public class AuthenticationView implements FxmlView<AuthenticationViewModel>, In
      * @param event ActionEvent
      */
     @FXML
-    void onSubmit(ActionEvent event) {
+    private void onSubmit(ActionEvent event) {
         viewModel.submit();
+    }
+
+    @FXML
+    private void onCancel() {
+        viewModel.cancel();
     }
 }

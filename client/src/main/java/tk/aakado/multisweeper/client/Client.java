@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.connection.handler.ConnectedHandler;
+import tk.aakado.multisweeper.client.connection.handler.GameSelectionHandler;
 import tk.aakado.multisweeper.client.views.GameProperties;
 import tk.aakado.multisweeper.client.views.MultiSweeperView;
+import tk.aakado.multisweeper.client.views.Notificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationViewModel;
@@ -127,8 +129,17 @@ public class Client extends Application {
      */
     public List<Class> getAllActionHandlers() {
         return Arrays.asList(
-                ConnectedHandler.class
+                ConnectedHandler.class,
+                GameSelectionHandler.class
         );
+    }
+
+    /**
+     * Returns the currently active view.
+     * @return The active view.
+     */
+    public MultiSweeperView getActiveView() {
+        return this.activeView;
     }
 
     /**
@@ -144,6 +155,18 @@ public class Client extends Application {
                 viewType.getName(),
                 activeView.getCodeBehind().getClass().getName())
         );
+    }
+
+    /**
+     * Returns the notificator of the given view.
+     * @param viewType The view class.
+     * @return The notificator of the view.
+     */
+    public Notificator getNotificator(Class viewType) {
+        if (!this.views.containsKey(viewType)) {
+            throw new IllegalArgumentException("The view " + viewType.getSimpleName() + " is not existent.");
+        }
+        return this.views.get(viewType).getNotificator();
     }
 
 }

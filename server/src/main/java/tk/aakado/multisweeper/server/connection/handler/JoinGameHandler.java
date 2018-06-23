@@ -12,6 +12,7 @@ import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.Connection;
 import tk.aakado.multisweeper.shared.connection.dtos.AuthenticationDTO;
+import tk.aakado.multisweeper.shared.connection.dtos.GameJoinedInfoDTO;
 
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ public class JoinGameHandler {
             return;
         }
 
+        //noinspection ConstantConditions as the game id is already verified
         Game game = gameManager.getGame(gameId).get();
 
         // Get player of the sender or if there is none create a new one.
@@ -44,6 +46,7 @@ public class JoinGameHandler {
 
         if (!game.hasPassword()) {
             game.addPlayer(player, "");
+            playerJoinedFeedback(game, player, connector, sender);
             return;
         }
 
@@ -68,6 +71,7 @@ public class JoinGameHandler {
             return;
         }
 
+        //noinspection ConstantConditions as the game id is already verified
         Game game = gameManager.getGame(gameId).get();
 
         // Get the player of the sender. It has to already exist due to the joining mechanism
@@ -78,6 +82,8 @@ public class JoinGameHandler {
 
         if (wrongPassword) {
             connector.sendTo(new Action(ActionType.PASSWORD_WRONG), message.getSender());
+        } else {
+            playerJoinedFeedback(game, player, connector, sender);
         }
     }
 
@@ -100,6 +106,20 @@ public class JoinGameHandler {
         Action action = new Action(ActionType.WRONG_GAME_ID);
         connector.sendTo(action, sender);
         return false;
+    }
+
+    /**
+     * Sends a feedback to the client that he has joined the game.
+     * @param game The game to which the player joined.
+     * @param player Player
+     * @param connector ServerConnector
+     * @param sender The client which send the action and which is sent the feedback to.
+     */
+    private void playerJoinedFeedback(Game game, Player player, ServerConnector connector, Connection sender) {
+        //noinspection ConstantConditions as game has minimum one player now
+        boolean isAdmin = player.equals(game.getAdmin().get());
+        GameJoinedInfoDTO gameJoinedInfoDTO = new GameJoinedInfoDTO(isAdmin, game.isStarted());
+        connector.sendTo(new Action(ActionType.GAME_JOINED, gameJoinedInfoDTO), sender);
     }
 
 }

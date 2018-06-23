@@ -6,20 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class GameProperties {
-    private IntegerProperty gameId = new SimpleIntegerProperty(0);
     private BooleanProperty admin = new SimpleBooleanProperty(false);
-
-    public int getGameId() {
-        return gameId.get();
-    }
-
-    public IntegerProperty gameIdProperty() {
-        return gameId;
-    }
-
-    public void setGameId(int gameId) {
-        this.gameId.set(gameId);
-    }
 
     public boolean isAdmin() {
         return admin.get();

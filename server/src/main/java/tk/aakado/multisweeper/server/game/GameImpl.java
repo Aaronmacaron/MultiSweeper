@@ -91,11 +91,8 @@ public class GameImpl implements Game {
         return Optional.ofNullable(this.players.get(0));
     }
 
-    /**
-     * Tests if the game is currently running or in the setup phase.
-     * @return  If the game is running.
-     */
-    private boolean isStarted() {
+    @Override
+    public boolean isStarted() {
         return this.currentPlayingField != null;
     }
 

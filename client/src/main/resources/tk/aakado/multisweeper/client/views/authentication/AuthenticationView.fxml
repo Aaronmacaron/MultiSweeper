@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.authentication.AuthenticationView">
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.authentication.AuthenticationView">
    <children>
       <Label text="Authentication required">
          <font>
@@ -24,6 +24,7 @@
          <children>
             <PasswordField fx:id="passwordField" />
             <Button fx:id="submitButton" defaultButton="true" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
+            <Button cancelButton="true" layoutX="169.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
          </children>
       </HBox>
       <Label fx:id="failedLabel" text="Authentication failed" textFill="RED" visible="false" />

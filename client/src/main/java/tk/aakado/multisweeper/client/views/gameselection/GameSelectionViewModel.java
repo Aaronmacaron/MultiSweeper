@@ -10,6 +10,7 @@ import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
+import tk.aakado.multisweeper.client.views.game.GameView;
 
 /**
  * View model for the game selection view.
@@ -28,13 +29,10 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
     }
 
     @Override
-    public void gameSelected(int gameId, boolean isAdmin, boolean authRequired) {
+    public void gameSelected(boolean isAdmin, boolean isRunning) {
         Client.getInstance().getGameProperties().setAdmin(isAdmin);
-        Client.getInstance().getGameProperties().setGameId(gameId);
-
-        // display the correct view
-        if (authRequired && !isAdmin) {
-            Client.getInstance().changeView(AuthenticationView.class);
+        if (isRunning) {
+            Client.getInstance().changeView(GameView.class);
         } else {
             Client.getInstance().changeView(ConfigurationView.class);
         }
