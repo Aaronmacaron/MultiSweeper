@@ -27,7 +27,7 @@ public class Transmitter {
      * Connects client to server.
      */
     public void connect() {
-        Action action = new Action(ActionType.CONNECT, new Object());
+        Action action = new Action(ActionType.CONNECT);
         clientConnector.send(action);
     }
 
@@ -35,7 +35,7 @@ public class Transmitter {
      * Disconnects client from server.
      */
     public void disconnect() {
-        Action action = new Action(ActionType.DISCONNECT, new Object());
+        Action action = new Action(ActionType.DISCONNECT);
         clientConnector.send(action);
     }
 
@@ -93,7 +93,7 @@ public class Transmitter {
      * Restarts the game with the same settings
      */
     public void restart() {
-        Action action = new Action(ActionType.RESTART, new Object());
+        Action action = new Action(ActionType.RESTART);
         clientConnector.send(action);
     }
 
