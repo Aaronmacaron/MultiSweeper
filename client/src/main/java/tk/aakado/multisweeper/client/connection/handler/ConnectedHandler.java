@@ -14,9 +14,12 @@ import java.util.Optional;
 
 public class ConnectedHandler {
 
+    /**
+     * Action handler for when client successfully connected and the server accepted the connection
+     * @param message The message sent by the server
+     */
     @ActionHandler(actionType = ActionType.CONNECTED)
     public void onConnected(ClientMessage message) {
-        Logger.get(this).debug("Yay connected!");
         Optional<MultiSweeperView> optionalMultiSweeperView = Client.getInstance().getActiveView(ConnectionView.class);
         if (!optionalMultiSweeperView.isPresent()) {
             // Do nothing if the wrong view is set
@@ -27,6 +30,8 @@ public class ConnectedHandler {
         // This should be save since the type is being checked in getActiveView
         ConnectionNotificator notificator = (ConnectionNotificator) optionalMultiSweeperView.get().getNotificator();
 
+        // Use Platform.runLater since this is executed in other thread
         Platform.runLater(notificator::connected);
     }
+
 }

@@ -50,7 +50,7 @@ public class ClientConnector extends AbstractConnector {
     public Optional<Exception> start() {
         try {
             connection = new Socket(host, port);
-            Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}", host, port);
+            Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}'", host, port);
             output = new PrintWriter(connection.getOutputStream());
             input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             executeRepeatedly(this::handleInput);
@@ -124,7 +124,6 @@ public class ClientConnector extends AbstractConnector {
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
             Logger.get(this).warn("Could not invoke method {} because it has the wrong parameters.", e);
-            Logger.get(this).debug(method.getName());
         } catch (InstantiationException e) {
             Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }
