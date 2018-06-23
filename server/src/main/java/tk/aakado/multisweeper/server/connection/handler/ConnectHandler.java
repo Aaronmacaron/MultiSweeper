@@ -16,7 +16,6 @@ public class ConnectHandler {
      */
     @ActionHandler(actionType = ActionType.CONNECT)
     public void onConnect(ServerMessage message) {
-        Logger.get(this).debug("In server onConnect handler");
         Action response = new Action(ActionType.CONNECTED);
         message.getConnector().send(response);
     }

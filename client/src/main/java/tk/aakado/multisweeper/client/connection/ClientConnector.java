@@ -124,7 +124,6 @@ public class ClientConnector extends AbstractConnector {
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
             Logger.get(this).warn("Could not invoke method {} because it has the wrong parameters.", e);
-            Logger.get(this).debug(method.getName());
         } catch (InstantiationException e) {
             Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }
