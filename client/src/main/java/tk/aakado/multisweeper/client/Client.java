@@ -109,15 +109,13 @@ public class Client extends Application {
      */
     public void changeView(Class viewType) {
         // check if the requested view exists
-        if (this.views.entrySet().stream().noneMatch(entry -> entry.getKey().equals(viewType))) {
+        if (!this.views.containsKey(viewType)) {
             throw new IllegalArgumentException("The requested view: " + viewType.getName() + " does not exists.");
         }
 
         // set the new view
         activeView = this.views.get(viewType);
-        Parent parent = activeView.getView();
-        Scene scene = new Scene(parent);
-        this.stage.setScene(scene);
+        this.stage.setScene(activeView.getScene());
     }
 
     public GameProperties getGameProperties() {
