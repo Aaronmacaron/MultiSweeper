@@ -1,7 +1,7 @@
 package tk.aakado.multisweeper.server.connection.handler;
 
+import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.connection.ServerMessage;
-import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
@@ -16,7 +16,7 @@ public class ConnectHandler {
      */
     @ActionHandler(actionType = ActionType.CONNECT)
     public void onConnect(ServerMessage message) {
-        Action response = new Action(ActionType.CONNECTED);
+        Action response = new Action(ActionType.CONNECTED, Server.getGameManager().getAllGameIds());
         message.getConnector().send(response);
     }
 

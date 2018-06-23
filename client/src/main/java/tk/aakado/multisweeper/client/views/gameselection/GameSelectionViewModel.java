@@ -16,8 +16,12 @@ import tk.aakado.multisweeper.client.views.connection.ConnectionView;
  */
 public class GameSelectionViewModel implements ViewModel, GameSelectionNotificator {
 
-    private ListProperty<Integer> gameIds = new SimpleListProperty<>(FXCollections.emptyObservableList());
+    private ListProperty<Integer> gameIds = new SimpleListProperty<>(FXCollections.observableArrayList());
 
+    /**
+     * Sets game Ids to list
+     * @param gameIds List containing all available game ids.
+     */
     @Override
     public void setAvailableGames(Set<Integer> gameIds) {
         this.gameIds.setAll(gameIds);
