@@ -87,11 +87,22 @@ public class ClientConnector extends AbstractConnector {
         try {
             String line;
             while((line = input.readLine()) != null) {
+
+                // Parse message and determine action type
                 JsonParser parser = new JsonParser();
                 JsonObject json = parser.parse(line).getAsJsonObject();
                 JsonElement params = json.get("params");
                 ActionType actionType = ActionType.valueOf(json.get("actionType").getAsString());
+
+                // Execute action handlers
                 queue.submit(() -> executeAllMatchingActionHandlers(actionType, params));
+
+                // Log
+                Logger.get(this).debug(
+                        "New message was received from server at: '{}'. The action type is: {}",
+                        connection.getRemoteSocketAddress(),
+                        actionType
+                );
             }
         } catch (IOException e) {
             e.printStackTrace();
