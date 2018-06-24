@@ -83,7 +83,7 @@ public class GameImpl implements Game {
 
     @Override
     public boolean hasPassword() {
-        return this.password.isEmpty();
+        return ! this.password.isEmpty();
     }
 
     @Override
