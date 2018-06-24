@@ -85,9 +85,6 @@ public class ServerConnector extends AbstractConnector {
             // Handle input of connection in new thread
             ExecutorService service = Executors.newSingleThreadExecutor();
             service.submit(() -> handleInput(connection));
-
-            // Simulate first action
-            executeAllMatchingActionHandlers(ActionType.CONNECT, new JsonObject(), connection);
         } catch (IOException e) {
             Logger.get(this).error("Client tried to connect but failed.", e);
         }
