@@ -53,7 +53,11 @@ public class ClientConnector extends AbstractConnector {
             Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}'", host, port);
             output = new PrintWriter(connection.getOutputStream());
             input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            executeRepeatedly(this::handleInput);
+
+            // Listen to input in new thread
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.submit(this::handleInput);
+
             return Optional.empty();
         } catch (IOException e) {
             return Optional.of(e);
@@ -67,15 +71,6 @@ public class ClientConnector extends AbstractConnector {
     @Override
     public void send(Action action) {
         output.println(action.toJson());
-    }
-
-    /**
-     * This method executes a runnable repeatedly in an other thread. This basically is a non-blocking while true.
-     * @param r The runnable that is executed repeatedly
-     */
-    private void executeRepeatedly(Runnable r) {
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleWithFixedDelay(r, 1, 1, TimeUnit.MICROSECONDS);
     }
 
     /**

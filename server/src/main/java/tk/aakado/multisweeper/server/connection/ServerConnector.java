@@ -21,7 +21,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -82,7 +81,12 @@ public class ServerConnector extends AbstractConnector {
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Connection connection = new Connection(socket, output, input);
             connections.add(connection);
-            executeRepeatedly(() -> handleInput(connection));
+
+            // Handle input of connection in new thread
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.submit(() -> handleInput(connection));
+
+            // Simulate first action
             executeAllMatchingActionHandlers(ActionType.CONNECT, new JsonObject(), connection);
         } catch (IOException e) {
             e.printStackTrace();
