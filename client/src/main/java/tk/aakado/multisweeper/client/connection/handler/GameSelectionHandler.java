@@ -58,7 +58,7 @@ public class GameSelectionHandler {
 
         // This should be save since the type is being checked in getActiveView
         GameSelectionNotificator notificator = (GameSelectionNotificator) gameSelectionView.getNotificator();
-        notificator.gameSelected(gameJoinedInfo.isAdmin(), gameJoinedInfo.isRunning());
+        Platform.runLater(() -> notificator.gameSelected(gameJoinedInfo.isAdmin(), gameJoinedInfo.isRunning()));
     }
 
     /**
