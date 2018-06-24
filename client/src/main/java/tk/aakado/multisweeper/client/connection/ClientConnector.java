@@ -4,7 +4,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import tk.aakado.multisweeper.shared.Logger;
-import tk.aakado.multisweeper.shared.connection.*;
+import tk.aakado.multisweeper.shared.connection.AbstractConnector;
+import tk.aakado.multisweeper.shared.connection.Action;
+import tk.aakado.multisweeper.shared.connection.ActionHandler;
+import tk.aakado.multisweeper.shared.connection.ActionType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +19,6 @@ import java.net.Socket;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 /**
@@ -51,7 +52,7 @@ public class ClientConnector extends AbstractConnector {
         try {
             connection = new Socket(host, port);
             Logger.get(this).info("Connected to MultiSweeper ServerConnector at 'multisweeper://{}:{}'", host, port);
-            output = new PrintWriter(connection.getOutputStream());
+            output = new PrintWriter(connection.getOutputStream(), true);
             input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
             // Listen to input in new thread
