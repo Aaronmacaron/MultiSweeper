@@ -59,6 +59,8 @@ public class ClientConnector extends AbstractConnector {
             ExecutorService service = Executors.newSingleThreadExecutor();
             service.submit(this::handleInput);
 
+            isStarted = true;
+
             return Optional.empty();
         } catch (IOException e) {
             return Optional.of(e);
@@ -71,6 +73,10 @@ public class ClientConnector extends AbstractConnector {
      */
     @Override
     public void send(Action action) {
+        if (!isStarted) {
+            throw new IllegalStateException("Client connector is not started yet.");
+        }
+
         output.println(action.toJson());
     }
 
