@@ -25,6 +25,14 @@ public class Transmitter {
     }
 
     /**
+     * Connects client to server.
+     */
+    public void connect() {
+        Action action = new Action(ActionType.CONNECT);
+        clientConnector.send(action);
+    }
+
+    /**
      * Disconnects client from server.
      */
     public void disconnect() {
