@@ -89,8 +89,7 @@ public class ServerConnector extends AbstractConnector {
             // Simulate first action
             executeAllMatchingActionHandlers(ActionType.CONNECT, new JsonObject(), connection);
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+            Logger.get(this).error("Client tried to connect but failed.", e);
         }
     }
 
@@ -110,7 +109,6 @@ public class ServerConnector extends AbstractConnector {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
         }
     }
 
