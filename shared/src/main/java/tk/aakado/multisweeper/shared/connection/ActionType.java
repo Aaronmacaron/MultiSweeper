@@ -17,5 +17,6 @@ public enum ActionType {
     WRONG_GAME_ID,
     CONNECTED,
     GAME_JOINED,
+    CLICKED,
     ;
 }

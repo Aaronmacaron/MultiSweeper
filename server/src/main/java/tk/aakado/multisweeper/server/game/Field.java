@@ -1,5 +1,6 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
 import java.util.Optional;
@@ -76,8 +77,15 @@ public class Field {
         this.flagPlayer = null;
     }
 
-    public FieldState toFieldState() {
-        return this.state;
+    /**
+     * Get the corresponding {@link FieldDTO} of this field.
+     * @return This field as {@link FieldDTO}
+     */
+    public FieldDTO toFieldDTO() {
+        if (this.state == FieldState.DISCOVERED) {
+            return new FieldDTO(this.fieldCords.getX(), this.fieldCords.getY(), this.state, this.type.getValue());
+        }
+        return  new FieldDTO(this.fieldCords.getX(), this.fieldCords.getY(), this.state);
     }
 
     // Getters

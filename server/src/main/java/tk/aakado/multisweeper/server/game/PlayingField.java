@@ -1,7 +1,7 @@
 package tk.aakado.multisweeper.server.game;
 
 import tk.aakado.multisweeper.server.game.Field.FieldType;
-import tk.aakado.multisweeper.shared.game.FieldState;
+import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,12 +122,13 @@ public class PlayingField {
      * If the field is a mine the game ends.
      * @param fieldCords The coordinates of the field to discover.
      * @param player The player which triggered the action.
+     * @return A list of all fields that have been discovered.
      */
-    public List<FieldState> discoverField(FieldCords fieldCords, Player player) {
+    public List<FieldDTO> discoverField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
 
-        List<FieldState> changedFields = new ArrayList<>();
+        List<FieldDTO> changedFields = new ArrayList<>();
 
         if (theField.isFlagged()) {
             // Do not discover flagged field
@@ -136,7 +137,7 @@ public class PlayingField {
 
         theField.discover(player);
 
-        changedFields.add(theField.toFieldState());
+        changedFields.add(theField.toFieldDTO());
 
         if (theField.isMine()) {
             // TODO: end game
@@ -158,17 +159,18 @@ public class PlayingField {
     }
 
     /**
-     * Flags a field of this playing field.
+     * Flags a field of this playing field. The field is only flagged when it is not
      * @param fieldCords The coordinates of the field to flag.
      * @param player The player which triggered the action.
+     * @return If the field has been flagged or not.
      */
-    public void flagField(FieldCords fieldCords, Player player) {
+    public Optional<FieldDTO> flagField(FieldCords fieldCords, Player player) {
         Field theField = this.getField(fieldCords)
                 .orElseThrow(() -> new IllegalArgumentException("The given coordinates are invalid."));
 
         if (theField.isDiscovered()) {
             // Already discovered field cannot be flagged
-            return;
+            return Optional.empty();
         }
 
         if (theField.isFlagged()) {
@@ -176,6 +178,7 @@ public class PlayingField {
         } else {
             theField.flag(player);
         }
+        return Optional.of(theField.toFieldDTO());
     }
 
     /**

@@ -1,9 +1,14 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.shared.Logger;
+import tk.aakado.multisweeper.shared.connection.Action;
+import tk.aakado.multisweeper.shared.connection.ActionType;
+import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,13 +45,24 @@ public class GameImpl implements Game {
     @Override
     public void discoverField(Player player, FieldCords fieldCords) {
         requiredGameRunning();
-        this.currentPlayingField.discoverField(fieldCords, player);
+        if (this.currentPlayingField.isValidCoordinate(fieldCords)) {
+            List<FieldDTO> changedFields = this.currentPlayingField.discoverField(fieldCords, player);
+
+            Server.getConnector().send(new Action(ActionType.CLICKED, changedFields));
+        }
     }
 
     @Override
     public void flagField(Player player, FieldCords fieldCords) {
         requiredGameRunning();
-        this.currentPlayingField.flagField(fieldCords, player);
+        if (this.currentPlayingField.isValidCoordinate(fieldCords)) {
+            Optional<FieldDTO> flaggedField = this.currentPlayingField.flagField(fieldCords, player);
+
+            if (flaggedField.isPresent()) {
+                Action action = new Action(ActionType.CLICKED, Collections.singletonList(flaggedField.get()));
+                Server.getConnector().send(action);
+            }
+        }
     }
 
     @Override
