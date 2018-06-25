@@ -54,6 +54,7 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
      * The players cancels the selection
      */
     public void cancel() {
+        Client.getInstance().getTransmitter().disconnect();
         Client.getInstance().changeView(ConnectionView.class);
     }
 }

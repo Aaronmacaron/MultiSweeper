@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.client.views.game;
 
 import java.time.Duration;
+import java.util.Optional;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.BooleanProperty;
@@ -86,18 +87,19 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     @Override
-    //TODO: new parameter value is needed
-    public void updateField(int[] cords, FieldState newState) {
+    public void updateField(int x, int y, FieldState newState, Optional<Integer> value) {
 
         Field field = fields.get().stream()
-                .filter(f -> f.getX() == cords[0] && f.getY() == cords[1])
+                .filter(f -> f.getX() == x && f.getY() == y)
                 .findFirst()
                 .orElseThrow(() -> {
-                    Logger.get(this).error("A field with the coordinates %s:%s does not exist", cords[0], cords[1]);
-                    return new IllegalArgumentException("A field with the coordinates " + cords[0] + ":" + cords[1] + " does not exist");
+                    String errorMsg = String.format("A field with the coordinates %s:%s does not exist", x, y);
+                    Logger.get(this).error(errorMsg);
+                    return new IllegalArgumentException(errorMsg);
                 });
 
-            field.setFieldState(newState);
+        field.setFieldState(newState);
+        value.ifPresent(field::setValue);
     }
 
     @Override

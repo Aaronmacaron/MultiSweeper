@@ -10,12 +10,9 @@ import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotifica
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificator;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
-import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.dtos.GameJoinedInfoDTO;
-
-import java.util.Optional;
 
 public class GameSelectionHandler {
 
@@ -54,10 +51,8 @@ public class GameSelectionHandler {
     public void onGameJoined(ClientMessage message) {
         GameJoinedInfoDTO gameJoinedInfo = new Gson().fromJson(message.getParams(), GameJoinedInfoDTO.class);
 
-        MultiSweeperView gameSelectionView = Client.getInstance().getActiveView(GameSelectionView.class);
-
         // This should be save since the type is being checked in getActiveView
-        GameSelectionNotificator notificator = (GameSelectionNotificator) gameSelectionView.getNotificator();
+        GameSelectionNotificator notificator = (GameSelectionNotificator) Client.getInstance().getNotificator(GameSelectionView.class);
         Platform.runLater(() -> notificator.gameSelected(gameJoinedInfo.isAdmin(), gameJoinedInfo.isRunning()));
     }
 
