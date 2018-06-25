@@ -1,8 +1,5 @@
 package tk.aakado.multisweeper.client.views.authentication;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.event.ActionEvent;
@@ -11,10 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import tk.aakado.multisweeper.client.Client;
-import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
+import tk.aakado.multisweeper.client.views.ViewEnteredListener;
 
-public class AuthenticationView implements FxmlView<AuthenticationViewModel>, Initializable {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AuthenticationView implements FxmlView<AuthenticationViewModel>, Initializable, ViewEnteredListener {
 
     @InjectViewModel
     private AuthenticationViewModel viewModel;
@@ -38,6 +37,11 @@ public class AuthenticationView implements FxmlView<AuthenticationViewModel>, In
 
         // Disable the submit button when no password is entered
         submitButton.disableProperty().bind(passwordField.textProperty().isEmpty());
+    }
+
+    @Override
+    public void viewEntered() {
+        this.passwordField.clear();
     }
 
     /**

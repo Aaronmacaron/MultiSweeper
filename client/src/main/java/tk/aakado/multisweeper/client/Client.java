@@ -1,9 +1,6 @@
 package tk.aakado.multisweeper.client;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.connection.handler.ConnectedHandler;
@@ -11,6 +8,7 @@ import tk.aakado.multisweeper.client.connection.handler.GameSelectionHandler;
 import tk.aakado.multisweeper.client.views.GameProperties;
 import tk.aakado.multisweeper.client.views.MultiSweeperView;
 import tk.aakado.multisweeper.client.views.Notificator;
+import tk.aakado.multisweeper.client.views.ViewEnteredListener;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationViewModel;
@@ -30,7 +28,10 @@ import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificato
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The client Application of MultiSweeper.
@@ -118,6 +119,11 @@ public class Client extends Application {
         // set the new view
         activeView = this.views.get(viewType);
         this.stage.setScene(activeView.getScene());
+
+        // call the view entered listener if the view has one
+        if (activeView.getView() instanceof ViewEnteredListener) {
+            ((ViewEnteredListener) activeView.getView()).viewEntered();
+        }
     }
 
     public GameProperties getGameProperties() {
