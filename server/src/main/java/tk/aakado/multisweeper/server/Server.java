@@ -3,8 +3,11 @@ package tk.aakado.multisweeper.server;
 import tk.aakado.multisweeper.server.connection.ServerConnector;
 import tk.aakado.multisweeper.server.connection.handler.ClickHandler;
 import tk.aakado.multisweeper.server.connection.handler.ConnectHandler;
+import tk.aakado.multisweeper.server.connection.handler.DisconnectedHandler;
 import tk.aakado.multisweeper.server.connection.handler.JoinGameHandler;
+import tk.aakado.multisweeper.server.game.Game;
 import tk.aakado.multisweeper.server.game.GameManager;
+import tk.aakado.multisweeper.server.game.Player;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Connector;
 
@@ -55,7 +58,12 @@ public class Server {
         // set up game manager
         gameManager = new GameManager();
         for (int i = 0; i < arguments.getNumberOfGames(); i++) {
-            gameManager.createGame();
+            int id = gameManager.createGame();
+            Player p = new Player("test");
+            Game game = gameManager.getGame(id).get();
+            game.addPlayer(p, "");
+            game.setPassword(p, "test");
+            game.startNewRound(p);
         }
 
         // set up connector
@@ -80,6 +88,7 @@ public class Server {
         Collection<Class> actionHandlers = Arrays.asList(
                 JoinGameHandler.class,
                 ConnectHandler.class,
+                DisconnectedHandler.class,
                 ClickHandler.class
         );
 
