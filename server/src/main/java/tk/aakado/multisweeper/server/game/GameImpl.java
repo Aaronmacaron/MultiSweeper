@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class GameImpl implements Game {
 
-    private static final GameConfigDTO DEFAULT_CONFIGURATION = new GameConfigDTO(15, 15, 20);
+    private static final GameConfigDTO DEFAULT_CONFIGURATION = new GameConfigDTO(15, 15, 0.2);
 
     private List<Player> players = new ArrayList<>();
     private PlayingField currentPlayingField;
@@ -128,6 +128,7 @@ public class GameImpl implements Game {
      */
     private boolean checkAdmin(Player player) {
         if (hasPlayer(player)) {
+            //noinspection ConstantConditions
             return player.equals(getAdmin().get());
         }
         Logger.get(this).warn("Player {} is not part of this game and tried to invoke admin action.", player);
