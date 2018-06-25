@@ -38,6 +38,25 @@ public class GameManager {
     }
 
     /**
+     * Removes the player which is linked to the connection.
+     * If there is no mapping the method will return. If the player is still
+     * part of a game he will be removed from that game.
+     * @param connection The connection the player is linked to.
+     */
+    public void removePlayer(Connection connection) {
+        if (this.allPlayers.containsKey(connection)) {
+            // if no player is existent
+            return;
+        }
+        Player player = this.allPlayers.get(connection);
+
+        // If player is in a game, remove him
+        getGameOf(player).ifPresent(game -> game.removePlayer(player));
+
+        this.allPlayers.remove(connection);
+    }
+
+    /**
      * Retrieve the player by a connection.
      * @param connection The connection which belongs to a player.
      * @return Optional of the player, empty if the connection has no mapping to a player.
