@@ -24,5 +24,6 @@ public enum ActionType {
     PLAYER_CONNECTED,
     GAME_STARTED,
     GAME_FINISHED,
+    LEAVE_GAME,
     ;
 }

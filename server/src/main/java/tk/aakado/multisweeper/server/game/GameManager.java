@@ -46,7 +46,7 @@ public class GameManager {
      * @param connection The connection the player is linked to.
      */
     public void removePlayer(Connection connection) {
-        if (this.allPlayers.containsKey(connection)) {
+        if (! this.allPlayers.containsKey(connection)) {
             // if no player is existent
             return;
         }

@@ -51,8 +51,8 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
     /**
      * Disconnects from server
      */
-    public void disconnect() {
-        Client.getInstance().getTransmitter().disconnect();
+    public void leaveGame() {
+        Client.getInstance().getTransmitter().leaveGame();
         Client.getInstance().changeView(ConnectionView.class);
     }
 

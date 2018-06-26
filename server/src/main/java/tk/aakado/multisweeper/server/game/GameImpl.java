@@ -5,15 +5,13 @@ import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.Connection;
+import tk.aakado.multisweeper.shared.connection.dtos.DisconnectDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GameImpl implements Game {
 
@@ -42,6 +40,35 @@ public class GameImpl implements Game {
     public void removePlayer(Player player) {
         if (hasPlayer(player)) {
             this.players.remove(player);
+
+            Optional<Connection> connection = Server.getGameManager().getConnection(player);
+
+            // Inform every other player
+            Optional<Player> optionalNewAdmin = getAdmin();
+            if (!optionalNewAdmin.isPresent()) {
+                return;
+            }
+
+            Player newAdmin = optionalNewAdmin.get();
+
+            // Send message to non-admin players
+            Action nonAdminAction = new Action(
+                    ActionType.DISCONNECTED,
+                    new DisconnectDTO(player.toString(), false)
+            );
+            Connection adminConnection = Server.getGameManager().getConnection(newAdmin)
+                    .orElseThrow(() -> new IllegalStateException("The player doesn't belong to connection."));
+            List<Connection> except = new ArrayList<>();
+            except.add(adminConnection);
+            connection.ifPresent(except::add);
+            Server.getConnector().sendExcept(nonAdminAction, except);
+
+            // Send message to new admin
+            Action adminAction = new Action(
+                    ActionType.DISCONNECTED,
+                    new DisconnectDTO(player.toString(), true)
+            );
+            Server.getConnector().sendTo(adminAction, adminConnection);
         }
     }
 

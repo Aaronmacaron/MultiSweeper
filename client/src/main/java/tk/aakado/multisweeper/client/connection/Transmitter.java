@@ -108,6 +108,14 @@ public class Transmitter {
     }
 
     /**
+     * Leaves the current game of the player.
+     */
+    public void leaveGame() {
+        Action action = new Action(ActionType.LEAVE_GAME);
+        clientConnector.send(action);
+    }
+
+    /**
      * Used by the client to send a request to the server to get the information needed to start the game.
      */
     public void requestGameInfo() {

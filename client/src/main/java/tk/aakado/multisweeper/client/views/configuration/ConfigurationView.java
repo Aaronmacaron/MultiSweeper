@@ -81,8 +81,8 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
      * @param event ActionEvent
      */
     @FXML
-    void onDisconnect(ActionEvent event) {
-        viewModel.disconnect();
+    void onLeave(ActionEvent event) {
+        viewModel.leaveGame();
     }
 
     /**

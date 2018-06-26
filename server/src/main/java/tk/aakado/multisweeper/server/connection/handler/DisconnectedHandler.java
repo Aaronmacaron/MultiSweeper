@@ -2,16 +2,11 @@ package tk.aakado.multisweeper.server.connection.handler;
 
 import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.connection.ServerMessage;
-import tk.aakado.multisweeper.server.game.Game;
 import tk.aakado.multisweeper.server.game.Player;
 import tk.aakado.multisweeper.shared.Logger;
-import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
-import tk.aakado.multisweeper.shared.connection.Connection;
-import tk.aakado.multisweeper.shared.connection.dtos.DisconnectDTO;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 public class DisconnectedHandler {
@@ -24,43 +19,12 @@ public class DisconnectedHandler {
     public void onDisconnect(ServerMessage message) {
         Optional<Player> disconnectedPlayer = Server.getGameManager().getPlayer(message.getSender());
 
+        if (disconnectedPlayer.isPresent()) {
+            Server.getGameManager().removePlayer(message.getSender());
+        }
+
         // Close connection
         message.getSender().close();
-
-        if (disconnectedPlayer.isPresent()) {
-            Optional<Game> game = Server.getGameManager().getGameOf(disconnectedPlayer.get());
-
-            Server.getGameManager().removePlayer(message.getSender());
-
-            if (game.isPresent()) {
-                // Inform every other player
-                Optional<Player> optionalNewAdmin = game.get().getAdmin();
-                if (!optionalNewAdmin.isPresent()) {
-                    // Do nothing if there are no players left
-                    Logger.get(this).info("There are no players left in game.");
-                    return;
-                }
-
-                Player newAdmin = optionalNewAdmin.get();
-
-                // Send message to non-admin players
-                Action nonAdminAction = new Action(
-                        ActionType.DISCONNECTED,
-                        new DisconnectDTO(disconnectedPlayer.get().toString(), false)
-                );
-                Connection adminConnection = Server.getGameManager().getConnection(newAdmin)
-                        .orElseThrow(() -> new IllegalStateException("The player doesn't belong to connection."));
-                message.getConnector().sendExcept(nonAdminAction, Arrays.asList(adminConnection, message.getSender()));
-
-                // Send message to new admin
-                Action adminAction = new Action(
-                        ActionType.DISCONNECTED,
-                        new DisconnectDTO(disconnectedPlayer.get().toString(), true)
-                );
-                message.getConnector().sendTo(adminAction, adminConnection);
-            }
-
-        }
 
         Logger.get(this).info("Client {} disconnected from server.", message.getSender().getSocket().getRemoteSocketAddress());
 
