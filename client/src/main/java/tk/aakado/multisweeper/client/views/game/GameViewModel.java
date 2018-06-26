@@ -70,7 +70,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void finished() {
-        Client.getInstance().changeView(FinishedView.class);
+        this.isFinished.setValue(true);
     }
 
     /**
@@ -109,6 +109,13 @@ public class GameViewModel implements ViewModel, GameNotificator {
         }
     }
 
+    /**
+     * Change the view after the user decided to do it
+     */
+    public void onContinue() {
+        Client.getInstance().changeView(FinishedView.class);
+    }
+
     public ObjectProperty<Duration> elapsedTimeProperty() {
         return elapsedTime;
     }
@@ -143,5 +150,25 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public IntegerProperty fieldHeightProperty() {
         return fieldHeight;
+    }
+
+    public boolean isAdmin() {
+        return admin.get();
+    }
+
+    public BooleanProperty adminProperty() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin.set(admin);
+    }
+
+    public boolean isIsFinished() {
+        return isFinished.get();
+    }
+
+    public BooleanProperty isFinishedProperty() {
+        return isFinished;
     }
 }
