@@ -42,10 +42,10 @@ public class GameHandler {
     }
 
 
-    public void onRestartChangeView(){
-        ViewModel viewModel = Client.getInstance().getActiveView().getViewModel();
-
-    }
+//    @ActionHandler(actionType = ActionType.GAME_STARTED)
+//    public void onRestartChangeView(){
+//        Client.getInstance().changeView(GameView.class);
+//    }
     @ActionHandler(actionType = ActionType.GAME_FINISHED)
     public void onGameFinished(ClientMessage message) {
         GameNotificator notificator = (GameNotificator) Client.getInstance().getNotificator(GameView.class);
