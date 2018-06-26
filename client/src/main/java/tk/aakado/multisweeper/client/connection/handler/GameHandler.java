@@ -24,4 +24,10 @@ public class GameHandler {
         });
     }
 
+    @ActionHandler(actionType = ActionType.GAME_FINISHED)
+    public void onGameFinished(ClientMessage message) {
+        GameNotificator notificator = (GameNotificator) Client.getInstance().getNotificator(GameView.class);
+        notificator.finished();
+    }
+
 }

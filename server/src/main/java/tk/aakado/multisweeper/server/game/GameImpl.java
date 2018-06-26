@@ -4,6 +4,7 @@ import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionType;
+import tk.aakado.multisweeper.shared.connection.Connection;
 import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
@@ -51,6 +52,15 @@ public class GameImpl implements Game {
             List<FieldDTO> changedFields = this.currentPlayingField.discoverField(fieldCords, player);
 
             Server.getConnector().send(new Action(ActionType.CLICKED, changedFields));
+
+            // if one of the changed fields is an exploded mine, the game is finished
+            boolean isFinished = changedFields.stream()
+                    .anyMatch(fieldDTO -> fieldDTO.getState() == FieldState.MINE_EXPLODED);
+            if (isFinished) {
+                Action action = new Action(ActionType.GAME_FINISHED);
+                List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
+                Server.getConnector().sendTo(action, players);
+            }
         }
     }
 
