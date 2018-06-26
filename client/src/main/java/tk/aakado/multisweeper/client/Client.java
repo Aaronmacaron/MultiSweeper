@@ -93,6 +93,8 @@ public class Client extends Application {
         // show the connection view
         changeView(ConnectionView.class);
         primaryStage.show();
+
+
     }
 
     public static Client getInstance() {
