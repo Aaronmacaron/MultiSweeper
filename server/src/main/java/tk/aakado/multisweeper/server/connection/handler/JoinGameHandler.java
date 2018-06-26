@@ -14,7 +14,9 @@ import tk.aakado.multisweeper.shared.connection.Connection;
 import tk.aakado.multisweeper.shared.connection.dtos.AuthenticationDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameJoinedInfoDTO;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This handler takes care of the joining process.
@@ -118,11 +120,12 @@ public class JoinGameHandler {
     private void playerJoinedFeedback(Game game, Player player, ServerConnector connector, Connection sender) {
         //noinspection ConstantConditions as game has minimum one player now
         boolean isAdmin = player.equals(game.getAdmin().get());
-        GameJoinedInfoDTO gameJoinedInfoDTO = new GameJoinedInfoDTO(isAdmin, game.isStarted(), null);
+        List<String> playerNames = Server.getGameManager().getAllPlayersOf(game).map(Player::toString).collect(Collectors.toList());
+        GameJoinedInfoDTO gameJoinedInfoDTO = new GameJoinedInfoDTO(isAdmin, game.isStarted(), playerNames);
         connector.sendTo(new Action(ActionType.GAME_JOINED, gameJoinedInfoDTO), sender);
 
         // Inform other player about the new player
-        Action newPlayerAction = new Action(ActionType.PLAYER_CONNECTED, player.getName());
+        Action newPlayerAction = new Action(ActionType.PLAYER_CONNECTED, player.toString());
         connector.sendExcept(newPlayerAction, sender);
     }
 
