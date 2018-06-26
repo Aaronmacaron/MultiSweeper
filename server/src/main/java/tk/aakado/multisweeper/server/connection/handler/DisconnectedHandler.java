@@ -46,7 +46,7 @@ public class DisconnectedHandler {
                 // Send message to non-admin players
                 Action nonAdminAction = new Action(
                         ActionType.DISCONNECTED,
-                        new DisconnectDTO(disconnectedPlayer.get().getName(), false)
+                        new DisconnectDTO(disconnectedPlayer.get().toString(), false)
                 );
                 Connection adminConnection = Server.getGameManager().getConnection(newAdmin)
                         .orElseThrow(() -> new IllegalStateException("The player doesn't belong to connection."));
@@ -55,7 +55,7 @@ public class DisconnectedHandler {
                 // Send message to new admin
                 Action adminAction = new Action(
                         ActionType.DISCONNECTED,
-                        new DisconnectDTO(disconnectedPlayer.get().getName(), true)
+                        new DisconnectDTO(disconnectedPlayer.get().toString(), true)
                 );
                 message.getConnector().sendTo(adminAction, adminConnection);
             }

@@ -48,7 +48,7 @@ public class ConnectedHandler {
         // Extract data from message
         DisconnectDTO disconnectDTO = new Gson().fromJson(message.getParams(), DisconnectDTO.class);
         ConfigurationNotificator notificator = (ConfigurationNotificator) Client.getInstance()
-                .getActiveView(ConfigurationView.class).getNotificator();
+                .getNotificator(ConfigurationView.class);
 
         // Send to view using notificator
         Platform.runLater(() ->
