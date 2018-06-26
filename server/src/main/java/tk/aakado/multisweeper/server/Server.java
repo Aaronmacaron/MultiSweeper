@@ -82,7 +82,8 @@ public class Server {
                 ConnectHandler.class,
                 DisconnectedHandler.class,
                 ClickHandler.class,
-                ConfigurationHandler.class
+                ConfigurationHandler.class,
+                FinishedHandler.class
         );
 
         connector.addAllActionHandlers(actionHandlers);
