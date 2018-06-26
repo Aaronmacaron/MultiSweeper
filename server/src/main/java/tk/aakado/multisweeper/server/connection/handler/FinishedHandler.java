@@ -2,7 +2,6 @@ package tk.aakado.multisweeper.server.connection.handler;
 
 import java.util.List;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.connection.ServerConnector;
 import tk.aakado.multisweeper.server.connection.ServerMessage;

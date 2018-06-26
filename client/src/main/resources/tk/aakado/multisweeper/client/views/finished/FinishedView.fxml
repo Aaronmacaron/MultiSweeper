@@ -64,7 +64,7 @@
                 </GridPane>
                 <HBox layoutX="10.0" layoutY="290.0" spacing="20.0">
                     <children>
-                        <Button fx:id="startNewButton" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="30.0" prefWidth="120.0" text="Strart New Game" />
+                        <Button fx:id="startNewButton" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="30.0" prefWidth="120.0" text="Start New Game" />
                         <Button fx:id="reconfigureButton" mnemonicParsing="false" onAction="#onReconfigure" prefHeight="30.0" prefWidth="120.0" text="Reconfigure" />
                         <Region HBox.hgrow="ALWAYS" />
                         <Button cancelButton="true" mnemonicParsing="false" onAction="#onDisconnect" prefHeight="30.0" prefWidth="120.0" text="Disconnect" />
