@@ -34,15 +34,18 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      * Starts the configured game
      */
     public void start() {
-        if (admin.get())
+        if (admin.get()) {
             Client.getInstance().getTransmitter().start(fieldWidth.get(), fieldHeight.get(), mineDensity.get());
+        }
     }
 
     /**
      * Saves the password to persistence
      */
     public void save() {
-        if (admin.get()) Client.getInstance().getTransmitter().savePassword(password.get());
+        if (admin.get()) {
+            Client.getInstance().getTransmitter().savePassword(password.get());
+        }
     }
 
     /**
