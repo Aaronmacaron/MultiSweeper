@@ -118,8 +118,12 @@ public class JoinGameHandler {
     private void playerJoinedFeedback(Game game, Player player, ServerConnector connector, Connection sender) {
         //noinspection ConstantConditions as game has minimum one player now
         boolean isAdmin = player.equals(game.getAdmin().get());
-        GameJoinedInfoDTO gameJoinedInfoDTO = new GameJoinedInfoDTO(isAdmin, game.isStarted());
+        GameJoinedInfoDTO gameJoinedInfoDTO = new GameJoinedInfoDTO(isAdmin, game.isStarted(), null);
         connector.sendTo(new Action(ActionType.GAME_JOINED, gameJoinedInfoDTO), sender);
+
+        // Inform other player about the new player
+        Action newPlayerAction = new Action(ActionType.PLAYER_CONNECTED, player.getName());
+        connector.sendExcept(newPlayerAction, sender);
     }
 
 }

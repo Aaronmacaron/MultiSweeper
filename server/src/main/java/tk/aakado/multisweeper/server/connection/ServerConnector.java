@@ -15,6 +15,7 @@ import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -116,7 +117,7 @@ public class ServerConnector extends AbstractConnector {
                 );
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            connections.remove(connection);
         }
     }
 
@@ -180,6 +181,23 @@ public class ServerConnector extends AbstractConnector {
 
         for (Connection connection : connections) {
             if (!connection.equals(except)) {
+                connection.getOutput().println(action.toJson());
+            }
+        }
+    }
+
+    /**
+     * Sends a Message containing an Action to all but a list of Clients.
+     * @param action The Action to be sent through the Connector
+     * @param except The Collection of Connections that should be ignored.
+     */
+    public void sendExcept(Action action, Collection<Connection> except) {
+        if (!isStarted) {
+            throw new IllegalStateException("Server is not started yet.");
+        }
+
+        for (Connection connection : connections) {
+            if (!except.contains(connection)) {
                 connection.getOutput().println(action.toJson());
             }
         }

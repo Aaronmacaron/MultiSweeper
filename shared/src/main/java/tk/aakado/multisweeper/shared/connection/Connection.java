@@ -1,6 +1,7 @@
 package tk.aakado.multisweeper.shared.connection;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -14,6 +15,7 @@ public class Connection {
     private Socket socket;
     private PrintWriter output;
     private BufferedReader input;
+    private boolean isClosed = false;
 
     /**
      * Constructor
@@ -51,4 +53,23 @@ public class Connection {
         return input;
     }
 
+    /**
+     * Closes this connection
+     */
+    public void close() {
+        isClosed = true;
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Getter for isClosed
+     * @return isClosed
+     */
+    public boolean isClosed() {
+        return isClosed;
+    }
 }
