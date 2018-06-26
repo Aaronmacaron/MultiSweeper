@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +44,7 @@ public class GameViewModelTest {
         }
 
         // let the viewmodel create new fields
-        viewModel.restart(x, y);
+        viewModel.configureField(x, y);
         List<Field> actualFields = viewModel.getFields();
 
         // check all fields
@@ -57,15 +58,14 @@ public class GameViewModelTest {
     public void updateField() {
         // create and add a field to the list
         ObservableList<Field> fieldList = FXCollections.observableArrayList();
-        int[] coords = {0, 0};
         FieldState newState = FieldState.MINE;
-        fieldList.add(new Field(coords[0], coords[1], FieldState.UNDISCOVERED, 0));
+        fieldList.add(new Field(0, 0, FieldState.UNDISCOVERED, 0));
 
         // set the list as value
         this.viewModel.fieldsProperty().setValue(fieldList);
 
         // change the state of the field
-        this.viewModel.updateField(coords, newState);
+        this.viewModel.updateField(0, 0, newState, Optional.empty());
 
         // check if the new field state is set
         assertEquals(newState, this.viewModel.getFields().get(0).getFieldState());

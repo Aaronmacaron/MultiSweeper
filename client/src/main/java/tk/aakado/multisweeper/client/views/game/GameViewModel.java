@@ -31,40 +31,6 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
-    private BooleanProperty admin = new SimpleBooleanProperty(false);
-
-
-    public GameViewModel() {
-        this.admin.bindBidirectional(Client.getInstance().getGameProperties().adminProperty());
-    }
-
-    @Override
-    public void playerDisconnected(String player, boolean isNewAdmin) {
-        // check if the given player exists
-        String playerToRemove = players.get().stream()
-                .filter(s -> s.equals(player))
-                .findFirst()
-                .orElseThrow(() -> {
-                    Logger.get(this).error("Can't remove player that doesn't exist");
-                    return new IllegalArgumentException("Can't remove player that doesn't exist");
-                });
-
-        // remove the player
-        players.get().remove(playerToRemove);
-
-        // set the new admin
-        admin.setValue(isNewAdmin);
-    }
-
-    @Override
-    public void playerConnected(String player) {
-        // check if a player with the same name already exists
-        if (players.get().stream().anyMatch(s -> s.equals(player))) {
-            Logger.get(this).error("Player with the same name already exists");
-            throw new IllegalArgumentException("Player with the same name already exists");
-        }
-        players.get().add(player);
-    }
 
     @Override
     public void configureField(int width, int height) {
@@ -138,7 +104,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     public void sendRestart() {
-        if (admin.get()) {
+        if (Client.getInstance().getGameProperties().isAdmin()) {
             Client.getInstance().getTransmitter().restart();
         }
     }
@@ -177,17 +143,5 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public IntegerProperty fieldHeightProperty() {
         return fieldHeight;
-    }
-
-    public boolean isAdmin() {
-        return admin.get();
-    }
-
-    public BooleanProperty adminProperty() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin.set(admin);
     }
 }

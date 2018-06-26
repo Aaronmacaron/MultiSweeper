@@ -9,21 +9,6 @@ import java.util.Optional;
 public interface GameNotificator extends Notificator  {
 
     /**
-     * A player disconnected the game
-     *
-     * @param player     Players IP
-     * @param isNewAdmin When the admin disconnected, an other Player becomes the admin
-     */
-    void playerDisconnected(String player, boolean isNewAdmin);
-
-    /**
-     * A new player joined the game
-     *
-     * @param player Players IP
-     */
-    void playerConnected(String player);
-
-    /**
      * Admin configures the field.
      *
      * @param width x-axis size

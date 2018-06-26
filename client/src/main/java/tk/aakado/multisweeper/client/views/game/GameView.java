@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.client.views.game.view.FieldButton;
 import tk.aakado.multisweeper.client.views.game.view.FieldGrid;
@@ -56,7 +57,7 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
         gamePane.getChildren().add(new FieldGrid(viewModel.fieldsProperty(), viewModel.fieldWidthProperty(), viewModel.fieldHeightProperty(), this::onClick));
 
         // Hide restart Button if player isn't the admin
-        restartButton.visibleProperty().bind(viewModel.adminProperty());
+        restartButton.visibleProperty().bind(Client.getInstance().getGameProperties().adminProperty());
     }
 
     /**
