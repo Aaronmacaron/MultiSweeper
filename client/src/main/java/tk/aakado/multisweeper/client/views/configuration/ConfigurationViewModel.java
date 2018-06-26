@@ -1,20 +1,11 @@
 package tk.aakado.multisweeper.client.views.configuration;
 
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.Client;
-import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.game.GameView;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.shared.Logger;
 
 public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
@@ -53,7 +44,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      */
     public void leaveGame() {
         Client.getInstance().getTransmitter().leaveGame();
-        Client.getInstance().changeView(ConnectionView.class);
+        Client.getInstance().changeView(GameSelectionView.class);
     }
 
     @Override
