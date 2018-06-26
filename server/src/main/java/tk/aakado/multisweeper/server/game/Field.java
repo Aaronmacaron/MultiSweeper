@@ -139,7 +139,7 @@ public class Field {
     }
 
     public boolean isFlagged() {
-        return this.state == FieldState.FLAG;
+        return this.state == FieldState.FLAG || this.state == FieldState.FALSE_FLAGGED_MINE;
     }
 
     public Optional<Player> getFlagPlayer() {
