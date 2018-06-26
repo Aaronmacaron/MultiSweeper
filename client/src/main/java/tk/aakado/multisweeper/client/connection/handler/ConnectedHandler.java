@@ -2,21 +2,19 @@ package tk.aakado.multisweeper.client.connection.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.Set;
+
 import javafx.application.Platform;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.connection.ClientMessage;
-import tk.aakado.multisweeper.client.views.MultiSweeperView;
 import tk.aakado.multisweeper.client.views.connection.ConnectionNotificator;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
-import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
-
-import java.lang.reflect.Type;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * ActionHandler that handles connect action sent by server when client connects

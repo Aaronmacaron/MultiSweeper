@@ -5,10 +5,13 @@ import java.util.ResourceBundle;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.util.converter.NumberStringConverter;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 
@@ -28,8 +31,13 @@ public class GameSelectionView implements FxmlView<GameSelectionViewModel>, Init
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // gamesListView content
-        this.viewModel.gameIdsProperty().addListener((observable, oldValue, newValue) -> newValue.forEach(
-                gameId -> this.gamesListView.getItems().add("Game " + gameId)));
+//        this.viewModel.gameIdsProperty().addListener((observable, oldValue, newValue) -> newValue.forEach(
+//                gameId -> this.gamesListView.getItems().add("Game " + gameId)));
+
+        this.viewModel.gameIdsProperty().addListener((observable, oldValue, newValue) -> {
+            this.gamesListView.itemsProperty().setValue(FXCollections.observableArrayList());
+            newValue.forEach(integer -> this.gamesListView.getItems().add("Game " + integer));
+        });
 
         // join button
         this.joinButton
