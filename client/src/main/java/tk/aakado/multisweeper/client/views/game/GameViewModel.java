@@ -31,6 +31,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
+    private BooleanProperty isFinished = new SimpleBooleanProperty(false);
 
     @Override
     public void configureField(int width, int height) {
@@ -50,6 +51,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
         // set the new fields as new value to the existing ListProperty
         fields.setValue(newFields);
+        isFinished.setValue(false);
     }
 
     @Override
@@ -70,7 +72,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void finished() {
-        Client.getInstance().changeView(FinishedView.class);
+        this.isFinished.setValue(true);
     }
 
     /**
@@ -109,6 +111,13 @@ public class GameViewModel implements ViewModel, GameNotificator {
         }
     }
 
+    /**
+     * Change the view after the user decided to do it
+     */
+    public void onContinue() {
+        Client.getInstance().changeView(FinishedView.class);
+    }
+
     public ObjectProperty<Duration> elapsedTimeProperty() {
         return elapsedTime;
     }
@@ -143,5 +152,14 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public IntegerProperty fieldHeightProperty() {
         return fieldHeight;
+    }
+
+
+    public boolean isIsFinished() {
+        return isFinished.get();
+    }
+
+    public BooleanProperty isFinishedProperty() {
+        return isFinished;
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.game.GameView">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.game.GameView">
     <HBox spacing="2.0">
         <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -47,8 +47,8 @@
     </HBox>
    <!--suppress JavaFxUnresolvedStyleClassReference Because edge-to-edge exists by default but is not
    recognized by intellij -->
-    <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" styleClass="edge-to-edge">
-        <AnchorPane fx:id="gamePane"/>
+    <ScrollPane prefHeight="200.0" prefWidth="200.0" styleClass="edge-to-edge" VBox.vgrow="ALWAYS">
+        <AnchorPane fx:id="gamePane" />
     </ScrollPane>
     <HBox spacing="15.0">
         <padding>
@@ -56,5 +56,6 @@
         </padding>
         <Button fx:id="restartButton" mnemonicParsing="false" onAction="#onRestart" text="Restart" />
         <Button mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
+      <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onContinue" text="Continue" />
     </HBox>
 </VBox>

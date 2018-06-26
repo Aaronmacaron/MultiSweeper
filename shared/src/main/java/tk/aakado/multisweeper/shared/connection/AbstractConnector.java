@@ -1,8 +1,6 @@
 package tk.aakado.multisweeper.shared.connection;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Abstract implementation of Connector interface. This abstract class handles the ActionHandler registering of a
@@ -13,7 +11,7 @@ abstract public class AbstractConnector implements Connector {
     /**
      * This List stores the ActionsHandlers.
      */
-    protected List<Class> actionHandlers = new ArrayList<>();
+    protected Set<Class> actionHandlers = new HashSet<>();
 
     /**
      * Adds new ActionHandler to Connector.
