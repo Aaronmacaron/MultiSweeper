@@ -4,7 +4,6 @@ import tk.aakado.multisweeper.server.connection.ServerConnector;
 import tk.aakado.multisweeper.server.connection.handler.*;
 import tk.aakado.multisweeper.server.game.GameManager;
 import tk.aakado.multisweeper.shared.Logger;
-import tk.aakado.multisweeper.shared.connection.Connector;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -83,7 +82,8 @@ public class Server {
                 DisconnectedHandler.class,
                 ClickHandler.class,
                 ConfigurationHandler.class,
-                FinishedHandler.class
+                FinishedHandler.class,
+                LeaveGameHanlder.class
         );
 
         connector.addAllActionHandlers(actionHandlers);
