@@ -24,7 +24,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private StringProperty password = new SimpleStringProperty();
-    private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
+    private ListProperty<String> players = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public ConfigurationViewModel() {
         this.admin.bindBidirectional(Client.getInstance().getGameProperties().adminProperty());
@@ -34,15 +34,18 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      * Starts the configured game
      */
     public void start() {
-        if (admin.get())
+        if (admin.get()) {
             Client.getInstance().getTransmitter().start(fieldWidth.get(), fieldHeight.get(), mineDensity.get());
+        }
     }
 
     /**
      * Saves the password to persistence
      */
     public void save() {
-        if (admin.get()) Client.getInstance().getTransmitter().savePassword(password.get());
+        if (admin.get()) {
+            Client.getInstance().getTransmitter().savePassword(password.get());
+        }
     }
 
     /**

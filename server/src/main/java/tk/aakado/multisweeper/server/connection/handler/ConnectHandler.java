@@ -17,7 +17,7 @@ public class ConnectHandler {
     @ActionHandler(actionType = ActionType.CONNECT)
     public void onConnect(ServerMessage message) {
         Action response = new Action(ActionType.CONNECTED, Server.getGameManager().getAllGameIds());
-        message.getConnector().send(response);
+        message.getConnector().sendTo(response, message.getSender());
     }
 
 }

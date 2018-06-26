@@ -8,6 +8,8 @@ import tk.aakado.multisweeper.client.connection.ClientMessage;
 import tk.aakado.multisweeper.client.views.MultiSweeperView;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationNotificator;
 import tk.aakado.multisweeper.client.views.authentication.AuthenticationView;
+import tk.aakado.multisweeper.client.views.configuration.ConfigurationNotificator;
+import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificator;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
@@ -54,6 +56,11 @@ public class GameSelectionHandler {
         // This should be save since the type is being checked in getActiveView
         GameSelectionNotificator notificator = (GameSelectionNotificator) Client.getInstance().getNotificator(GameSelectionView.class);
         Platform.runLater(() -> notificator.gameSelected(gameJoinedInfo.isAdmin(), gameJoinedInfo.isRunning()));
+
+        // Add all players to Configuration view
+        ConfigurationNotificator configurationNotificator = (ConfigurationNotificator) Client.getInstance()
+                .getNotificator(ConfigurationView.class);
+        gameJoinedInfo.getPlayers().forEach(p -> Platform.runLater(() -> configurationNotificator.playerConnected(p)));
     }
 
     /**
