@@ -70,9 +70,6 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         mineDensitySlider.disableProperty().bind(viewModel.adminProperty().not());
         startButton.disableProperty().bind(viewModel.adminProperty().not());
         saveButton.disableProperty().bind(viewModel.adminProperty().not());
-
-        // only enable start button if the input is correct
-        startButton.disableProperty().bind(Bindings.createBooleanBinding(this::correctParams).not());
     }
 
     /**
@@ -105,16 +102,4 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         viewModel.start();
     }
 
-    /**
-     * Checks if the given height and width are valid.
-     *
-     * @return true if valid
-     */
-    private boolean correctParams() {
-        if (viewModel.fieldWidthProperty().get() != 0) return false;
-        if (viewModel.fieldHeightProperty().get() != 0) return false;
-        if (viewModel.fieldWidthProperty().get() != 0) return false;
-        if (viewModel.fieldWidthProperty().get() != 0) return false;
-        return true;
-    }
 }
