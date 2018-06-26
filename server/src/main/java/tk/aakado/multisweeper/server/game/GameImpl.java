@@ -161,7 +161,10 @@ public class GameImpl implements Game {
 
     @Override
     public Optional<Player> getAdmin() {
-        return Optional.ofNullable(this.players.get(0));
+        if (this.players.size() < 1) {
+            return Optional.empty();
+        }
+        return Optional.of(this.players.get(0));
     }
 
     @Override
