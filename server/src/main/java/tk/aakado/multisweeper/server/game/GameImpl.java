@@ -7,6 +7,7 @@ import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
+import tk.aakado.multisweeper.shared.game.FieldState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,9 +88,7 @@ public class GameImpl implements Game {
         StartInfoDTO startInfo = new StartInfoDTO(width, height, this.currentPlayingField.getCurrentPlayingFieldState());
         Action update = new Action(ActionType.CONFIGURE_GAME, startInfo);
         GameManager gameManager = Server.getGameManager();
-        gameManager.getAllPlayersOf(this)
-                .map(gameManager::getConnection)
-                .map(Optional::get)
+        gameManager.getAllConnectionsOf(this)
                 .forEach(c -> Server.getConnector().sendTo(update, c));
     }
 

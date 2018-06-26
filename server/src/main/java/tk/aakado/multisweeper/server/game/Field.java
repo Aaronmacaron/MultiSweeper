@@ -48,7 +48,11 @@ public class Field {
             throw new IllegalStateException("This field has already been discovered.");
         }
 
-        this.state = FieldState.DISCOVERED;
+        if (isMine()) {
+            this.state = FieldState.MINE;
+        } else {
+            this.state = FieldState.DISCOVERED;
+        }
         this.discoverPlayer = player;
     }
 
@@ -61,7 +65,12 @@ public class Field {
             throw new IllegalStateException("The field has already been flagged.");
         }
 
-        this.state = FieldState.FLAG;
+        if (isMine()) {
+            this.state = FieldState.FLAG;
+        } else {
+            this.state = FieldState.FALSE_FLAGGED_MINE;
+        }
+
         this.flagPlayer = player;
     }
 
@@ -81,11 +90,26 @@ public class Field {
      * Get the corresponding {@link FieldDTO} of this field.
      * @return This field as {@link FieldDTO}
      */
-    public FieldDTO toFieldDTO() {
-        if (this.state == FieldState.DISCOVERED) {
-            return new FieldDTO(this.fieldCords.getX(), this.fieldCords.getY(), this.state, this.type.getValue());
+    public FieldDTO toFieldDTO(boolean exposed) {
+        int x = this.fieldCords.getX();
+        int y = this.fieldCords.getY();
+        FieldState displayState = this.state;
+        if (this.isDiscovered()) {
+            return new FieldDTO(x, y, this.state, this.type.getValue());
+        } else if (this.isFlagged()) {
+            if (exposed) {
+                displayState = this.state;
+            } else {
+                displayState = FieldState.FLAG;
+            }
+        } else if (isMine()) {
+            if (exposed) {
+                displayState = FieldState.MINE;
+            } else {
+                displayState = FieldState.UNDISCOVERED;
+            }
         }
-        return  new FieldDTO(this.fieldCords.getX(), this.fieldCords.getY(), this.state);
+        return new FieldDTO(this.fieldCords.getX(), this.fieldCords.getY(), displayState);
     }
 
     // Getters

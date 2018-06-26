@@ -50,6 +50,7 @@ public class FieldButton extends Button {
 
         // change the graphic when the state changes
         fieldState.addListener(this::onChange);
+        value.addListener(this::onChange);
 
         // send a leftClick with the coordinates
         this.setOnMouseClicked(onClick);
@@ -71,7 +72,7 @@ public class FieldButton extends Button {
      * @param oldValue   the old state
      * @param newValue   the new state
      */
-    private void onChange(Observable observable, FieldState oldValue, FieldState newValue) {
+    private void onChange(Observable observable, Object oldValue, Object newValue) {
         changeImage();
     }
 

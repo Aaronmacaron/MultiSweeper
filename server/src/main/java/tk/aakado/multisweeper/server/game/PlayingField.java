@@ -1,7 +1,10 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.game.Field.FieldType;
+import tk.aakado.multisweeper.shared.connection.Connection;
 import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
+import tk.aakado.multisweeper.shared.game.FieldState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -137,11 +140,10 @@ public class PlayingField {
 
         theField.discover(player);
 
-        changedFields.add(theField.toFieldDTO());
+        changedFields.add(theField.toFieldDTO(false));
 
         if (theField.isMine()) {
-            // TODO: end game
-            return changedFields;
+            return endGame(fieldCords);
         }
 
         if (theField.getFieldValue() == FieldType.FIELD_0.getValue()) {
@@ -178,7 +180,7 @@ public class PlayingField {
         } else {
             theField.flag(player);
         }
-        return Optional.of(theField.toFieldDTO());
+        return Optional.of(theField.toFieldDTO(false));
     }
 
     /**
@@ -196,8 +198,18 @@ public class PlayingField {
      */
     public List<FieldDTO> getCurrentPlayingFieldState() {
         return this.fields.stream()
-                .map(Field::toFieldDTO)
+                .map(field -> field.toFieldDTO(false))
                 .collect(Collectors.toList());
+    }
+
+    private List<FieldDTO> endGame(FieldCords fieldCords) {
+        List<FieldDTO> endFields = this.fields.stream()
+                .map(field -> field.toFieldDTO(true))
+                .filter(fieldDTO -> !(fieldDTO.getX() == fieldCords.getX() && fieldDTO.getY() == fieldCords.getY()))
+                .collect(Collectors.toList());
+
+        endFields.add(new FieldDTO(fieldCords.getX(), fieldCords.getY(), FieldState.MINE_EXPLODED));
+        return endFields;
     }
 
     // Getters
