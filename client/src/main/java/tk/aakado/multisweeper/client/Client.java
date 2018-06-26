@@ -138,7 +138,6 @@ public class Client extends Application {
     public List<Class> getAllActionHandlers() {
         return Arrays.asList(
                 ConnectedHandler.class,
-                GameSelectionHandler.class,
                 ClickedHandler.class,
                 GameHandler.class,
                 GameSelectionHandler.class,
