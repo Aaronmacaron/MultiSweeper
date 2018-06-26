@@ -51,6 +51,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
         // set the new fields as new value to the existing ListProperty
         fields.setValue(newFields);
+        isFinished.setValue(false);
     }
 
     @Override
