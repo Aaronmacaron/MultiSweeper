@@ -4,6 +4,8 @@ import tk.aakado.multisweeper.shared.connection.Connection;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The Game Manager manages all the games on this server.
@@ -63,6 +65,42 @@ public class GameManager {
      */
     public Optional<Player> getPlayer(Connection connection) {
         return Optional.ofNullable(this.allPlayers.get(connection));
+    }
+
+    /**
+     * Returns all players which are part of the given game.
+     * @param game The game of which to get all players.
+     * @return List of the players.
+     */
+    public Stream<Player> getAllPlayersOf(Game game) {
+        return this.allPlayers.values().stream()
+                .filter(game::hasPlayer);
+    }
+
+    /**
+     * Retrieve connection by player.
+     * @param player The player to get connection from.
+     * @return The connection that the player belongs to.
+     */
+    public Optional<Connection> getConnection(Player player) {
+        // Return connection of player if one exists else empty optional
+        return allPlayers.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(player))
+                .findFirst()
+                .map(Map.Entry::getKey);
+
+    }
+
+    /**
+     * Retrieve all connections that belong to the players which are part of the given game.
+     * @param game The game that has the players of which to get the connections.
+     * @return List of connections.
+     */
+    public List<Connection> getAllConnectionsOf(Game game) {
+        return getAllPlayersOf(game)
+                .map(this::getConnection)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     /**
