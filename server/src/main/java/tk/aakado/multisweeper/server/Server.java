@@ -26,7 +26,7 @@ public class Server {
      * This is the connector instance of the serverConnector. It is static so that the game can easily get the instance
      * without passing the instance around.
      */
-    private static Connector connector;
+    private static ServerConnector connector;
 
     /**
      * This is the game manager instance.It is static so that the game can easily get the instance without passing the
@@ -99,7 +99,7 @@ public class Server {
      * Getter for static connector instance.
      * @return The static connector.
      */
-    public static Connector getConnector() {
+    public static ServerConnector getConnector() {
         return connector;
     }
 
