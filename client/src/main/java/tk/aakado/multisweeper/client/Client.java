@@ -1,6 +1,8 @@
 package tk.aakado.multisweeper.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.connection.handler.ConfigurationHandler;
@@ -29,6 +31,7 @@ import tk.aakado.multisweeper.client.views.game.GameViewModel;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionNotificator;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionViewModel;
+import tk.aakado.multisweeper.shared.Logger;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -73,6 +76,9 @@ public class Client extends Application {
     public void start(Stage primaryStage) {
         instance = this;
         this.stage = primaryStage;
+
+        // Disconnect on close
+        primaryStage.setOnCloseRequest(this::closeApp);
 
         // create all views
         MultiSweeperView<ConnectionView, ConnectionViewModel, ConnectionNotificator> connectionView = new MultiSweeperView<>(ConnectionView.class);
@@ -178,6 +184,18 @@ public class Client extends Application {
             throw new IllegalArgumentException("The view " + viewType.getSimpleName() + " is not existent.");
         }
         return this.views.get(viewType).getNotificator();
+    }
+
+    private void closeApp(Event event) {
+        Logger.get(this).info("Received close request. Application is shutting down now.");
+        if (transmitter != null) {
+            Logger.get(this).info("Disconnecting form server.");
+            transmitter.disconnect();
+        }
+
+        Logger.get(this).info("Shut down application");
+        Platform.exit();
+        System.exit(0);
     }
 
 }
