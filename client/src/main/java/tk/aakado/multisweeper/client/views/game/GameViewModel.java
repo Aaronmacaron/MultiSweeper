@@ -32,6 +32,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
     private BooleanProperty admin = new SimpleBooleanProperty(false);
+    private BooleanProperty isFinished = new SimpleBooleanProperty(false);
 
 
     public GameViewModel() {
@@ -104,7 +105,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void finished() {
-        Client.getInstance().changeView(FinishedView.class);
+        this.isFinished.setValue(true);
     }
 
     /**
@@ -141,6 +142,13 @@ public class GameViewModel implements ViewModel, GameNotificator {
         if (admin.get()) {
             Client.getInstance().getTransmitter().restart();
         }
+    }
+
+    /**
+     * Change the view after the user decided to do it
+     */
+    public void onContinue() {
+        Client.getInstance().changeView(FinishedView.class);
     }
 
     public ObjectProperty<Duration> elapsedTimeProperty() {
@@ -189,5 +197,13 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     public void setAdmin(boolean admin) {
         this.admin.set(admin);
+    }
+
+    public boolean isIsFinished() {
+        return isFinished.get();
+    }
+
+    public BooleanProperty isFinishedProperty() {
+        return isFinished;
     }
 }

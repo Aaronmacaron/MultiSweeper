@@ -34,6 +34,8 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     private Label remainingMinesLabel;
     @FXML
     private Button restartButton;
+    @FXML
+    private Button continueButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,6 +59,20 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
 
         // Hide restart Button if player isn't the admin
         restartButton.visibleProperty().bind(viewModel.adminProperty());
+
+        // disable the field, after the game finished
+        gamePane.disableProperty().bind(viewModel.isFinishedProperty());
+        // make the continue button visible after the game finished
+        continueButton.visibleProperty().bind(viewModel.isFinishedProperty());
+    }
+
+    /**
+     * The player want to see the finished view
+     * @param actionEvent
+     */
+    @FXML
+    private void onContinue(ActionEvent actionEvent){
+        viewModel.onContinue();
     }
 
     /**
