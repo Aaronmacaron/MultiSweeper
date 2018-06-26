@@ -1,5 +1,6 @@
 package tk.aakado.multisweeper.server.connection.handler;
 
+import com.google.gson.Gson;
 import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.connection.ServerMessage;
 import tk.aakado.multisweeper.server.game.Game;
@@ -9,6 +10,7 @@ import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.Connection;
+import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 
 import java.util.List;
 
@@ -47,8 +49,10 @@ public class ConfigurationHandler {
                 new IllegalStateException("Connection does not belong to a game."));
         Player player = Server.getGameManager().getPlayer(message.getSender())
                 .orElseThrow(() -> new IllegalStateException("Connection doesn't belong to a player."));
+        GameConfigDTO gameConfigDTO = new Gson().fromJson(message.getParams(), GameConfigDTO.class);
 
         // Start game
+        game.configure(player, gameConfigDTO);
         game.startNewRound(player);
 
         // Inform all clients
