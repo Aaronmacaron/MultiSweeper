@@ -22,43 +22,48 @@ public class DisconnectedHandler {
      */
     @ActionHandler(actionType = ActionType.DISCONNECT)
     public void onDisconnect(ServerMessage message) {
-        Player disconnectedPlayer = Server.getGameManager().getPlayer(message.getSender())
-                .orElseThrow(() -> new IllegalStateException("This connection is not associated with a player."));
-        Game game = Server.getGameManager().getGameOf(disconnectedPlayer)
-                .orElseThrow(() -> new IllegalStateException("Player is not playing game currently."));
-
-        Server.getGameManager().removePlayer(message.getSender());
+        Optional<Player> disconnectedPlayer = Server.getGameManager().getPlayer(message.getSender());
 
         // Close connection
         message.getSender().close();
 
-        Logger.get(this).info("Client {} disconnected from server.", message.getSender().getSocket().getRemoteSocketAddress());
+        if (disconnectedPlayer.isPresent()) {
+            Optional<Game> game = Server.getGameManager().getGameOf(disconnectedPlayer.get());
 
-        // Inform every other player
-        Optional<Player> optionalNewAdmin = game.getAdmin();
-        if (!optionalNewAdmin.isPresent()) {
-            // Do nothing if there are no players left
-            Logger.get(this).info("There are no players left in game.");
-            return;
+            Server.getGameManager().removePlayer(message.getSender());
+
+            if (game.isPresent()) {
+                // Inform every other player
+                Optional<Player> optionalNewAdmin = game.get().getAdmin();
+                if (!optionalNewAdmin.isPresent()) {
+                    // Do nothing if there are no players left
+                    Logger.get(this).info("There are no players left in game.");
+                    return;
+                }
+
+                Player newAdmin = optionalNewAdmin.get();
+
+                // Send message to non-admin players
+                Action nonAdminAction = new Action(
+                        ActionType.DISCONNECTED,
+                        new DisconnectDTO(disconnectedPlayer.get().getName(), false)
+                );
+                Connection adminConnection = Server.getGameManager().getConnection(newAdmin)
+                        .orElseThrow(() -> new IllegalStateException("The player doesn't belong to connection."));
+                message.getConnector().sendExcept(nonAdminAction, Arrays.asList(adminConnection, message.getSender()));
+
+                // Send message to new admin
+                Action adminAction = new Action(
+                        ActionType.DISCONNECTED,
+                        new DisconnectDTO(disconnectedPlayer.get().getName(), true)
+                );
+                message.getConnector().sendTo(adminAction, adminConnection);
+            }
+
         }
 
-        Player newAdmin = optionalNewAdmin.get();
+        Logger.get(this).info("Client {} disconnected from server.", message.getSender().getSocket().getRemoteSocketAddress());
 
-        // Send message to non-admin players
-        Action nonAdminAction = new Action(
-                ActionType.DISCONNECTED,
-                new DisconnectDTO(disconnectedPlayer.getName(), false)
-        );
-        Connection adminConnection = Server.getGameManager().getConnection(newAdmin)
-                .orElseThrow(() -> new IllegalStateException("The player doesn't belong to connection."));
-        message.getConnector().sendExcept(nonAdminAction, Arrays.asList(adminConnection, message.getSender()));
-
-        // Send message to new admin
-        Action adminAction = new Action(
-                ActionType.DISCONNECTED,
-                new DisconnectDTO(disconnectedPlayer.getName(), true)
-        );
-        message.getConnector().sendTo(adminAction, adminConnection);
     }
 
 }

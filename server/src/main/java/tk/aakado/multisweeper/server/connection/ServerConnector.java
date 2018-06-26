@@ -148,7 +148,7 @@ public class ServerConnector extends AbstractConnector {
             method.invoke(method.getDeclaringClass().newInstance(), message);
         } catch (IllegalAccessException | InvocationTargetException e) {
             // Do nothing if method hasn't got the right parameters.
-            Logger.get(this).warn("Could not invoke method {} because it has the wrong parameters.", method.getName());
+            Logger.get(this).warn("Could not invoke method {} because it has the wrong parameters.", method.getName(), e);
         } catch (InstantiationException e) {
             Logger.get(this).error("Could not instantiate action handler: " + method.getDeclaringClass().getSimpleName(), e);
         }
