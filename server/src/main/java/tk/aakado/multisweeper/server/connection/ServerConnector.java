@@ -221,7 +221,7 @@ public class ServerConnector extends AbstractConnector {
      * @param action The action to send.
      * @param to All connection to which the action should be delivered.
      */
-    public void sendTo(Action action, Connection... to) {
+    public void sendTo(Action action, Collection<Connection> to) {
         if (!isStarted) {
             throw new IllegalStateException("Server is not started yet.");
         }

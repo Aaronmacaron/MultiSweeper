@@ -5,8 +5,12 @@ import tk.aakado.multisweeper.server.connection.ServerMessage;
 import tk.aakado.multisweeper.server.game.Game;
 import tk.aakado.multisweeper.server.game.GameManager;
 import tk.aakado.multisweeper.server.game.Player;
+import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
+import tk.aakado.multisweeper.shared.connection.Connection;
+
+import java.util.List;
 
 /**
  * Contains all ActionHandlers concerning the configuration of the game.
@@ -31,5 +35,25 @@ public class ConfigurationHandler {
 
         // Set new password
         game.setPassword(player, password);
+    }
+
+    /**
+     * Starts game
+     */
+    @ActionHandler(actionType = ActionType.START)
+    public void onStart(ServerMessage message) {
+        // Get objects
+        Game game = Server.getGameManager().getGameOf(message.getSender()).orElseThrow(() ->
+                new IllegalStateException("Connection does not belong to a game."));
+        Player player = Server.getGameManager().getPlayer(message.getSender())
+                .orElseThrow(() -> new IllegalStateException("Connection doesn't belong to a player."));
+
+        // Start game
+        game.startNewRound(player);
+
+        // Inform all clients
+        Action action = new Action(ActionType.GAME_STARTED);
+        List<Connection> connections = Server.getGameManager().getAllConnectionsOf(game);
+        message.getConnector().sendTo(action, connections);
     }
 }

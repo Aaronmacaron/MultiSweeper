@@ -20,5 +20,6 @@ public enum ActionType {
     CLICKED,
     DISCONNECTED,
     PLAYER_CONNECTED,
+    GAME_STARTED
     ;
 }

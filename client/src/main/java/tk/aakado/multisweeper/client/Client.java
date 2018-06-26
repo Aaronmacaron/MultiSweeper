@@ -3,6 +3,7 @@ package tk.aakado.multisweeper.client;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
+import tk.aakado.multisweeper.client.connection.handler.ConfigurationHandler;
 import tk.aakado.multisweeper.client.connection.handler.ConnectedHandler;
 import tk.aakado.multisweeper.client.connection.handler.GameSelectionHandler;
 import tk.aakado.multisweeper.client.views.GameProperties;
@@ -136,7 +137,8 @@ public class Client extends Application {
     public List<Class> getAllActionHandlers() {
         return Arrays.asList(
                 ConnectedHandler.class,
-                GameSelectionHandler.class
+                GameSelectionHandler.class,
+                ConfigurationHandler.class
         );
     }
 

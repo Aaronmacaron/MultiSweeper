@@ -115,6 +115,17 @@ public class GameManager {
     }
 
     /**
+     * Gets game of connection.
+     * @param connection The connection to get game of
+     * @return The game
+     */
+    public Optional<Game> getGameOf(Connection connection) {
+        Player player = getPlayer(connection).orElseThrow(() ->
+                new IllegalStateException("Connection doesn't belong to a player."));
+        return getGameOf(player);
+    }
+
+    /**
      * Retrieves an existing game by its id. The id has to exist.
      * @param id The id of the game.
      * @return The game.
