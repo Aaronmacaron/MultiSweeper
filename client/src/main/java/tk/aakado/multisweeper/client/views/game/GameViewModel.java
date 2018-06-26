@@ -31,6 +31,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
+    private BooleanProperty isFinished = new SimpleBooleanProperty(false);
 
     @Override
     public void configureField(int width, int height) {
@@ -152,17 +153,6 @@ public class GameViewModel implements ViewModel, GameNotificator {
         return fieldHeight;
     }
 
-    public boolean isAdmin() {
-        return admin.get();
-    }
-
-    public BooleanProperty adminProperty() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin.set(admin);
-    }
 
     public boolean isIsFinished() {
         return isFinished.get();
