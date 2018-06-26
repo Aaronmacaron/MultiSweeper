@@ -6,6 +6,7 @@ import tk.aakado.multisweeper.shared.connection.Action;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
+import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,6 +82,15 @@ public class GameImpl implements Game {
         int mines = (int) Math.round(width * height * runConfig.getMinesPercentage());
 
         this.currentPlayingField = new PlayingField(width, height, mines);
+
+        // Set configuration on clients
+        StartInfoDTO startInfo = new StartInfoDTO(width, height, this.currentPlayingField.getCurrentPlayingFieldState());
+        Action update = new Action(ActionType.CONFIGURE_GAME, startInfo);
+        GameManager gameManager = Server.getGameManager();
+        gameManager.getAllPlayersOf(this)
+                .map(gameManager::getConnection)
+                .map(Optional::get)
+                .forEach(c -> Server.getConnector().sendTo(update, c));
     }
 
     @Override
@@ -91,10 +101,21 @@ public class GameImpl implements Game {
     }
 
     @Override
+    public GameConfigDTO getCurrentConfiguration() {
+        return this.configuration != null ? this.configuration : DEFAULT_CONFIGURATION;
+    }
+
+    @Override
     public void setPassword(Player player, String password) {
         if (checkAdmin(player)) {
             this.password = password;
         }
+    }
+
+    @Override
+    public List<FieldDTO> getCurrentStateOfGame() {
+        requiredGameRunning();
+        return this.currentPlayingField.getCurrentPlayingFieldState();
     }
 
     @Override

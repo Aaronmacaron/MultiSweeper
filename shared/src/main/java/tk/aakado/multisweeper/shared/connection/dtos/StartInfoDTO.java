@@ -1,32 +1,26 @@
 package tk.aakado.multisweeper.shared.connection.dtos;
 
+import java.util.List;
+
 /**
  * POJO for start action params. This is used to store information when starting a new game about the game.
  */
 public class StartInfoDTO {
 
-    private double mineDensity;
-    private int fieldWidth;
-    private int fieldHeight;
+    private final int fieldWidth;
+    private final int fieldHeight;
+    private final List<FieldDTO> initialFieldState;
 
     /**
      * Constructor
-     * @param mineDensity mineDensity of game
      * @param fieldWidth fieldWidth of game
      * @param fieldHeight fieldHeight of game
+     * @param initialFieldState The initial fields of the game
      */
-    public StartInfoDTO(double mineDensity, int fieldWidth, int fieldHeight) {
-        this.mineDensity = mineDensity;
+    public StartInfoDTO(int fieldWidth, int fieldHeight, List<FieldDTO> initialFieldState) {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
-    }
-
-    /**
-     * Getter for mineDensity
-     * @return mineDensity
-     */
-    public double getMineDensity() {
-        return mineDensity;
+        this.initialFieldState = initialFieldState;
     }
 
     /**
@@ -43,6 +37,14 @@ public class StartInfoDTO {
      */
     public int getFieldHeight() {
         return fieldHeight;
+    }
+
+    /**
+     * Getter for initialFieldState
+     * @return initialFieldState
+     */
+    public List<FieldDTO> getInitialFieldState() {
+        return initialFieldState;
     }
 
 }

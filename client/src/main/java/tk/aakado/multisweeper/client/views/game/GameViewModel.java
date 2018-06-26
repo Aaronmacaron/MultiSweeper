@@ -67,17 +67,17 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     @Override
-    public void restart(int x, int y) {
+    public void configureField(int width, int height) {
         // set the size of the field
-        this.fieldWidth.setValue(x);
-        this.fieldHeight.setValue(y);
+        this.fieldWidth.setValue(width);
+        this.fieldHeight.setValue(height);
 
         // create a new empty ObservableArrayList
         ObservableList<Field> newFields = FXCollections.observableArrayList();
 
         // Create all required Fields and add them to the fields list
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 newFields.add(new Field(i, j, FieldState.UNDISCOVERED, 0));
             }
         }

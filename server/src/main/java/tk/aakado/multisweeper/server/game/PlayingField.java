@@ -190,6 +190,16 @@ public class PlayingField {
         return this.fields.stream().map(Field::getFieldCords).anyMatch(cords -> cords.equals(fieldCords));
     }
 
+    /**
+     * Get all fields of this playing fields as {@link FieldDTO}.
+     * @return The {@link FieldDTO}s of this playing field.
+     */
+    public List<FieldDTO> getCurrentPlayingFieldState() {
+        return this.fields.stream()
+                .map(Field::toFieldDTO)
+                .collect(Collectors.toList());
+    }
+
     // Getters
 
     public int getWidth() {

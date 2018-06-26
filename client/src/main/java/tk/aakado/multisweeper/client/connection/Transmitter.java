@@ -2,7 +2,6 @@ package tk.aakado.multisweeper.client.connection;
 
 
 import javafx.scene.input.MouseButton;
-import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.dtos.AuthenticationDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.ClickDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
@@ -50,7 +49,8 @@ public class Transmitter {
     }
 
     /**
-     * Starts game with given information
+     * Starts game with given information.
+     * Used by the admin of a game.
      * @param fieldWidth Width of playingField
      * @param fieldHeight Height of playingField
      * @param minesPercentage Percentage of mine Fields in playingField
@@ -104,6 +104,14 @@ public class Transmitter {
      */
     public void joinGame(int gameId) {
         Action action = new Action(ActionType.JOIN_GAME, gameId);
+        clientConnector.send(action);
+    }
+
+    /**
+     * Used by the client to send a request to the server to get the information needed to start the game.
+     */
+    public void requestGameInfo() {
+        Action action = new Action(ActionType.REQUEST_GAME_INFO);
         clientConnector.send(action);
     }
 

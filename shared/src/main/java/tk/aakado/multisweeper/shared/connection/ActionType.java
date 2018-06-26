@@ -11,6 +11,7 @@ public enum ActionType {
     START,
     AUTHENTICATE,
     RESTART,
+    CONFIGURE_GAME,
     JOIN_GAME,
     PASSWORD_WRONG,
     PASSWORD_NEEDED,
@@ -18,5 +19,6 @@ public enum ActionType {
     CONNECTED,
     GAME_JOINED,
     CLICKED,
+    REQUEST_GAME_INFO,
     ;
 }

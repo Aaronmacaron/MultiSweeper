@@ -32,6 +32,7 @@ public class GameSelectionViewModel implements ViewModel, GameSelectionNotificat
         Client.getInstance().getGameProperties().setAdmin(isAdmin);
         if (isRunning) {
             Client.getInstance().changeView(GameView.class);
+            Client.getInstance().getTransmitter().requestGameInfo();
         } else {
             Client.getInstance().changeView(ConfigurationView.class);
         }

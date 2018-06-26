@@ -12,7 +12,9 @@ import tk.aakado.multisweeper.shared.connection.ActionHandler;
 import tk.aakado.multisweeper.shared.connection.ActionType;
 import tk.aakado.multisweeper.shared.connection.Connection;
 import tk.aakado.multisweeper.shared.connection.dtos.AuthenticationDTO;
+import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameJoinedInfoDTO;
+import tk.aakado.multisweeper.shared.connection.dtos.StartInfoDTO;
 
 import java.util.Optional;
 
@@ -87,6 +89,30 @@ public class JoinGameHandler {
         }
     }
 
+    @ActionHandler(actionType = ActionType.REQUEST_GAME_INFO)
+    public void onGameInfoRequest(ServerMessage message) {
+        GameManager gameManager = Server.getGameManager();
+
+        Optional<Player> player = gameManager.getPlayer(message.getSender());
+        if (!player.isPresent()) {
+            // if there is no player for the connection return
+            return;
+        }
+
+        Optional<Game> game = gameManager.getGameOf(player.get());
+        if (!game.isPresent()) {
+            // if player is currently not in game return too
+            return;
+        }
+
+        // Send start info to client
+        GameConfigDTO config = game.get().getCurrentConfiguration();
+        StartInfoDTO startInfo = new StartInfoDTO(config.getWidth(), config.getHeight(), game.get().getCurrentStateOfGame());
+        Action action = new Action(ActionType.CONFIGURE_GAME, startInfo);
+        message.getConnector().sendTo(action, message.getSender());
+
+    }
+
     /**
      * Checks if a game id is valid and has a corresponding existing game.
      * If the game id is invalid the client get notified.
@@ -97,7 +123,7 @@ public class JoinGameHandler {
      * @return If the given game id is valid.
      */
     private boolean validateGameId(int gameId, GameManager manager, ServerConnector connector, Connection sender) {
-        Optional<Game> game = Server.getGameManager().getGame(gameId);
+        Optional<Game> game = manager.getGame(gameId);
         if (game.isPresent()) {
             return true;
         }

@@ -24,12 +24,12 @@ public interface GameNotificator extends Notificator  {
     void playerConnected(String player);
 
     /**
-     * Admin restarts the game
+     * Admin configures the field.
      *
-     * @param x x-axis size
-     * @param y y-axis size
+     * @param width x-axis size
+     * @param height y-axis size
      */
-    void restart(int x, int y);
+    void configureField(int width, int height);
 
     /**
      * A player clicks a Field and every Player gets Notificated

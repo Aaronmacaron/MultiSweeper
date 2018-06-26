@@ -1,7 +1,9 @@
 package tk.aakado.multisweeper.server.game;
 
+import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.connection.dtos.GameConfigDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,6 +40,11 @@ public interface Game {
      * @param gameConfigDTO The config.
      */
     void configure(Player player, GameConfigDTO gameConfigDTO);
+
+    /**
+     * Returns the current configured values of this game.
+     */
+    GameConfigDTO getCurrentConfiguration();
 
     /**
      * Sets the password for this game.
@@ -87,5 +94,11 @@ public interface Game {
      * @return Optional containing the admin, empty if no player is in the game.
      */
     Optional<Player> getAdmin();
+
+    /**
+     * Returns a list containing the state of all fields of the current game.
+     * @return
+     */
+    List<FieldDTO> getCurrentStateOfGame();
 
 }
