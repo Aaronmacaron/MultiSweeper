@@ -1,11 +1,7 @@
 package tk.aakado.multisweeper.server;
 
 import tk.aakado.multisweeper.server.connection.ServerConnector;
-import tk.aakado.multisweeper.server.connection.handler.ClickHandler;
-import tk.aakado.multisweeper.server.connection.handler.ConnectHandler;
-import tk.aakado.multisweeper.server.connection.handler.DisconnectedHandler;
-import tk.aakado.multisweeper.server.connection.handler.JoinGameHandler;
-import tk.aakado.multisweeper.server.game.Game;
+import tk.aakado.multisweeper.server.connection.handler.*;
 import tk.aakado.multisweeper.server.game.GameManager;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Connector;
@@ -85,7 +81,8 @@ public class Server {
                 JoinGameHandler.class,
                 ConnectHandler.class,
                 DisconnectedHandler.class,
-                ClickHandler.class
+                ClickHandler.class,
+                ConfigurationHandler.class
         );
 
         connector.addAllActionHandlers(actionHandlers);
