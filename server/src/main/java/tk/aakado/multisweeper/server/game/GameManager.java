@@ -66,6 +66,20 @@ public class GameManager {
     }
 
     /**
+     * Retrieve connection by player
+     * @param player The player to get connection from.
+     * @return The connection that belongs the player to.
+     */
+    public Optional<Connection> getConnection(Player player) {
+        // Return connection of player if one exists else empty optional
+        return allPlayers.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(player))
+                .findFirst()
+                .map(Map.Entry::getKey);
+
+    }
+
+    /**
      * Retrieve the current game of a player.
      * @param player The player of which to receive the game.
      * @return Optional containing the game, empty if player is in no game.
