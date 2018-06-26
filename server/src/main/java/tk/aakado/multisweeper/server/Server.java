@@ -1,17 +1,14 @@
 package tk.aakado.multisweeper.server;
 
 import tk.aakado.multisweeper.server.connection.ServerConnector;
-import tk.aakado.multisweeper.server.connection.handler.ClickHandler;
-import tk.aakado.multisweeper.server.connection.handler.ConnectHandler;
-import tk.aakado.multisweeper.server.connection.handler.DisconnectedHandler;
-import tk.aakado.multisweeper.server.connection.handler.JoinGameHandler;
-import tk.aakado.multisweeper.server.game.Game;
+import tk.aakado.multisweeper.server.connection.handler.*;
 import tk.aakado.multisweeper.server.game.GameManager;
-import tk.aakado.multisweeper.server.game.Player;
 import tk.aakado.multisweeper.shared.Logger;
 import tk.aakado.multisweeper.shared.connection.Connector;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * This is the main class for the server part of the application.
@@ -58,12 +55,7 @@ public class Server {
         // set up game manager
         gameManager = new GameManager();
         for (int i = 0; i < arguments.getNumberOfGames(); i++) {
-            int id = gameManager.createGame();
-            Player p = new Player("test");
-            Game game = gameManager.getGame(id).get();
-            game.addPlayer(p, "");
-            game.setPassword(p, "test");
-            game.startNewRound(p);
+            gameManager.createGame();
         }
 
         // set up connector
@@ -89,7 +81,8 @@ public class Server {
                 JoinGameHandler.class,
                 ConnectHandler.class,
                 DisconnectedHandler.class,
-                ClickHandler.class
+                ClickHandler.class,
+                ConfigurationHandler.class
         );
 
         connector.addAllActionHandlers(actionHandlers);
