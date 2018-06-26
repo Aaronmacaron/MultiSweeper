@@ -38,7 +38,6 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
         viewModel.victoryProperty().addListener(this::onVictoryChanged);
         totalPlayersLabel.textProperty().bind(viewModel.totalPlayersProperty().asString());
         timeLabel.textProperty().bind(Bindings.createStringBinding(() -> {
-            //TODO: should we outsource large lambdas in own mehtods?
             Duration duration = viewModel.totalTimeProperty().get();
             return String.format("%s:%s", duration.toMinutes(), duration.getSeconds());
         }));

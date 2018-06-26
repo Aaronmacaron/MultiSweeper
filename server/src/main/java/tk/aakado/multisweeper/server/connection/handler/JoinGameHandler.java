@@ -152,7 +152,9 @@ public class JoinGameHandler {
 
         // Inform other player about the new player
         Action newPlayerAction = new Action(ActionType.PLAYER_CONNECTED, player.toString());
-        connector.sendExcept(newPlayerAction, sender);
+        List<Connection> connections = Server.getGameManager().getAllConnectionsOf(game);
+        connections.remove(sender);
+        connector.sendTo(newPlayerAction, connections);
     }
 
 }
