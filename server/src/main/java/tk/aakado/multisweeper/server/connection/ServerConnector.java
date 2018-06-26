@@ -198,4 +198,20 @@ public class ServerConnector extends AbstractConnector {
         to.getOutput().println(action.toJson());
     }
 
+    /**
+     * Send a message to multiple connections.
+     * @param action The action to send.
+     * @param to All connection to which the action should be delivered.
+     */
+    public void sendTo(Action action, Connection... to) {
+        if (!isStarted) {
+            throw new IllegalStateException("Server is not started yet.");
+        }
+
+        String json = action.toJson();
+        for (Connection connection : to) {
+            connection.getOutput().println(json);
+        }
+    }
+
 }
