@@ -148,7 +148,7 @@ public class FieldButton extends Button {
      */
     private Image getImageByName(String name) {
         return fieldGrid.getImageCache().computeIfAbsent(name,
-                key -> new Image(this.getClass().getResourceAsStream(String.format("../tiles/%s.png", key))));
+                key -> new Image(this.getClass().getClassLoader().getResourceAsStream(String.format("tk/aakado/multisweeper/client/views/game/tiles/%s.png", key))));
     }
 
     /**
