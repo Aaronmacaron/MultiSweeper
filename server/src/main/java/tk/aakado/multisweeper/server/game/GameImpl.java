@@ -81,10 +81,15 @@ public class GameImpl implements Game {
             Server.getConnector().send(new Action(ActionType.CLICKED, changedFields));
 
             // if one of the changed fields is an exploded mine, the game is finished
-            boolean isFinished = changedFields.stream()
+            boolean gameLost = changedFields.stream()
                     .anyMatch(fieldDTO -> fieldDTO.getState() == FieldState.MINE_EXPLODED);
-            if (isFinished) {
-                Action action = new Action(ActionType.GAME_FINISHED);
+
+            if (gameLost) {
+                Action action = new Action(ActionType.GAME_FINISHED, false);
+                List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
+                Server.getConnector().sendTo(action, players);
+            } else if (this.currentPlayingField.gameWon()) {
+                Action action = new Action(ActionType.GAME_FINISHED, true);
                 List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
                 Server.getConnector().sendTo(action, players);
             }

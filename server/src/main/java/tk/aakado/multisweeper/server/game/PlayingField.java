@@ -1,8 +1,6 @@
 package tk.aakado.multisweeper.server.game;
 
-import tk.aakado.multisweeper.server.Server;
 import tk.aakado.multisweeper.server.game.Field.FieldType;
-import tk.aakado.multisweeper.shared.connection.Connection;
 import tk.aakado.multisweeper.shared.connection.dtos.FieldDTO;
 import tk.aakado.multisweeper.shared.game.FieldState;
 
@@ -200,6 +198,16 @@ public class PlayingField {
         return this.fields.stream()
                 .map(field -> field.toFieldDTO(false))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns if the game is won.
+     * @return if the game is won.
+     */
+    public boolean gameWon() {
+        return this.fields.stream()
+                .filter(field -> field.isMine() && field.isFlagged())
+                .noneMatch(field -> field.isDiscovered() && !field.isMine());
     }
 
     private List<FieldDTO> endGame(FieldCords fieldCords) {

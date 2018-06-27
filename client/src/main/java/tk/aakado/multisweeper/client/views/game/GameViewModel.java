@@ -30,7 +30,6 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private ListProperty<Field> fields = new SimpleListProperty<>(FXCollections.emptyObservableList());
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
-    private ListProperty<String> players = new SimpleListProperty<>(FXCollections.emptyObservableList());
     private BooleanProperty isFinished = new SimpleBooleanProperty(false);
 
     @Override
@@ -71,7 +70,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
     }
 
     @Override
-    public void finished() {
+    public void finished(boolean won) {
         this.isFinished.setValue(true);
     }
 

@@ -27,6 +27,7 @@ public interface GameNotificator extends Notificator  {
 
     /**
      * The Game is finished
+     * @param won If the players won the game
      */
-    void finished();
+    void finished(boolean won);
 }
