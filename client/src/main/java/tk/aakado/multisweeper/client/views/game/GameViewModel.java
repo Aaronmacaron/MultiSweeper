@@ -71,6 +71,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void finished(boolean won) {
+        Client.getInstance().getGameProperties().setVictory(won);
         this.isFinished.setValue(true);
     }
 
