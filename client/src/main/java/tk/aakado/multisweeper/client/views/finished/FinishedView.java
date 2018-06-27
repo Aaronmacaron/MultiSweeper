@@ -67,7 +67,7 @@ public class FinishedView implements FxmlView<FinishedViewModel>, Initializable 
     }
 
     @FXML
-    public void onDisconnect(ActionEvent actionEvent) {
-        viewModel.disconnect();
+    public void onLeave(ActionEvent actionEvent) {
+        viewModel.leaveGame();
     }
 }

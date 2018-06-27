@@ -1,18 +1,13 @@
 package tk.aakado.multisweeper.client.views.finished;
 
-import java.time.Duration;
-
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.views.configuration.ConfigurationView;
-import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.game.GameView;
+import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
+
+import java.time.Duration;
 
 public class FinishedViewModel implements ViewModel, FinishedNotificator {
 
@@ -54,11 +49,9 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
         Client.getInstance().changeView(ConfigurationView.class);
     }
 
-
-    @Override
-    public void disconnect() {
-        Client.getInstance().getTransmitter().disconnect();
-        Client.getInstance().changeView(ConnectionView.class);
+    public void leaveGame() {
+        Client.getInstance().getTransmitter().leaveGame();
+        Client.getInstance().changeView(GameSelectionView.class);
     }
 
     public BooleanProperty victoryProperty() {

@@ -70,7 +70,7 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     }
 
     /**
-     * Hanlde disconnect button
+     * Hanlde leaveGame button
      *
      * @param event ActionEvent
      */

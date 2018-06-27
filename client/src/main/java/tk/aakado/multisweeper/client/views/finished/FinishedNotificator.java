@@ -14,9 +14,4 @@ public interface FinishedNotificator extends Notificator {
      */
     void reconfigure();
 
-    /**
-     * Disconnect from the server
-     */
-    void disconnect();
-
 }
