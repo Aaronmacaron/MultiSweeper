@@ -22,7 +22,6 @@ public class FinishedHandler {
      * Restart the game with the current configuration
      * @param message The message
      */
-    //TODO: onRestart method is frequently used. Outsource in a GameHandler class???
     @ActionHandler(actionType = ActionType.RESTART)
     public void onRestart(ServerMessage message) {
         Connection sender = message.getSender();
