@@ -4,6 +4,7 @@ import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import tk.aakado.multisweeper.client.Client;
+import tk.aakado.multisweeper.client.views.connection.ConnectionView;
 import tk.aakado.multisweeper.client.views.game.GameView;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.shared.Logger;
@@ -43,8 +44,10 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      * Disconnects from server
      */
     public void leaveGame() {
-        Client.getInstance().getTransmitter().leaveGame();
-        Client.getInstance().changeView(GameSelectionView.class);
+//        Client.getInstance().getTransmitter().leaveGame();
+//        Client.getInstance().changeView(GameSelectionView.class);
+        Client.getInstance().getTransmitter().disconnect();
+        Client.getInstance().changeView(ConnectionView.class);
     }
 
     @Override
