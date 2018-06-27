@@ -69,6 +69,11 @@ public class GameImpl implements Game {
                     new DisconnectDTO(player.toString(), true)
             );
             Server.getConnector().sendTo(adminAction, adminConnection);
+
+            // if there is no player left, end the game
+            if (this.players.isEmpty()) {
+                this.currentPlayingField = null;
+            }
         }
     }
 
@@ -85,13 +90,9 @@ public class GameImpl implements Game {
                     .anyMatch(fieldDTO -> fieldDTO.getState() == FieldState.MINE_EXPLODED);
 
             if (gameLost) {
-                Action action = new Action(ActionType.GAME_FINISHED, false);
-                List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
-                Server.getConnector().sendTo(action, players);
+                sendGameFinished(false);
             } else if (this.currentPlayingField.gameWon()) {
-                Action action = new Action(ActionType.GAME_FINISHED, true);
-                List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
-                Server.getConnector().sendTo(action, players);
+                sendGameFinished(true);
             }
         }
     }
@@ -105,6 +106,9 @@ public class GameImpl implements Game {
             if (flaggedField.isPresent()) {
                 Action action = new Action(ActionType.CLICKED, Collections.singletonList(flaggedField.get()));
                 Server.getConnector().send(action);
+            }
+            if (this.currentPlayingField.gameWon()) {
+                sendGameFinished(true);
             }
         }
     }
@@ -198,6 +202,16 @@ public class GameImpl implements Game {
         }
         Logger.get(this).warn("Player {} is not part of this game and tried to invoke admin action.", player);
         return false;
+    }
+
+    /**
+     * Sends a message to all players of the game that the game is finished.
+     * @param won If the players won.
+     */
+    private void sendGameFinished(boolean won) {
+        Action action = new Action(ActionType.GAME_FINISHED, won);
+        List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
+        Server.getConnector().sendTo(action, players);
     }
 
 }
