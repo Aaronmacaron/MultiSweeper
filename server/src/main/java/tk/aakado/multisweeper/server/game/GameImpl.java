@@ -46,6 +46,8 @@ public class GameImpl implements Game {
             // Inform every other player
             Optional<Player> optionalNewAdmin = getAdmin();
             if (!optionalNewAdmin.isPresent()) {
+                // if there is no player left, end the game
+                this.currentPlayingField = null;
                 return;
             }
 
@@ -69,11 +71,6 @@ public class GameImpl implements Game {
                     new DisconnectDTO(player.toString(), true)
             );
             Server.getConnector().sendTo(adminAction, adminConnection);
-
-            // if there is no player left, end the game
-            if (this.players.isEmpty()) {
-                this.currentPlayingField = null;
-            }
         }
     }
 
