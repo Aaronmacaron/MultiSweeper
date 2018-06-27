@@ -207,7 +207,7 @@ public class PlayingField {
     public boolean gameWon() {
         return this.fields.stream()
                 .filter(field -> !(field.isMine() && field.isFlagged()))
-                .noneMatch(field -> !(field.isDiscovered() && field.isMine()));
+                .noneMatch(field -> !(field.isDiscovered() && !field.isMine()));
     }
 
     private List<FieldDTO> endGame(FieldCords fieldCords) {
