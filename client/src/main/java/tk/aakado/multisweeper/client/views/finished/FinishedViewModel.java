@@ -26,6 +26,7 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
      */
     public FinishedViewModel() {
         admin.bindBidirectional(Client.getInstance().getGameProperties().adminProperty());
+        victory.bind(Client.getInstance().getGameProperties().victoryProperty());
     }
 
     /**
@@ -78,5 +79,9 @@ public class FinishedViewModel implements ViewModel, FinishedNotificator {
 
     public BooleanProperty adminProperty() {
         return admin;
+    }
+
+    public void setVictory(boolean victory) {
+        this.victory.set(victory);
     }
 }

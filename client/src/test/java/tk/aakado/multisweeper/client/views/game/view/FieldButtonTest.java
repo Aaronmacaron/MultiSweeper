@@ -20,7 +20,6 @@ public class FieldButtonTest {
     public void setUp() throws Exception {
         this.field = new Field(x, y, fieldState, 8);
         // create a new FieldButton with a #dummyOnClick as onClickHandler
-        // TODO: Lambdas dont work in junit 4
 //         this.fieldButton = new FieldButton(this.field, this::dummyOnClick);
     }
 

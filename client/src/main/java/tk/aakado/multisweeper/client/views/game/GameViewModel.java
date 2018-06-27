@@ -24,7 +24,7 @@ import tk.aakado.multisweeper.shared.game.FieldState;
 
 public class GameViewModel implements ViewModel, GameNotificator {
 
-    private ObjectProperty<Duration> elapsedTime = new SimpleObjectProperty<>(Duration.ZERO);//TODO to prevent NUllPointerException Duration.ZERO is set
+    private ObjectProperty<Duration> elapsedTime = new SimpleObjectProperty<>(Duration.ZERO);
     private IntegerProperty numberOfPlayers = new SimpleIntegerProperty();
     private IntegerProperty remainingMines = new SimpleIntegerProperty();
     private ListProperty<Field> fields = new SimpleListProperty<>(FXCollections.emptyObservableList());
@@ -71,6 +71,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
 
     @Override
     public void finished(boolean won) {
+        Client.getInstance().getGameProperties().setVictory(won);
         this.isFinished.setValue(true);
     }
 

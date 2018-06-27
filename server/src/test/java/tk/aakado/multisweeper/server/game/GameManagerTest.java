@@ -10,7 +10,6 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-// TODO: Find out how to mock a socket as currently null pointers occur.
 public class GameManagerTest {
 
     private static final Connection DUMMY_CONNECTION = new Connection(new Socket(), null, null);
