@@ -3,6 +3,7 @@ package tk.aakado.multisweeper.client;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.connection.handler.ConfigurationHandler;
@@ -77,8 +78,13 @@ public class Client extends Application {
         instance = this;
         this.stage = primaryStage;
 
+        // Set icon
+        Image icon = new Image(this.getClass().getClassLoader()
+                .getResourceAsStream("tk/aakado/multisweeper/client/views/game/tiles/mine.png"));
+        this.stage.getIcons().add(icon);
+
         // Disconnect on close
-        primaryStage.setOnCloseRequest(this::closeApp);
+        this.stage.setOnCloseRequest(this::closeApp);
 
         // create all views
         MultiSweeperView<ConnectionView, ConnectionViewModel, ConnectionNotificator> connectionView = new MultiSweeperView<>(ConnectionView.class);
@@ -99,7 +105,6 @@ public class Client extends Application {
         // show the connection view
         changeView(ConnectionView.class);
         primaryStage.show();
-
 
     }
 
