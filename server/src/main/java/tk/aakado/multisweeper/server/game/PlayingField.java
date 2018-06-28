@@ -131,8 +131,8 @@ public class PlayingField {
 
         List<FieldDTO> changedFields = new ArrayList<>();
 
-        if (theField.isFlagged()) {
-            // Do not discover flagged field
+        if (theField.isFlagged() || theField.isDiscovered()) {
+            // Do not discover already flagged/discovered field
             return changedFields;
         }
 
