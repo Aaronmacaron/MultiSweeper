@@ -9,8 +9,8 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 dependencies {
-    compile project(':shared')
-    compile group: 'de.saxsys', name: 'mvvmfx', version: '1.7.0'
+    implementation project(':shared')
+    implementation group: 'de.saxsys', name: 'mvvmfx', version: '1.7.0'
 }
 
 mainClassName = 'tk.aakado.multisweeper.client.Client'
