@@ -80,7 +80,7 @@ public class GameImpl implements Game {
         if (this.currentPlayingField.isValidCoordinate(fieldCords)) {
             List<FieldDTO> changedFields = this.currentPlayingField.discoverField(fieldCords, player);
 
-            Server.getConnector().send(new Action(ActionType.CLICKED, changedFields));
+            sendToAllPlayers(new Action(ActionType.CLICKED, changedFields));
 
             // if one of the changed fields is an exploded mine, the game is finished
             boolean gameLost = changedFields.stream()
@@ -101,9 +101,10 @@ public class GameImpl implements Game {
             Optional<FieldDTO> flaggedField = this.currentPlayingField.flagField(fieldCords, player);
 
             if (flaggedField.isPresent()) {
-                Action action = new Action(ActionType.CLICKED, Collections.singletonList(flaggedField.get()));
-                Server.getConnector().send(action);
+                Action clicked = new Action(ActionType.CLICKED, Collections.singletonList(flaggedField.get()));
+                sendToAllPlayers(clicked);
             }
+
             if (this.currentPlayingField.gameWon()) {
                 sendGameFinished(true);
             }
@@ -207,8 +208,17 @@ public class GameImpl implements Game {
      */
     private void sendGameFinished(boolean won) {
         Action action = new Action(ActionType.GAME_FINISHED, won);
-        List<Connection> players = Server.getGameManager().getAllConnectionsOf(this);
-        Server.getConnector().sendTo(action, players);
+        sendToAllPlayers(action);
+    }
+
+    /**
+     * Sends an action to all players of this game.
+     * @param action The action to send to the players.
+     */
+    private void sendToAllPlayers(Action action) {
+        GameManager manager = Server.getGameManager();
+        List<Connection> connectionsOfAllPlayers = manager.getAllConnectionsOf(this);
+        Server.getConnector().sendTo(action, connectionsOfAllPlayers);
     }
 
 }
