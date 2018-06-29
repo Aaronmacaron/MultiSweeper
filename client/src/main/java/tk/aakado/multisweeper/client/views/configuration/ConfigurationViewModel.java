@@ -11,22 +11,17 @@ import tk.aakado.multisweeper.shared.Logger;
 
 public class ConfigurationViewModel implements ViewModel, ConfigurationNotificator {
 
-    private BooleanProperty admin = new SimpleBooleanProperty(false);
     private DoubleProperty mineDensity = new SimpleDoubleProperty();
     private IntegerProperty fieldWidth = new SimpleIntegerProperty();
     private IntegerProperty fieldHeight = new SimpleIntegerProperty();
     private StringProperty password = new SimpleStringProperty();
     private ListProperty<String> players = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    public ConfigurationViewModel() {
-        this.admin.bindBidirectional(Client.getInstance().getGameProperties().adminProperty());
-    }
-
     /**
      * Starts the configured game
      */
     public void start() {
-        if (admin.get()) {
+        if (Client.getInstance().isAdmin()) {
             Client.getInstance().getTransmitter().start(fieldWidth.get(), fieldHeight.get(), mineDensity.get());
         }
     }
@@ -35,7 +30,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
      * Saves the password to persistence
      */
     public void save() {
-        if (admin.get()) {
+        if (Client.getInstance().isAdmin()) {
             Client.getInstance().getTransmitter().savePassword(password.get());
         }
     }
@@ -65,7 +60,7 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
         players.get().remove(playerToRemove);
 
         // set the new admin
-        admin.setValue(isNewAdmin);
+        Client.getInstance().getGameProperties().adminProperty().setValue(isNewAdmin);
     }
 
     @Override
@@ -104,15 +99,4 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
         return players;
     }
 
-    public boolean isAdmin() {
-        return admin.get();
-    }
-
-    public BooleanProperty adminProperty() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin.set(admin);
-    }
 }

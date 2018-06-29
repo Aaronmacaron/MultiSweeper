@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class GameProperties {
     private BooleanProperty admin = new SimpleBooleanProperty(false);
-    private BooleanProperty victory = new SimpleBooleanProperty(false);
+    private BooleanProperty victory = new SimpleBooleanProperty();
 
     public boolean isAdmin() {
         return admin.get();
