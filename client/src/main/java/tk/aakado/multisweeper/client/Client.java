@@ -2,6 +2,7 @@ package tk.aakado.multisweeper.client;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -136,8 +137,8 @@ public class Client extends Application {
         this.stage.setScene(activeView.getScene());
 
         // call the view entered listener if the view has one
-        if (activeView.getView() instanceof ViewEnteredListener) {
-            ((ViewEnteredListener) activeView.getView()).viewEntered();
+        if (activeView.getCodeBehind() instanceof ViewEnteredListener) {
+            ((ViewEnteredListener) activeView.getCodeBehind()).viewEntered();
         }
     }
 
@@ -160,6 +161,7 @@ public class Client extends Application {
 
     /**
      * Returns the currently active view.
+     *
      * @return The active view.
      */
     public MultiSweeperView getActiveView() {
@@ -168,6 +170,7 @@ public class Client extends Application {
 
     /**
      * Returns the currently active view if the given viewType matches with the active one. Else the optional is empty.
+     *
      * @return Optional of activeView
      */
     public MultiSweeperView getActiveView(Class viewType) {
@@ -183,6 +186,7 @@ public class Client extends Application {
 
     /**
      * Returns the notificator of the given view.
+     *
      * @param viewType The view class.
      * @return The notificator of the view.
      */
@@ -203,6 +207,15 @@ public class Client extends Application {
         Logger.get(this).info("Shut down application");
         Platform.exit();
         System.exit(0);
+    }
+
+    /**
+     * Delegate Method for easier access
+     *
+     * @return
+     */
+    public boolean isAdmin() {
+        return gameProperties.isAdmin();
     }
 
 }

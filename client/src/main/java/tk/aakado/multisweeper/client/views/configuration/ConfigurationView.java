@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
+import tk.aakado.multisweeper.client.Client;
 
 public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Initializable {
     @InjectViewModel
@@ -59,13 +60,13 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         playersList.itemsProperty().bind(viewModel.playersProperty());
 
         // Make all Configuration Properties not editable when Player isn't an admin
-        passwordField.editableProperty().bind(viewModel.adminProperty());
-        fieldHeightField.editableProperty().bind(viewModel.adminProperty());
-        fieldWidthField.editableProperty().bind(viewModel.adminProperty());
+        passwordField.editableProperty().bind(Client.getInstance().getGameProperties().adminProperty());
+        fieldHeightField.editableProperty().bind(Client.getInstance().getGameProperties().adminProperty());
+        fieldWidthField.editableProperty().bind(Client.getInstance().getGameProperties().adminProperty());
         // Make all Configuration Buttons disabled when Player isn't an admin
-        mineDensitySlider.disableProperty().bind(viewModel.adminProperty().not());
-        startButton.disableProperty().bind(viewModel.adminProperty().not());
-        saveButton.disableProperty().bind(viewModel.adminProperty().not());
+        mineDensitySlider.disableProperty().bind(Client.getInstance().getGameProperties().adminProperty().not());
+        startButton.disableProperty().bind(Client.getInstance().getGameProperties().adminProperty().not());
+        saveButton.disableProperty().bind(Client.getInstance().getGameProperties().adminProperty().not());
 
     }
 
@@ -110,6 +111,6 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         if (viewModel.fieldWidthProperty().get() == 0) return false;
         if (viewModel.fieldWidthProperty().get() == 0) return false;
         if (viewModel.mineDensityProperty().get() == 0d) return false;
-        return viewModel.isAdmin();
+        return Client.getInstance().isAdmin();
     }
 }
