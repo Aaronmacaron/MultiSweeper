@@ -28,14 +28,7 @@ run {
     }
 }
 
-mainClassName = 'tk.aakado.multisweeper.server.Server'
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+task docker(dependsOn: shadowJar, type: Exec) {
+    shadowJar
+    commandLine "docker", "build", "-t", "multisweeper:"+version, "."
 }
