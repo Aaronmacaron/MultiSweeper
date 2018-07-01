@@ -46,25 +46,25 @@ public class ArgumentsParserTest {
 
     @Test
     public void portEmptyOnEmptyArgs() {
-        Optional<Integer> port = Parser.getPort(new String[]{});
+        Optional<Integer> port = Parser.parsePort(null);
         assertFalse(port.isPresent());
     }
 
     @Test
     public void portEmptyOnInvalidPort() {
-        Optional<Integer> port = Parser.getPort(new String[]{"0"});
+        Optional<Integer> port = Parser.parsePort("0");
         assertFalse(port.isPresent());
 
-        port = Parser.getPort(new String[]{"65536"});
+        port = Parser.parsePort("65536");
         assertFalse(port.isPresent());
     }
 
     @Test
     public void portEmptyOnInvalidNumber() {
-        Optional<Integer> port = Parser.getPort(new String[]{""});
+        Optional<Integer> port = Parser.parsePort("");
         assertFalse(port.isPresent());
 
-        port = Parser.getPort(new String[]{"Not a number"});
+        port = Parser.parsePort("Not a number");
         assertFalse(port.isPresent());
     }
 
@@ -73,7 +73,7 @@ public class ArgumentsParserTest {
         String portString = "1";
         int portNum = 1;
 
-        Optional<Integer> port = Parser.getPort(new String[]{portString});
+        Optional<Integer> port = Parser.parsePort(portString);
         assertTrue(port.isPresent());
         assertEquals((Integer) portNum, port.get());
 
@@ -81,37 +81,10 @@ public class ArgumentsParserTest {
         portString = "65535";
         portNum = 65535;
 
-        port = Parser.getPort(new String[]{portString});
+        port = Parser.parsePort(portString);
         assertTrue(port.isPresent());
         assertEquals((Integer) portNum, port.get());
     }
 
-    @Test
-    public void gamesEmptyOnEmptyArgs() {
-        Optional<Integer> games = Parser.getNumberOfGames(new String[]{});
-        assertFalse(games.isPresent());
-    }
-
-    @Test
-    public void gamesEmptyOnInvalidNumberOfGames() {
-        Optional<Integer> games = Parser.getNumberOfGames(new String[]{"", "0"});
-        assertFalse(games.isPresent());
-    }
-
-    @Test
-    public void gamesEmptyOnInvalidNumber() {
-        Optional<Integer> games = Parser.getPort(new String[]{"", "Not a number"});
-        assertFalse(games.isPresent());
-    }
-
-    @Test
-    public void gamesAvailableOnValidNumberOfGames() {
-        String gamesString = "1";
-        int games = 1;
-
-        Optional<Integer> parsedGames = Parser.getNumberOfGames(new String[]{"", gamesString});
-        assertTrue(parsedGames.isPresent());
-        assertEquals((Integer) games, parsedGames.get());
-    }
 
 }

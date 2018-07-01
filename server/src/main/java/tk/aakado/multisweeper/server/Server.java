@@ -1,5 +1,6 @@
 package tk.aakado.multisweeper.server;
 
+import org.apache.commons.cli.HelpFormatter;
 import tk.aakado.multisweeper.server.connection.ServerConnector;
 import tk.aakado.multisweeper.server.connection.handler.*;
 import tk.aakado.multisweeper.server.game.GameManager;
@@ -35,11 +36,19 @@ public class Server {
      * @param args The command line args
      */
     public static void main(String[] args) {
-        Arguments.Parser parser = new Arguments.Parser(args);
         try {
-            startServer(parser.parse());
+            // Parse args
+            Arguments arguments = new Arguments.Parser(args).parse();
+
+            // Warn user on default
+            arguments.warnUserOnDefault();
+
+            // Start server
+            startServer(arguments);
         } catch (ArgumentParseException e) {
-            Logger.get(Server.class).error("Server has not been started as the arguments could not be parsed: ", e);
+            Logger.get(Server.class).error("Server has not been started as the arguments could not be parsed: {}", e.getMessage());
+            System.out.println("Help: ");
+            new HelpFormatter().printHelp("multisweeper-server", e.getOptions());
             System.exit(1);
         }
     }
@@ -56,6 +65,7 @@ public class Server {
         for (int i = 0; i < arguments.getNumberOfGames(); i++) {
             gameManager.createGame();
         }
+        Logger.get(Server.class).info("SeverManager with {} game(s) started.", arguments.getNumberOfGames());
 
         // set up connector
         connector = new ServerConnector(arguments.getPort());
