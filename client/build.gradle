@@ -1,7 +1,16 @@
-plugins {
-    id 'java'
-    id 'application'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
 }
+
+apply plugin: 'application'
+mainClassName = 'tk.aakado.multisweeper.client.Client'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
 
 group 'tk.aakado.multisweeper'
 version '1.0-SNAPSHOT'
@@ -11,16 +20,4 @@ sourceCompatibility = 1.8
 dependencies {
     implementation project(':shared')
     implementation group: 'de.saxsys', name: 'mvvmfx', version: '1.7.0'
-}
-
-mainClassName = 'tk.aakado.multisweeper.client.Client'
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
 }

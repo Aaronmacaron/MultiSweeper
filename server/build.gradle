@@ -1,7 +1,16 @@
-plugins {
-    id 'java'
-    id 'application'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
 }
+
+apply plugin: 'application'
+mainClassName = 'tk.aakado.multisweeper.server.Server'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
 
 group 'tk.aakado.multisweeper'
 version '1.0-SNAPSHOT'
