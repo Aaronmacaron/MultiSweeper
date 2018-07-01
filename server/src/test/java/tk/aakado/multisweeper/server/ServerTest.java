@@ -12,7 +12,7 @@ public class ServerTest {
     public void testServerSetUp() {
         int port = 41813;
         int games = 4;
-        Server.main(new String[] { String.valueOf(port), String.valueOf(games) });
+        Server.main(new String[] { "-p", String.valueOf(port), "-n", String.valueOf(games) });
 
         assertNotNull(Server.getConnector());
 

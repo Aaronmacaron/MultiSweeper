@@ -16,8 +16,8 @@ public class ArgumentsParserTest {
 
     @Test
     public void parseFailsOnInvalidPort() {
-        Parser lowerParser = new Parser(new String[] { "0" });
-        Parser upperParser = new Parser(new String[] { "65536" });
+        Parser lowerParser = new Parser(new String[] { "-p",  "0" });
+        Parser upperParser = new Parser(new String[] { "-p", "65536" });
         try {
             lowerParser.parse();
             fail("The parsing should have failed!");
@@ -31,14 +31,14 @@ public class ArgumentsParserTest {
 
     @Test
     public void parseFailsOnInvalidNumberOfGames() throws ArgumentParseException {
-        Parser parser = new Parser(new String[] { "1", "0" });
+        Parser parser = new Parser(new String[] { "-p", "1", "-n", "0" });
         expectedException.expect(ArgumentParseException.class);
         parser.parse();
     }
 
     @Test
     public void parseSucceedsOnValidArgs() throws ArgumentParseException {
-        Parser parser = new Parser(new String[] { "1", "1" });
+        Parser parser = new Parser(new String[] { "-p", "1", "-n", "1" });
         Arguments args = parser.parse();
         assertEquals(args.getPort(), 1);
         assertEquals(args.getNumberOfGames(), 1);
