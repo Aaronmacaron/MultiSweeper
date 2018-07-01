@@ -17,6 +17,8 @@ import tk.aakado.multisweeper.shared.Logger;
 
 public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
+    private static int DEFAULT_PORT = 41414;
+
     private StringProperty connection = new SimpleStringProperty("");
     private BooleanProperty correctAddress = new SimpleBooleanProperty(false);
     private BooleanProperty rejected = new SimpleBooleanProperty(false);
@@ -30,6 +32,11 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
             // URI. Thus the connection string can be parsed very easily using the URI class.
             String uriString = "multisweeper://" + connection.get();
             URI uri = new URI(uriString);
+
+            // Set to default port when none specified
+            if (uri.getPort() == -1) {
+                uri = new URI(uri.getScheme(), null, uri.getHost(), DEFAULT_PORT, null, null, null);
+            }
 
             // Establish connection to server using client connector. Connects to address specified by the user.
             ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
