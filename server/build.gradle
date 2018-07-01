@@ -30,5 +30,5 @@ run {
 
 task docker(dependsOn: shadowJar, type: Exec) {
     shadowJar
-    commandLine "docker", "build", "-t", "multisweeper:"+version, "."
+    commandLine "docker", "build", "-t", "aakadoo/multisweeper:"+version, "."
 }
