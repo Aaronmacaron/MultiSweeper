@@ -42,6 +42,7 @@ public class AuthenticationView implements FxmlView<AuthenticationViewModel>, In
     @Override
     public void viewEntered() {
         this.passwordField.clear();
+        this.viewModel.rejectedProperty().setValue(false);
     }
 
     /**
