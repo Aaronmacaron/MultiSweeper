@@ -13,34 +13,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.configuration.ConfigurationView" stylesheets="/tk/aakado/multisweeper/client/views/css/ui.css">
+<VBox  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.configuration.ConfigurationView" stylesheets="/tk/aakado/multisweeper/client/views/css/ui.css">
    <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
+      <HBox styleClass="box">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+            <VBox HBox.hgrow="ALWAYS" styleClass="box">
                <children>
-                  <Label text="Configure">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="Password (if required)">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <HBox spacing="10.0">
+                  <Label text="Configure" styleClass="title" />
+                  <Label text="Password (if required)" styleClass="subtitle"/>
+                  <HBox styleClass="box">
                      <children>
                         <PasswordField fx:id="passwordField" HBox.hgrow="ALWAYS" />
                         <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSave" text="Save" />
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
-                  <Label text="Mine density">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <Separator/>
+                  <Label text="Mine density" styleClass="subtitle"/>
                   <HBox spacing="5.0">
                      <children>
                         <Label text="Min" />
@@ -48,46 +36,25 @@
                         <Label text="Max" />
                      </children>
                   </HBox>
-                  <Label text="Field width">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <Label text="Field width" styleClass="subtitle"/>
                   <TextField fx:id="fieldWidthField" />
-                  <Label text="Field height">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <Label text="Field height" styleClass="subtitle"/>
                   <TextField fx:id="fieldHeightField" />
                </children>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+            <VBox styleClass="box" HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="Players">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
+                  <Label text="Players" styleClass="subtitle"/>
                   <ListView fx:id="playersList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
             </VBox>
          </children>
       </HBox>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <ButtonBar VBox.vgrow="ALWAYS" styleClass="box">
         <buttons>
           <Button cancelButton="true" mnemonicParsing="false" onAction="#onLeave" text="Leave Game" />
             <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onStart" text="Start!" />
         </buttons>
-         <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </padding>
       </ButtonBar>
    </children>
 </VBox>
