@@ -81,7 +81,7 @@ public class Client extends Application {
 
         // Set icon
         Image icon = new Image(this.getClass().getClassLoader()
-                .getResourceAsStream("tk/aakado/multisweeper/client/views/game/tiles/mine.png"));
+                .getResourceAsStream("tk/aakado/multisweeper/client/views/images/icon_mine.png"));
         this.stage.getIcons().add(icon);
 
         // Disconnect on close
