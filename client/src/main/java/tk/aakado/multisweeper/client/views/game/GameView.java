@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +27,7 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     private GameViewModel viewModel;
 
     @FXML
-    public AnchorPane gamePane;
+    public ScrollPane gamePane;
     @FXML
     private Label timeElapsedLabel;
     @FXML
@@ -56,7 +57,7 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
                 Integer.toString(viewModel.remainingMinesProperty().get())));
 
         // Creates a new FieldGrid and add it to the AchnorPane
-        gamePane.getChildren().add(new FieldGrid(viewModel.fieldsProperty(), viewModel.fieldWidthProperty(), viewModel.fieldHeightProperty(), this::onClick));
+        gamePane.setContent(new FieldGrid(viewModel.fieldsProperty(), viewModel.fieldWidthProperty(), viewModel.fieldHeightProperty(), this::onClick));
 
         // Hide restart Button if player isn't the admin
         restartButton.visibleProperty().bind(Client.getInstance().getGameProperties().adminProperty());

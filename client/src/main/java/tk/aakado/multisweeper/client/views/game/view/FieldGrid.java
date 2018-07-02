@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -61,6 +62,9 @@ public class FieldGrid extends GridPane {
 
         // add a change listener
         this.fields.addListener(this::change);
+
+        // locate in the center
+        this.setAlignment(Pos.CENTER);
     }
 
     /**

@@ -1,59 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="/tk/aakado/multisweeper/client/views/css/ui.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.game.GameView">
-    <HBox spacing="2.0">
-        <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-        </padding>
-        <Label text="Time elapsed: ">
-            <font>
-                <Font name="System Bold" size="13.0" />
-            </font>
-        </Label>
-        <Label fx:id="timeElapsedLabel">
-            <HBox.margin>
-                <Insets right="10.0" />
-            </HBox.margin>
-        </Label>
-        <Label text="Players: ">
-            <font>
-                <Font name="System Bold" size="13.0" />
-            </font>
-        </Label>
-        <Label fx:id="numberOfPlayersLabel">
-            <HBox.margin>
-                <Insets right="10.0" />
-            </HBox.margin>
-        </Label>
-        <Label text="Remaining Mines: ">
-            <font>
-                <Font name="System Bold" size="13.0" />
-            </font>
-        </Label>
-        <Label fx:id="remainingMinesLabel">
-            <HBox.margin>
-                <Insets right="10.0" />
-            </HBox.margin>
-        </Label>
+<?import javafx.scene.control.Button?><?import javafx.scene.control.Label?><?import javafx.scene.control.ScrollPane?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?>
+<VBox prefHeight="400.0" prefWidth="600.0" styleClass="box" stylesheets="/tk/aakado/multisweeper/client/views/css/ui.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.game.GameView">
+    <HBox styleClass="box">
+        <Label text="Time elapsed: " styleClass="description, bold" />
+        <Label fx:id="timeElapsedLabel" styleClass="description" />
+        <Label text="Players: " styleClass="description, bold" />
+        <Label fx:id="numberOfPlayersLabel" styleClass="description" />
+        <Label text="Remaining Mines: " styleClass="description, bold" />
+        <Label fx:id="remainingMinesLabel" styleClass="description" />
     </HBox>
    <!--suppress JavaFxUnresolvedStyleClassReference Because edge-to-edge exists by default but is not
    recognized by intellij -->
-    <ScrollPane prefHeight="200.0" prefWidth="200.0" styleClass="edge-to-edge" VBox.vgrow="ALWAYS">
-        <AnchorPane fx:id="gamePane" />
-    </ScrollPane>
-    <HBox spacing="15.0">
-        <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-        </padding>
+    <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="edge-to-edge, box" VBox.vgrow="ALWAYS" fx:id="gamePane" />
+    <HBox styleClass="box">
         <Button fx:id="restartButton" mnemonicParsing="false" onAction="#onRestart" text="Restart" />
         <Button mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
       <Button fx:id="continueButton" mnemonicParsing="false" onAction="#onContinue" text="Continue" />

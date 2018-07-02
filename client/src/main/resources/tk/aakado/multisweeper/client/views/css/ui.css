@@ -35,6 +35,36 @@ LABEL
     -fx-text-fill: -black;
 }
 
+.title {
+    -fx-font-size: 24;
+}
+
+.subtitle {
+    -fx-font-size: 18;
+}
+
+.bold {
+    -fx-font-weight: bold;
+}
+
+.description {
+    -fx-font-size: 14;
+}
+
+.error-description {
+    -fx-font-size: 14;
+    -fx-text-fill: -error;
+}
+
+/*
+CONATINER
+*/
+.box {
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
 /*
 BUTTONS
 */
@@ -77,6 +107,7 @@ see also: https://stackoverflow.com/a/15661385/7130107
     -fx-background-color: -white;
     -fx-text-fill: -black;
 }
+
 /*striped dark*/
 .list-cell:odd {
     -fx-background-color: -primary-lightest;
