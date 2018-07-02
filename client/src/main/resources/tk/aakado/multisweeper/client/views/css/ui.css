@@ -1,0 +1,124 @@
+* {
+    -primary: #1b9cfc;
+    -primary-darker: #048BF3;
+    -primary-darkest: #044E87;
+    -primary-lighter: #53B3FD;
+    -primary-lightest: rgba(135, 206, 255, 0.15);
+    -error: #fd7272;
+    -error-darker: #C74343;
+    -error-darkest: #7C1E1E;
+    -error-lighter: #FF9797;
+    -error-lightest: #FFC5C5;
+    -black: #2c3a47;
+    -black-darker: #162533;
+    -black-darkest: #07111A;
+    -black-lighter: #4C6275;
+    -black-lightest: #93A7B9;
+    -white: #FFFFFF;
+
+    -fx-fill-width: true;
+    -fx-fill-height: true;
+
+    /*notfocused-border-glow - focused-border - focues-border-glow - background*/
+    -fx-background-color: -primary-lighter, -primary-lightest, -primary-lightest, -white;
+}
+
+.root {
+    -fx-focus-color: -primary-lighter;
+    -fx-faint-focus-color: -primary-lighter;
+}
+
+/*
+LABEL
+*/
+.label {
+    -fx-text-fill: -black;
+}
+
+/*
+BUTTONS
+*/
+
+.button {
+    -fx-background-color: -primary;
+    -fx-text-fill: -white;
+    -fx-border: none;
+}
+
+.button:default {
+    -fx-background-color: -primary-darker;
+}
+
+.button:hover, .button:focused {
+    -fx-background-color: -primary-darkest;
+}
+
+/*
+BUTTONS-CANCEL
+*/
+.button:cancel {
+    -fx-background-color: -error;
+}
+
+.button:cancel:hover, .button:cancel:focused {
+    -fx-background-color: -error-darker;
+}
+
+/*
+LIST-CELL
+see also: https://stackoverflow.com/a/15661385/7130107
+*/
+.list-cell {
+    -fx-text-fill: -white;
+}
+
+/*striped light*/
+.list-cell:even {
+    -fx-background-color: -white;
+    -fx-text-fill: -black;
+}
+/*striped dark*/
+.list-cell:odd {
+    -fx-background-color: -primary-lightest;
+    -fx-text-fill: -black;
+}
+
+/*mark on hover*/
+.list-cell:filled:hover {
+    -fx-background-color: -primary-lighter;
+}
+
+/*selected*/
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: -primary;
+    -fx-text-fill: -white;
+}
+
+/*
+INPUTS
+*/
+.text-field {
+    -fx-highlight-fill: -primary;
+    -fx-highlight-text-fill: -white;
+    -fx-text-fill: -black;
+}
+
+/*
+SLIDER
+*/
+.thumb {
+    -fx-background-color: -primary-lighter;
+}
+
+/*
+SCROLLBAR
+*/
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: -white;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: -primary-lighter;
+}
