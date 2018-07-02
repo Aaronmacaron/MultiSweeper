@@ -1,12 +1,15 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url "http://sandec.bintray.com/repo" }
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+        classpath 'com.sandec.jpro:jpro-plugin-gradle:2018.1.1'
     }
 }
 
+apply plugin: 'com.sandec.jpro'
 apply plugin: 'application'
 mainClassName = 'tk.aakado.multisweeper.client.Client'
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -21,3 +24,4 @@ dependencies {
     implementation project(':shared')
     implementation group: 'de.saxsys', name: 'mvvmfx', version: '1.7.0'
 }
+jpro { port = 8080 }
