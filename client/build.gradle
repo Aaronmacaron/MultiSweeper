@@ -20,4 +20,6 @@ sourceCompatibility = 1.8
 dependencies {
     implementation project(':shared')
     implementation group: 'de.saxsys', name: 'mvvmfx', version: '1.7.0'
+    implementation group: 'de.saxsys', name: 'mvvmfx-validation', version: '1.7.0'
+    implementation group: 'org.controlsfx', name: 'controlsfx', version: '8.20.8'
 }
