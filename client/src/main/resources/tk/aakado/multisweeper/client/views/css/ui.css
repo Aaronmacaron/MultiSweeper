@@ -153,3 +153,8 @@ SCROLLBAR
 .scroll-bar .decrement-arrow {
     -fx-background-color: -primary-lighter;
 }
+
+.text-validation {
+    /*notfocused-border-glow - focused-border - focues-border-glow - background*/
+    -fx-background-color: -error, -primary-lightest, -primary-lightest, -white;
+}

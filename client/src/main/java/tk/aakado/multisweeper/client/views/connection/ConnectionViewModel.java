@@ -3,8 +3,12 @@ package tk.aakado.multisweeper.client.views.connection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import de.saxsys.mvvmfx.ViewModel;
+import de.saxsys.mvvmfx.utils.validation.FunctionBasedValidator;
+import de.saxsys.mvvmfx.utils.validation.ValidationMessage;
+import de.saxsys.mvvmfx.utils.validation.ValidationStatus;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,9 +23,29 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
 
     private static int DEFAULT_PORT = 41414;
 
+    /**
+     * Regex that checks if string is hostname or ip address
+     */
+    private static final Pattern pattern = Pattern.compile("(^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.)" +
+            "{3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-" +
+            "9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]))(:([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|" +
+            "65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$");
+
     private StringProperty connection = new SimpleStringProperty("");
-    private BooleanProperty correctAddress = new SimpleBooleanProperty(false);
+
     private BooleanProperty rejected = new SimpleBooleanProperty(false);
+
+    private FunctionBasedValidator<String> addressValidator;
+
+
+    /**
+     * Setup all validations
+     */
+    public ConnectionViewModel() {
+        addressValidator = new FunctionBasedValidator<>(connection,
+                str -> pattern.matcher(str).matches(),
+                ValidationMessage.error("Invalid Hostname"));
+    }
 
     /**
      * Connects player to MultiSweeper server
@@ -89,15 +113,8 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
         return connection;
     }
 
-    public boolean isCorrectAddress() {
-        return correctAddress.get();
+    public ValidationStatus addressValidation(){
+        return addressValidator.getValidationStatus();
     }
 
-    public BooleanProperty correctAddressProperty() {
-        return correctAddress;
-    }
-
-    public void setCorrectAddress(boolean correctAddress) {
-        this.correctAddress.set(correctAddress);
-    }
 }

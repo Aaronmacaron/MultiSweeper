@@ -2,7 +2,6 @@ package tk.aakado.multisweeper.client.views.connection;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -12,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import tk.aakado.multisweeper.client.views.validation.ControlDecorator;
+import tk.aakado.multisweeper.client.views.validation.ControlDecoratorImpl;
 
 public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializable {
 
@@ -22,13 +23,7 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
     @FXML
     private Button connectButton;
 
-    /**
-     * Regex that checks if string is hostname or ip address
-     */
-    private static final Pattern pattern = Pattern.compile("(^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.)" +
-            "{3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-" +
-            "9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]))(:([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|" +
-            "65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$");
+    private ControlDecorator decorator;
 
     @InjectViewModel
     private ConnectionViewModel viewModel;
@@ -39,22 +34,19 @@ public class ConnectionView implements FxmlView<ConnectionViewModel>, Initializa
         // bind connectionField bidirectional to viewModel
         connectionField.textProperty().bindBidirectional(viewModel.connectionProperty());
 
-        // Only shows enabled Connect Button when the Connection String is correct
-        viewModel.connectionProperty().addListener((observable, oldValue, newValue) -> viewModel.setCorrectAddress(isCorrectAddress(newValue)));
-        connectButton.disableProperty().bind(viewModel.correctAddressProperty().not());
-
         // Shows error message when the connection failed
         errorMessageLabel.visibleProperty().bind(viewModel.rejectedProperty());
-    }
 
-    /**
-     * Checks if the given String matches the Address pattern
-     *
-     * @param address Address to check
-     * @return match or no match
-     */
-    private boolean isCorrectAddress(String address) {
-        return pattern.matcher(address).matches();
+//        ValidationVisualizer visualizer = new ControlsFxVisualizer();
+//        visualizer.initVisualization(viewModel.addressValidation(), connectionField, true);
+
+        // Only shows enabled Connect Button when the Connection String is correct
+        connectButton.disableProperty().bind(viewModel.addressValidation().validProperty().not());
+
+        // decorates the
+        decorator = new ControlDecoratorImpl();
+        decorator.setDecorationClasses(connectionField.getClass(), "text-validation");
+        decorator.initDecoration(connectionField, viewModel.addressValidation().validProperty());
     }
 
     /**
