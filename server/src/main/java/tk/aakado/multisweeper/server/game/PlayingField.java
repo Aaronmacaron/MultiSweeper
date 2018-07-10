@@ -18,6 +18,7 @@ public class PlayingField {
     private final int width;
     private final int height;
     private final int numberOfMines;
+    private int numberOfFlags;
     private List<Field> fields;
 
     /**
@@ -138,10 +139,13 @@ public class PlayingField {
 
         theField.discover(player);
 
-        changedFields.add(theField.toFieldDTO(false));
+        changedFields.add(convertToFieldDTO(theField, false));
 
         if (theField.isMine()) {
-            return endGame(fieldCords);
+            // The game ends: expose all fields to the player
+            return this.fields.stream()
+                    .map(field -> this.convertToFieldDTO(field, true))
+                    .collect(Collectors.toList());
         }
 
         if (theField.getFieldValue() == FieldType.FIELD_0.getValue()) {
@@ -174,11 +178,17 @@ public class PlayingField {
         }
 
         if (theField.isFlagged()) {
+            this.numberOfFlags--;
             theField.unflag();
         } else {
+            this.numberOfFlags++;
+            // it is only allowed to have as many flags as there are mines
+            if (numberOfFlags > numberOfMines) {
+                return Optional.empty();
+            }
             theField.flag(player);
         }
-        return Optional.of(theField.toFieldDTO(false));
+        return Optional.of(convertToFieldDTO(theField, false));
     }
 
     /**
@@ -196,8 +206,61 @@ public class PlayingField {
      */
     public List<FieldDTO> getCurrentPlayingFieldState() {
         return this.fields.stream()
-                .map(field -> field.toFieldDTO(false))
+                .map(field -> convertToFieldDTO(field, false))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Converts a {@link Field} into a {@link FieldDTO}.
+     * @param field The field to convert.
+     * @param exposed If all details of the field are exposed.
+     * @return The converted field.
+     */
+    private FieldDTO convertToFieldDTO(Field field, boolean exposed) {
+        int x = field.getFieldCords().getX();
+        int y = field.getFieldCords().getY();
+        FieldState state = exposed ? getExposedFieldState(field) : getFieldState(field);
+
+        if (!field.isMine() && state == FieldState.DISCOVERED) {
+            // if the field is not a mine and discovered, return also the value of the field
+            return new FieldDTO(x, y, state, field.getFieldValue());
+        }
+
+        return new FieldDTO(x, y, state);
+    }
+
+    /**
+     * Returns the {@link FieldState} of the given {@link Field}.
+     * @param field The field of which to get the field state.
+     * @return The field state that corespondents to the field.
+     */
+    private FieldState getFieldState(Field field) {
+        if (field.isFlagged()) {
+            return FieldState.FLAG;
+        }
+        if (field.isDiscovered()) {
+            return FieldState.DISCOVERED;
+        }
+        return FieldState.UNDISCOVERED;
+    }
+
+
+    /**
+     * Returns the {@link FieldState} of the given {@link Field} but with all information exposed.
+     * @param field The field of which to get the exposed field state.
+     * @return The field state that corespondents to the field.
+     */
+    private FieldState getExposedFieldState(Field field) {
+        if (field.isMine()) {
+            if (field.isDiscovered()) {
+                return FieldState.MINE_EXPLODED;
+            }
+            return FieldState.MINE;
+        }
+        if (field.isFlagged() && !field.isMine()) {
+            return FieldState.FALSE_FLAGGED_MINE;
+        }
+        return getFieldState(field);
     }
 
     /**
@@ -205,19 +268,12 @@ public class PlayingField {
      * @return if the game is won.
      */
     public boolean gameWon() {
+        // filters all fields that are completed
         return this.fields.stream()
+                // filter out all mines that are flagged
                 .filter(field -> !(field.isMine() && field.isFlagged()))
-                .noneMatch(field -> !(field.isDiscovered() && !field.isMine()));
-    }
-
-    private List<FieldDTO> endGame(FieldCords fieldCords) {
-        List<FieldDTO> endFields = this.fields.stream()
-                .map(field -> field.toFieldDTO(true))
-                .filter(fieldDTO -> !(fieldDTO.getX() == fieldCords.getX() && fieldDTO.getY() == fieldCords.getY()))
-                .collect(Collectors.toList());
-
-        endFields.add(new FieldDTO(fieldCords.getX(), fieldCords.getY(), FieldState.MINE_EXPLODED));
-        return endFields;
+                // fields that are discovered and not a mine
+                .allMatch(field -> field.isDiscovered() && !field.isMine());
     }
 
     // Getters
@@ -228,6 +284,10 @@ public class PlayingField {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
     }
 
 }
