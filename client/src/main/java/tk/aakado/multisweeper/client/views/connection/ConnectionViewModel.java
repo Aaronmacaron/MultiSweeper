@@ -3,6 +3,7 @@ package tk.aakado.multisweeper.client.views.connection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.BooleanProperty;
@@ -10,6 +11,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import tk.aakado.multisweeper.client.Client;
+import tk.aakado.multisweeper.client.ConnectService;
 import tk.aakado.multisweeper.client.connection.ClientConnector;
 import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
@@ -23,48 +25,21 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     private BooleanProperty correctAddress = new SimpleBooleanProperty(false);
     private BooleanProperty rejected = new SimpleBooleanProperty(false);
 
+    private ConnectService connectService = new ConnectService();
+
     /**
      * Connects player to MultiSweeper server
      */
-    void connect() {
+    public void connect() {
         try {
-            // The uri scheme 'multisweeper' is implicitly added so the connection string becomes a valid hierarchical
-            // URI. Thus the connection string can be parsed very easily using the URI class.
-            String uriString = "multisweeper://" + connection.get();
-            URI uri = new URI(uriString);
-
-            // Set to default port when none specified
-            if (uri.getPort() == -1) {
-                uri = new URI(uri.getScheme(), null, uri.getHost(), DEFAULT_PORT, null, null, null);
-            }
-
-            // Establish connection to server using client connector. Connects to address specified by the user.
-            ClientConnector clientConnector = new ClientConnector(uri.getHost(), uri.getPort());
-
-            // Register all Action Handlers
-            clientConnector.addAllActionHandlers(Client.getInstance().getAllActionHandlers());
-            Optional<Exception> exception = clientConnector.start();
-
-            // Show error message if connecting fails
-            if (exception.isPresent()) {
-                rejected.setValue(true);
-                Logger.get(this).warn("Could not connect to server because the hostname and port could not be found.");
-                return;
-            }
-
-            // Create new Transmitter of clientConnector and store it in Client Main class
-            Transmitter transmitter = new Transmitter(clientConnector);
-            Client.getInstance().setTransmitter(transmitter);
-
-            // Connect to server
-            transmitter.connect();
+            this.connectService.setAddress(connection.get());
+            this.connectService.restart();
+            this.connectService.setOnFailed(event -> this.rejected.set(true));
         } catch (URISyntaxException e) {
             Logger.get(this).warn("The provided URI is not formatted correctly.");
             rejected.setValue(true);
         }
-
     }
-
 
     @Override
     public void connected() {
@@ -75,7 +50,6 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     public void rejected() {
         rejected.setValue(true);
     }
-
 
     public boolean isRejected() {
         return rejected.get();
@@ -100,4 +74,5 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     public void setCorrectAddress(boolean correctAddress) {
         this.correctAddress.set(correctAddress);
     }
+
 }
