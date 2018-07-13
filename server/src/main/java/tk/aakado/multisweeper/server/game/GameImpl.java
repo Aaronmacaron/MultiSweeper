@@ -47,7 +47,7 @@ public class GameImpl implements Game {
             Optional<Player> optionalNewAdmin = getAdmin();
             if (!optionalNewAdmin.isPresent()) {
                 // if there is no player left, end the game
-                this.currentPlayingField = null;
+                resetGame();
                 return;
             }
 
@@ -177,6 +177,15 @@ public class GameImpl implements Game {
     @Override
     public boolean isStarted() {
         return this.currentPlayingField != null;
+    }
+
+    /**
+     * Resets the game.
+     */
+    private void resetGame() {
+        this.currentPlayingField = null;
+        this.configuration = null;
+        this.password = "";
     }
 
     /**
