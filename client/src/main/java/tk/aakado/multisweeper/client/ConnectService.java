@@ -29,8 +29,7 @@ public class ConnectService extends Service<Void> {
 
                 // Fail if connector had exception
                 if (exception.isPresent()) {
-                    failed();
-                    return null;
+                    throw exception.get();
                 }
 
                 // Create new Transmitter of clientConnector and store it in Client Main class
