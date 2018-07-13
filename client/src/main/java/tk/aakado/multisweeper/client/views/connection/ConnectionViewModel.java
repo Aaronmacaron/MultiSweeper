@@ -6,10 +6,13 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.util.Duration;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.ConnectService;
 import tk.aakado.multisweeper.client.connection.ClientConnector;
@@ -24,6 +27,7 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     private StringProperty connection = new SimpleStringProperty("");
     private BooleanProperty correctAddress = new SimpleBooleanProperty(false);
     private BooleanProperty rejected = new SimpleBooleanProperty(false);
+    private BooleanProperty connecting = new SimpleBooleanProperty(false);
 
     private ConnectService connectService = new ConnectService();
 
@@ -33,12 +37,24 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
     public void connect() {
         try {
             this.connectService.setAddress(connection.get());
+            this.connecting.set(true);
             this.connectService.restart();
-            this.connectService.setOnFailed(event -> this.rejected.set(true));
+            this.connectService.setOnSucceeded(event -> this.connecting.set(false));
+            this.connectService.setOnFailed(event -> connectionFail());
         } catch (URISyntaxException e) {
             Logger.get(this).warn("The provided URI is not formatted correctly.");
             rejected.setValue(true);
         }
+    }
+
+    /**
+     * Handles a connection fail.
+     */
+    private void connectionFail() {
+        rejected();
+        this.connecting.set(false);
+        KeyFrame hideRejected = new KeyFrame(Duration.seconds(4), e -> this.rejected.set(false));
+        new Timeline(hideRejected).play();
     }
 
     @Override
@@ -75,4 +91,15 @@ public class ConnectionViewModel implements ViewModel, ConnectionNotificator {
         this.correctAddress.set(correctAddress);
     }
 
+    public boolean isConnecting() {
+        return connecting.get();
+    }
+
+    public BooleanProperty connectingProperty() {
+        return connecting;
+    }
+
+    public void setConnecting(boolean connecting) {
+        this.connecting.set(connecting);
+    }
 }

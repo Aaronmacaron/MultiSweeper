@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?><?import javafx.scene.control.Label?><?import javafx.scene.control.TextField?><?import javafx.scene.layout.VBox?>
-<VBox prefHeight="100.0" prefWidth="300.0" styleClass="box" stylesheets="/tk/aakado/multisweeper/client/views/css/ui.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.connection.ConnectionView">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="150.0" prefWidth="300.0" styleClass="box" stylesheets="/tk/aakado/multisweeper/client/views/css/ui.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.aakado.multisweeper.client.views.connection.ConnectionView">
     <children>
-        <Label text="Connect to server" styleClass="subtitle"/>
-        <TextField fx:id="connectionField" promptText="hostname or server" />
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#onConnect" text="Connect" fx:id="connectButton"/>
-      <Label text="Error while connecting (check spelling of hostname and connection)" visible="false" fx:id="errorMessageLabel" styleClass="error-description"/>
+        <Label styleClass="subtitle" text="Connect to server" />
+      <HBox fx:id="container" alignment="CENTER_LEFT" spacing="5.0">
+         <children>
+              <TextField fx:id="connectionField" promptText="hostname or server" HBox.hgrow="ALWAYS" />
+            <ProgressIndicator fx:id="loadingIndicator" prefHeight="25.0" prefWidth="25.0" />
+         </children>
+      </HBox>
+        <Button fx:id="connectButton" defaultButton="true" mnemonicParsing="false" onAction="#onConnect" text="Connect" />
+      <Label fx:id="errorMessageLabel" styleClass="error-description" text="Error while connecting (check spelling of hostname and connection)" visible="false" />
     </children>
 </VBox>
