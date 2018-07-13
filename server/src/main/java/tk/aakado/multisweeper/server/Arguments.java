@@ -100,18 +100,15 @@ public class Arguments {
 
             // Store args into variables
             String portArg = commandLine.getOptionValue("p", String.valueOf(DEFAULT_PORT));
-            String numberOfGamesArg = commandLine.getOptionValue(
-                    "n",
-                    String.valueOf(DEFAULT_NUMBER_OF_GAMES)
-            );
+            String numberOfGamesArg = commandLine.getOptionValue("n", String.valueOf(DEFAULT_NUMBER_OF_GAMES));
 
             // port
             int port = parsePort(portArg)
-                    .orElseThrow(() -> new ArgumentParseException("The specified port is not valid."));
+                    .orElseThrow(() -> new ArgumentParseException("The specified port is not valid.", options));
 
             // number of games
             int numberOfGames = parseNumberOfGames(numberOfGamesArg)
-                    .orElseThrow(() -> new ArgumentParseException("The specified value for number of games is invalid"));
+                    .orElseThrow(() -> new ArgumentParseException("The specified value for number of games is invalid", options));
 
             return new Arguments(port, numberOfGames);
         }
