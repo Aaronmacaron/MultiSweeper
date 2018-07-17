@@ -129,7 +129,7 @@ public class GameImpl implements Game {
         this.currentPlayingField = new PlayingField(width, height, mines);
 
         // Set configuration on clients
-        StartInfoDTO startInfo = new StartInfoDTO(width, height, this.currentPlayingField.getCurrentPlayingFieldState());
+        StartInfoDTO startInfo = new StartInfoDTO(width, height, mines, this.currentPlayingField.getCurrentPlayingFieldState());
         Action update = new Action(ActionType.CONFIGURE_GAME, startInfo);
         GameManager gameManager = Server.getGameManager();
         gameManager.getAllConnectionsOf(this)

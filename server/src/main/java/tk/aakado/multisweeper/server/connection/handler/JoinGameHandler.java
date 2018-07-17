@@ -109,7 +109,8 @@ public class JoinGameHandler {
 
         // Send start info to client
         GameConfigDTO config = game.get().getCurrentConfiguration();
-        StartInfoDTO startInfo = new StartInfoDTO(config.getWidth(), config.getHeight(), game.get().getCurrentStateOfGame());
+        int numberOfMines = (int) Math.round(config.getWidth() * config.getHeight() * config.getMinesPercentage());
+        StartInfoDTO startInfo = new StartInfoDTO(config.getWidth(), config.getHeight(),numberOfMines, game.get().getCurrentStateOfGame());
         Action action = new Action(ActionType.CONFIGURE_GAME, startInfo);
         message.getConnector().sendTo(action, message.getSender());
 

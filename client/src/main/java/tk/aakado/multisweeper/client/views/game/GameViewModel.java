@@ -1,5 +1,6 @@
 package tk.aakado.multisweeper.client.views.game;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -33,10 +34,11 @@ public class GameViewModel implements ViewModel, GameNotificator {
     private BooleanProperty isFinished = new SimpleBooleanProperty(false);
 
     @Override
-    public void configureField(int width, int height) {
+    public void configureField(int width, int height, int numberOfMines) {
         // set the size of the field
         this.fieldWidth.setValue(width);
         this.fieldHeight.setValue(height);
+        this.remainingMines.setValue(numberOfMines);
 
         // create a new empty ObservableArrayList
         ObservableList<Field> newFields = FXCollections.observableArrayList();

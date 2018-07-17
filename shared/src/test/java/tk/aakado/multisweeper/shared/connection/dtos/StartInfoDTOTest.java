@@ -13,7 +13,7 @@ public class StartInfoDTOTest {
 
     @Before
     public void setUp() {
-        startInfoDTO = new StartInfoDTO(34, 16, Collections.emptyList());
+        startInfoDTO = new StartInfoDTO(34, 16, 10, Collections.emptyList());
     }
 
     @Test
@@ -24,6 +24,11 @@ public class StartInfoDTOTest {
     @Test
     public void getFieldHeight() {
         assertEquals(16, startInfoDTO.getFieldHeight());
+    }
+
+    @Test
+    public void getNumberOfMines() {
+        assertEquals(10, startInfoDTO.getNumberOfMines());
     }
 
 }

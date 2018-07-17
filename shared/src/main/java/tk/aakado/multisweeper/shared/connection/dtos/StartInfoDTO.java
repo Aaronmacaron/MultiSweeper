@@ -9,6 +9,7 @@ public class StartInfoDTO {
 
     private final int fieldWidth;
     private final int fieldHeight;
+    private final int numberOfMines;
     private final List<FieldDTO> initialFieldState;
 
     /**
@@ -17,9 +18,10 @@ public class StartInfoDTO {
      * @param fieldHeight fieldHeight of game
      * @param initialFieldState The initial fields of the game
      */
-    public StartInfoDTO(int fieldWidth, int fieldHeight, List<FieldDTO> initialFieldState) {
+    public StartInfoDTO(int fieldWidth, int fieldHeight, int numberOfMines, List<FieldDTO> initialFieldState) {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
+        this.numberOfMines = numberOfMines;
         this.initialFieldState = initialFieldState;
     }
 
@@ -37,6 +39,14 @@ public class StartInfoDTO {
      */
     public int getFieldHeight() {
         return fieldHeight;
+    }
+
+    /**
+     * Getter for numberOfMines
+     * @return numberOfMines
+     */
+    public int getNumberOfMines() {
+        return numberOfMines;
     }
 
     /**

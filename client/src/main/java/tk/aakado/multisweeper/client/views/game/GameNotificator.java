@@ -13,8 +13,9 @@ public interface GameNotificator extends Notificator  {
      *
      * @param width x-axis size
      * @param height y-axis size
+     * @param numberOfMines the total amount of mines
      */
-    void configureField(int width, int height);
+    void configureField(int width, int height, int numberOfMines);
 
     /**
      * A player clicks a Field and every Player gets Notificated

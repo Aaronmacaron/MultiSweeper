@@ -18,7 +18,7 @@ public class GameHandler {
 
         GameNotificator notificator = (GameNotificator) Client.getInstance().getNotificator(GameView.class);
         Platform.runLater(() -> {
-            notificator.configureField(startInfo.getFieldWidth(), startInfo.getFieldHeight());
+            notificator.configureField(startInfo.getFieldWidth(), startInfo.getFieldHeight(), startInfo.getNumberOfMines());
             startInfo.getInitialFieldState().forEach(fieldDTO -> notificator
                     .updateField(fieldDTO.getX(), fieldDTO.getY(), fieldDTO.getState(), fieldDTO.getValue()));
         });
