@@ -1,9 +1,5 @@
 package tk.aakado.multisweeper.client.views.game;
 
-import java.net.URL;
-import java.time.Duration;
-import java.util.ResourceBundle;
-
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
@@ -15,11 +11,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.util.converter.LocalTimeStringConverter;
 import tk.aakado.multisweeper.client.Client;
-import tk.aakado.multisweeper.client.views.game.model.Field;
 import tk.aakado.multisweeper.client.views.game.view.FieldButton;
 import tk.aakado.multisweeper.client.views.game.view.FieldGrid;
+
+import java.net.URL;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
 public class GameView implements FxmlView<GameViewModel>, Initializable {
 
@@ -42,19 +41,15 @@ public class GameView implements FxmlView<GameViewModel>, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Convert Duration to String and bind it to timeElapsedLabel
-        timeElapsedLabel.textProperty().bind(Bindings.createStringBinding(() -> {
-            Duration duration = viewModel.elapsedTimeProperty().get();
-            return String.format("%s:%s", duration.toMinutes(), duration.getSeconds());
-        }));
+        // Convert LocalTime to String and bind it to timeElapsedLabel
+        LocalTimeStringConverter timeConverter = new LocalTimeStringConverter(DateTimeFormatter.ofPattern("mm:ss"), null);
+        Bindings.bindBidirectional(this.timeElapsedLabel.textProperty(), this.viewModel.elapsedTimeProperty(), timeConverter);
 
-        // Convert Int to String and bind it to numberOfPlayersLabel
-        numberOfPlayersLabel.textProperty().bind(Bindings.createStringBinding(() ->
-                Integer.toString(viewModel.numberOfPlayersProperty().get())));
+        // Bind number of players
+        this.numberOfPlayersLabel.textProperty().bind(this.viewModel.numberOfPlayersProperty().asString());
 
-        // Convert Int to String and bind it to remainingMinesLabel
-        remainingMinesLabel.textProperty().bind(Bindings.createStringBinding(() ->
-                Integer.toString(viewModel.remainingMinesProperty().get())));
+        // Bind remaining mines
+        this.remainingMinesLabel.textProperty().bind(this.viewModel.remainingMinesProperty().asString());
 
         // Creates a new FieldGrid and add it to the AchnorPane
         gamePane.setContent(new FieldGrid(viewModel.fieldsProperty(), viewModel.fieldWidthProperty(), viewModel.fieldHeightProperty(), this::onClick));

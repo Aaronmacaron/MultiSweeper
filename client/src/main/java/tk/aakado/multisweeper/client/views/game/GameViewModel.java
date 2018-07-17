@@ -1,6 +1,6 @@
 package tk.aakado.multisweeper.client.views.game;
 
-import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import de.saxsys.mvvmfx.ViewModel;
@@ -24,7 +24,7 @@ import tk.aakado.multisweeper.shared.game.FieldState;
 
 public class GameViewModel implements ViewModel, GameNotificator {
 
-    private ObjectProperty<Duration> elapsedTime = new SimpleObjectProperty<>(Duration.ZERO);
+    private ObjectProperty<LocalTime> elapsedTime = new SimpleObjectProperty<>(LocalTime.MIN);
     private IntegerProperty numberOfPlayers = new SimpleIntegerProperty();
     private IntegerProperty remainingMines = new SimpleIntegerProperty();
     private ListProperty<Field> fields = new SimpleListProperty<>(FXCollections.emptyObservableList());
@@ -118,7 +118,7 @@ public class GameViewModel implements ViewModel, GameNotificator {
         Client.getInstance().changeView(FinishedView.class);
     }
 
-    public ObjectProperty<Duration> elapsedTimeProperty() {
+    public ObjectProperty<LocalTime> elapsedTimeProperty() {
         return elapsedTime;
     }
 
