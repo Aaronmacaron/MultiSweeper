@@ -44,7 +44,7 @@ public class GameViewModelTest {
         }
 
         // let the viewmodel create new fields
-        viewModel.configureField(x, y);
+        viewModel.configureField(x, y, 0);
         List<Field> actualFields = viewModel.getFields();
 
         // check all fields
