@@ -153,3 +153,10 @@ SCROLLBAR
 .scroll-bar .decrement-arrow {
     -fx-background-color: -primary-lighter;
 }
+
+/*
+PROGRESS INDICATOR
+ */
+.progress-indicator {
+    -fx-progress-color: -primary-darkest;
+}
