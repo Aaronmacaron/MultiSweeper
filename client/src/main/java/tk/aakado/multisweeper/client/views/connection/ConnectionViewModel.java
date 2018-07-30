@@ -1,9 +1,6 @@
 package tk.aakado.multisweeper.client.views.connection;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
-import java.util.concurrent.ExecutorService;
 
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.animation.KeyFrame;
@@ -15,8 +12,6 @@ import javafx.beans.property.StringProperty;
 import javafx.util.Duration;
 import tk.aakado.multisweeper.client.Client;
 import tk.aakado.multisweeper.client.ConnectService;
-import tk.aakado.multisweeper.client.connection.ClientConnector;
-import tk.aakado.multisweeper.client.connection.Transmitter;
 import tk.aakado.multisweeper.client.views.gameselection.GameSelectionView;
 import tk.aakado.multisweeper.shared.Logger;
 
