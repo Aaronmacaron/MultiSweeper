@@ -25,6 +25,8 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
     @FXML
     private Slider mineDensitySlider;
     @FXML
+    private Label mineDensityLabel;
+    @FXML
     private TextField fieldWidthField;
     @FXML
     private TextField fieldHeightField;
@@ -63,6 +65,8 @@ public class ConfigurationView implements FxmlView<ConfigurationViewModel>, Init
         startButton.disableProperty().bind(Client.getInstance().getGameProperties().adminProperty().not());
         saveButton.disableProperty().bind(Client.getInstance().getGameProperties().adminProperty().not());
 
+        // Bind mineDensityLabelValue to Slider
+        mineDensityLabel.textProperty().bind(Bindings.format("%.2f", mineDensitySlider.valueProperty()));
     }
 
     /**
