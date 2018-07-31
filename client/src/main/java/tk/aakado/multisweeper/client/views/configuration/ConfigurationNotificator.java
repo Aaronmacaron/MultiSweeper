@@ -1,5 +1,7 @@
 package tk.aakado.multisweeper.client.views.configuration;
 
+import java.util.List;
+
 import tk.aakado.multisweeper.client.views.Notificator;
 
 public interface ConfigurationNotificator extends Notificator {
@@ -18,6 +20,12 @@ public interface ConfigurationNotificator extends Notificator {
      * @param player Player IP
      */
     void playerConnected(String player);
+
+    /**
+     * Add all connected Players to the players list
+     * @param players
+     */
+    void setPlayers(List<String> players);
 
     /**
      * Admin started the game

@@ -60,7 +60,8 @@ public class GameSelectionHandler {
         // Add all players to Configuration view
         ConfigurationNotificator configurationNotificator = (ConfigurationNotificator) Client.getInstance()
                 .getNotificator(ConfigurationView.class);
-        gameJoinedInfo.getPlayers().forEach(p -> Platform.runLater(() -> configurationNotificator.playerConnected(p)));
+//        gameJoinedInfo.getPlayers().forEach(p -> Platform.runLater(() -> configurationNotificator.playerConnected(p)));
+        configurationNotificator.setPlayers(gameJoinedInfo.getPlayers());
     }
 
     /**

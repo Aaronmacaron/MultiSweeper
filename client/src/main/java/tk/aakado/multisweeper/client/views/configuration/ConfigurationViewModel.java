@@ -1,5 +1,7 @@
 package tk.aakado.multisweeper.client.views.configuration;
 
+import java.util.List;
+
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -71,6 +73,11 @@ public class ConfigurationViewModel implements ViewModel, ConfigurationNotificat
             throw new IllegalArgumentException("Player with the same name already exists");
         }
         players.get().add(player);
+    }
+
+    @Override
+    public void setPlayers(List<String> newPlayers) {
+        players.get().setAll(newPlayers);
     }
 
     @Override
